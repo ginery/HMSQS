@@ -11,7 +11,7 @@ created by: ginx
         <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
         <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
         <meta name="author" content="LEFT4CODE">
-        <title>Register - Midone - Tailwind HTML Admin Template</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="dist/css/app.css" />
         <!-- END: CSS Assets-->
@@ -51,19 +51,7 @@ created by: ginx
                                 <input type="text" name="last_name" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Last Name">
                                 <input type="text" name="email" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Email">
                                 <input type="text" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
-                                <div class="intro-x w-full grid grid-cols-12 gap-4 h-1 mt-3">
-                                    <div class="col-span-3 h-full rounded bg-theme-9"></div>
-                                    <div class="col-span-3 h-full rounded bg-theme-9"></div>
-                                    <div class="col-span-3 h-full rounded bg-theme-9"></div>
-                                    <div class="col-span-3 h-full rounded bg-gray-200"></div>
-                                </div>
-                                <a href="" class="intro-x text-gray-600 block mt-2 text-xs sm:text-sm">What is a secure password?</a> 
                                 <input type="text" class="intro-x login__input input input--lg border border-gray-300 block mt-4" name="password_confirmation" placeholder="Password Confirmation">
-                            </div>
-                            <div class="intro-x flex items-center text-gray-700 mt-4 text-xs sm:text-sm">
-                                <input type="checkbox" class="input border mr-2" id="remember-me">
-                                <label class="cursor-pointer select-none" for="remember-me">I agree to the Envato</label>
-                                <a class="text-theme-1 ml-1" href="">Privacy Policy</a>. 
                             </div>
                             <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                                 <button type="submit" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Register</button>
