@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <!--
-Template Name: Midone - HTML Admin Dashboard Template
-Author: Left4code
-Website: http://www.left4code.com/
-Contact: muhammadrizki@left4code.com
-Purchase: https://themeforest.net/user/left4code/portfolio
-Renew Support: https://themeforest.net/user/left4code/portfolio
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+created by: ginx
 -->
 <html lang="en">
     <!-- BEGIN: Head -->
@@ -23,6 +17,12 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->
+    <script>
+        function register(){
+            // alert("test");
+            window.location = "{{ route('register') }}";
+        }
+    </script>
     <body class="login">
         <div class="container sm:px-10">
             <form method="POST" action="{{ route('login') }}">
@@ -60,7 +60,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                             <button type="submit" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Login</button>
-                            <button class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0">Sign up</button>
+                            <button onclick="register()" type="button" class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0">Register</button>
                         </div>
                         <div class="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">
                             By signin up, you agree to our 
