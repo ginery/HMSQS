@@ -173,7 +173,7 @@
               <h1
                 class="mb-6 text-2xl font-bold leading-snug text-white sm:text-2xl sm:leading-snug lg:text-2xl lg:leading-[1.2]"
               >
-              We're thrilled to have you back at Hometel. Let us know how we can personalize your experience.
+              We're thrilled to have you back at Hometel. Let us know how we can personalize your experience. 
               </h1>
             </div>
           </div>

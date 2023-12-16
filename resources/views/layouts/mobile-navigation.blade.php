@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="menu">
+            <a href="{{ route('rooms') }}" class="menu">
                 <div class="menu__icon"> <i data-feather="inbox"></i> </div>
                 <div class="menu__title"> Rooms </div>
             </a>

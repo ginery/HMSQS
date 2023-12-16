@@ -49,9 +49,9 @@ created by: ginx
                             <div class="intro-x mt-8">
                                 <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" name="first_name" required autofocus placeholder="First Name">
                                 <input type="text" name="last_name" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Last Name">
-                                <input type="text" name="email" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Email">
-                                <input type="text" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
-                                <input type="text" class="intro-x login__input input input--lg border border-gray-300 block mt-4" name="password_confirmation" placeholder="Password Confirmation">
+                                <input type="email" name="email" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Email">
+                                <input type="password" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
+                                <input type="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" name="password_confirmation" placeholder="Password Confirmation">
                             </div>
                             <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                                 <button type="submit" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Register</button>

@@ -31,7 +31,7 @@ create by: ginx
                 <div class="top-bar">
 
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Dashboard</a> </div>
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="{{route('dashboard')}}" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">{{ucfirst(Route::current()->getName())}}</a> </div>
                     <!-- END: Breadcrumb -->
                     <!-- BEGIN: Account Menu -->
                     @include('layouts.profile-dropdown')
