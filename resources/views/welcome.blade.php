@@ -2405,7 +2405,7 @@
                 href="javascript:void(0)"
                 class="mb-6 inline-block max-w-[160px]"
               >
-              <img alt="Midone Tailwind HTML Admin Template" style="width: 38px; height: 100px; margin-right: 11px !important;" src="dist/images/logo.svg">
+              <img alt="hometel-logo" class="w-6" style="width: 94px;" src="assets/images/logo-3.jpg">
               </a>
               <p class="mb-8 max-w-[270px] text-base text-gray-7">
                 We create digital experiences for brands and companies by using
