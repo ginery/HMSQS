@@ -7,11 +7,11 @@
     <title>
         {{ config('app.name', 'Laravel') }}
     </title>
-    <link
+    {{-- <link
       rel="shortcut icon"
       href="assets/images/favicon.png"
       type="image/x-icon"
-    />
+    /> --}}
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="assets/css/animate.css" />
     <link rel="stylesheet" href="assets/css/tailwind.css" />
@@ -32,8 +32,7 @@
         <div class="relative -mx-4 mt-6 flex items-center justify-between">
           <div class="w-60 max-w-full px-4">
             <a href="" class="-intro-x flex items-center pt-5">
-                <img alt="Midone Tailwind HTML Admin Template" style="width: 38px; height: 100px; margin-right: 11px !important;" src="dist/images/logo.svg">
-                <span class="text-white text-lg"> Mid<span class="font-medium">One</span> </span>
+                <img alt="Midone Tailwind HTML Admin Template" style="width: 94px; margin-right: 11px !important;" src="assets/images/logo-3.jpg">                
             </a>
           </div>
           <div class="flex w-full items-center justify-between px-4">

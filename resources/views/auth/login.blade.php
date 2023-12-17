@@ -35,8 +35,8 @@ created by: ginx
                 <!-- BEGIN: Login Info -->
                 <div class="hidden xl:flex flex-col min-h-screen">
                     <a href="#" class="-intro-x flex items-center pt-5">
-                        <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
-                        <span class="text-white text-lg ml-3"> Mid<span class="font-medium">One</span> </span>
+                        <img alt="Midone Tailwind HTML Admin Template" class="w-6" style="width: 94px;" src="assets/images/logo-3.jpg">
+                        
                     </a>
                     <div class="my-auto">
                         <img alt="Midone Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="dist/images/illustration.svg">
