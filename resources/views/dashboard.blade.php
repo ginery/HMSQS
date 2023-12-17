@@ -777,11 +777,12 @@
     @include('modals.scan-qr');
 
     <script>
+        
         function scanQr(){
             // alert("test");
             $("#scan_qr").modal("show");
         }
         
-        // const html5QrCode = new Html5Qrcode("reader");
+        
     </script>
 </x-app-layout>
