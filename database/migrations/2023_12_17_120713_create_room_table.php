@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('users')) {
-            Schema::dropIfExists('users');
-        }
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('room_name');
+            $table->float('price');
+            $table->string('description');
+            $table->string('image');
             $table->timestamps();
-            $table->integer('role')->unsigned()->default(0);
+            $table->integer('status')->unsigned()->default(0); //0 - active, 1 - inactive
         });
     }
 
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('room');
     }
 };
