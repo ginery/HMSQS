@@ -5,7 +5,7 @@
             <!-- BEGIN: General Report -->
             <div class="col-span-12 mt-8">
                 <div class="flex justify-end ">
-                    <div class=""> <a href="javascript:;" data-toggle="modal" data-target="#button-modal-preview" class="button box flex items-center text-gray-700"><i data-feather="maximize" class="mr-2"></i> Scan QR</a> </div>
+                    <div class=""> <a href="#" onclick="scanQr()" class="button box flex items-center text-gray-700"><i data-feather="maximize" class="mr-2"></i> Scan QR</a> </div>
                 </div>
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
@@ -774,17 +774,14 @@
     </div>
 
     <!-- FOR QR -->
-    <div class="modal" id="button-modal-preview">
-        <div class="modal__content relative"> <a data-dismiss="modal" href="javascript:;" class="absolute right-0 top-0 mt-3 mr-3"> <i data-feather="x" class="w-8 h-8 text-gray-500"></i> </a>
-            <div class="p-5 text-center">
-                <div style="width: 500px" id="reader"></div>
-            </div>
-            <div class="px-5 pb-8 text-center"> <button type="button" data-dismiss="modal" class="button w-24 bg-theme-1 text-white">Ok</button> </div>
-        </div>
-    </div>
+    @include('modals.scan-qr');
 
     <script>
-        const html5QrCode = new Html5Qrcode("reader");
-
+        function scanQr(){
+            // alert("test");
+            $("#scan_qr").modal("show");
+        }
+        
+        // const html5QrCode = new Html5Qrcode("reader");
     </script>
 </x-app-layout>
