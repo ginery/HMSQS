@@ -14,6 +14,8 @@ create by: ginx
         <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="dist/css/app.css" />
+        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script src="assets/js/jquery-3.7.1.min.js" type="text/javascript"></script>
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->
@@ -47,29 +49,12 @@ create by: ginx
             <!-- END: Content -->
         </div>
         <!-- BEGIN: JS Assets-->
+        
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
         <script src="dist/js/app.js"></script>
-        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        
         <!-- END: JS Assets-->
-        <script>
-            const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-            function onScanSuccess(decodedText, decodedResult) {
-            // handle the scanned code as you like, for example:
-            console.log(`Code matched = ${decodedText}`, decodedResult);
-            }
-
-            function onScanFailure(error) {
-            // handle scan failure, usually better to ignore and keep scanning.
-            // for example:
-            console.warn(`Code scan error = ${error}`);
-            }
-
-            let html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader",
-            { fps: 10, qrbox: {width: 250, height: 250} },
-            /* verbose= */ false);
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        </script>
+        
     </body>
 </html>
