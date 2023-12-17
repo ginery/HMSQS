@@ -1,7 +1,8 @@
 <x-app-layout>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-            <button class="button text-white bg-theme-1 shadow-md mr-2">Add New User</button>
+            <div class="text-center"> <a href="javascript:;" data-toggle="modal" data-target="#add-user-modal" class="button text-white bg-theme-1 shadow-md mr-2">Add New User</a> </div>
+            <!-- <button class="" >Add New User</button> -->
             <div class="dropdown relative">
                 <button class="dropdown-toggle button px-2 box text-gray-700">
                     <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
@@ -363,4 +364,13 @@
         </div>
         <!-- END: Pagination -->
     </div>
+    @include('modals.add-user');
+    <script>
+        $("#add-user-form").submit( function(e){
+            e.preventDefault();
+            var data = $("#add-user-form").serialize();
+
+            console.log(data);
+        });
+    </script>
 </x-app-layout>
