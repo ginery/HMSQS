@@ -15,6 +15,7 @@ class UsersController extends Controller
         //     'password' => Hash::make('12345'),
         //     'role' => $request->role,
         // ]);
-        echo 1;
+        // echo 1;
+        return json_encode($request);
     }
 }

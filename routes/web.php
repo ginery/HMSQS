@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RoomController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +22,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/rooms', function () {
-    return view('rooms');
-})->middleware(['auth', 'verified'])->name('rooms');
+// Route::get('/rooms', function () {
+//     return view('rooms');
+// })->middleware(['auth', 'verified'])->name('rooms');
+
+Route::get('/rooms', [RoomController::class, 'index'])->name('rooms');
+
 
 Route::get('/users', function () {
     return view('users');
