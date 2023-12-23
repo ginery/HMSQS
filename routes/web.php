@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\UsersController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,9 +31,10 @@ Route::get('/dashboard', function () {
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms');
 
 
-Route::get('/users', function () {
-    return view('users');
-})->middleware(['auth', 'verified'])->name('users');
+// Route::get('/users', function () {
+//     return view('users');
+// })->middleware(['auth', 'verified'])->name('users');
+Route::get('/users', [UsersController::class, 'index'])->name('users');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
