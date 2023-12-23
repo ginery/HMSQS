@@ -30,7 +30,8 @@
             <div class="box">
                 <div class="flex flex-col lg:flex-row items-center p-5 border-b border-gray-200">
                     <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                        <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg">
+                        <!-- <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="dist/images/profile-11.jpg"> -->
+                        <div id="qrcode" class="rounded-full"></div>
                     </div>
                     <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
                         <a href="" class="font-medium">{{$users->first_name}} {{$users->last_name}}</a> 
@@ -103,6 +104,17 @@
                     console.log(response);
                 }
             })
+        });
+
+        new QRCode(document.getElementById("qrcode"), {
+            drawer: 'svg',
+            text: "your text here",
+            // logo: "logo.png",
+            width: 50,
+            height: 50,
+            // logoWidth: 80,
+            // logoHeight: 80,
+            // logoBackgroundTransparent: true
         });
     </script>
 </x-app-layout>

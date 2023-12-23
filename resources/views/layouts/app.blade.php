@@ -16,6 +16,7 @@ create by: ginx
         <link rel="stylesheet" href="dist/css/app.css" />
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
         <script src="assets/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+        <script src="assets/js/jquery-qrcode.min.js" type="text/javascript"></script>
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->

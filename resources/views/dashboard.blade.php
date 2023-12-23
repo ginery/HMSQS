@@ -793,8 +793,8 @@
             { fps: 10, qrbox: {width: 250, height: 250} },
             /* verbose= */ false);
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
         function scanQr(){
-            // alert("test");
             $("#scan_qr").modal("show");
         }
         
