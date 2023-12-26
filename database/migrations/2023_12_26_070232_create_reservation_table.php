@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('reservation')) {
+            Schema::dropIfExists('reservation');
+        }
         Schema::create('reservation', function (Blueprint $table) {
             $table->id();
             $table->integer('room_id');
             $table->integer('user_id');
             $table->dateTime('checkin_date');
             $table->dateTime('checkout_date');
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }

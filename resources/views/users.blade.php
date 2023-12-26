@@ -98,7 +98,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'api/user_add',
+                url: 'api/user/user_add',
                 data: data,
                 success: function(response) {
                     $.toast('Success! New user was added.');

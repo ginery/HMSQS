@@ -94,7 +94,7 @@
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
-                url: 'api/room_add', // Replace with your upload endpoint
+                url: 'api/room/room_add', // Replace with your upload endpoint
                 type: 'POST',
                 data: formData,
                 processData: false,

@@ -26,7 +26,7 @@ class RoomController extends Controller
             'price' => $request->price,
             'description' => $request->description,
             'image' => $imageName, 
-            'status' => 0,
+            'status' => 1,
         ]);
      
         if($result){

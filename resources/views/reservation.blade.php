@@ -1,11 +1,12 @@
 <x-app-layout>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-            <button class="button text-white bg-theme-1 shadow-md mr-2">Add New Reservation</button>
+            <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add New Reservation</button>
             <div class="dropdown relative">
                 <button class="dropdown-toggle button px-2 box text-gray-700">
                     <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
                 </button>
+                {{-- {{dd(json_encode($reservation))}} --}}
                 <div class="dropdown-box mt-10 absolute w-40 top-0 left-0 z-20">
                     <div class="dropdown-box__content box p-2">
                         <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="printer" class="w-4 h-4 mr-2"></i> Print </a>
@@ -35,6 +36,8 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($reservations as $reservation)                       
+                    
                     <tr class="intro-x">
                         <td class="w-40">
                             <div class="flex">
@@ -44,12 +47,12 @@
                             </div>
                         </td>
                         <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Sony A7 III</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">Photography</div>
+                            <a href="" class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}}</a> 
+                            <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format(getRoomPrice($reservation->room_id),2)}}</div>
                         </td>
-                        <td class="text-center">50</td>
+                        <td class="text-center">{{$reservation->checkin_date}} - {{$reservation->checkin_date}}</td>
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>
+                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> {{$reservation->status}} </div>
                         </td>
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
@@ -58,238 +61,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-4.jpg" title="Uploaded at 26 November 2021">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-5.jpg" title="Uploaded at 26 November 2021">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-1.jpg" title="Uploaded at 26 November 2021">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Dell XPS 13</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">PC &amp; Laptop</div>
-                        </td>
-                        <td class="text-center">193</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-14.jpg" title="Uploaded at 27 April 2022">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-2.jpg" title="Uploaded at 27 April 2022">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-5.jpg" title="Uploaded at 27 April 2022">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Samsung Galaxy S20 Ultra</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">Smartphone &amp; Tablet</div>
-                        </td>
-                        <td class="text-center">87</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-1.jpg" title="Uploaded at 13 October 2020">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-8.jpg" title="Uploaded at 13 October 2020">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-8.jpg" title="Uploaded at 13 October 2020">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Nike Tanjun</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">Sport &amp; Outdoor</div>
-                        </td>
-                        <td class="text-center">97</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-7.jpg" title="Uploaded at 23 October 2022">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-2.jpg" title="Uploaded at 23 October 2022">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-3.jpg" title="Uploaded at 23 October 2022">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Samsung Galaxy S20 Ultra</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">Smartphone &amp; Tablet</div>
-                        </td>
-                        <td class="text-center">55</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-5.jpg" title="Uploaded at 23 April 2021">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-10.jpg" title="Uploaded at 23 April 2021">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-11.jpg" title="Uploaded at 23 April 2021">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Nike Air Max 270</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">Sport &amp; Outdoor</div>
-                        </td>
-                        <td class="text-center">132</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-3.jpg" title="Uploaded at 3 October 2022">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-14.jpg" title="Uploaded at 3 October 2022">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-5.jpg" title="Uploaded at 3 October 2022">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Sony A7 III</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">Photography</div>
-                        </td>
-                        <td class="text-center">64</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Active </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-4.jpg" title="Uploaded at 7 November 2020">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-13.jpg" title="Uploaded at 7 November 2020">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-3.jpg" title="Uploaded at 7 November 2020">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Dell XPS 13</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">PC &amp; Laptop</div>
-                        </td>
-                        <td class="text-center">145</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-14.jpg" title="Uploaded at 5 August 2020">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-15.jpg" title="Uploaded at 5 August 2020">
-                                </div>
-                                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                    <img alt="Midone Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-13.jpg" title="Uploaded at 5 August 2020">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="" class="font-medium whitespace-no-wrap">Dell XPS 13</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">PC &amp; Laptop</div>
-                        </td>
-                        <td class="text-center">144</td>
-                        <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Inactive </div>
-                        </td>
-                        <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                            </div>
-                        </td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -338,4 +110,30 @@
             </div>
         </div>
     </div>
+@include('modals.add-reservation')
+<script>
+function addModal() {        
+    $("#add-modal").modal("show");       
+}
+$(document).ready(function(){
+    $('#addForm').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: 'api/reservation/add_reservation',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("response: ", response);
+            },
+            error: function(error) {
+                console.log("error: ", error);
+            }
+        });
+
+    });
+});
+</script>
 </x-app-layout>

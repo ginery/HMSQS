@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Middleware\Authenticate;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,5 +20,13 @@ use App\Http\Controllers\RoomController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/user_add', [UsersController::class, 'create']);
-Route::post('/room_add', [RoomController::class, 'create']);
+
+Route::group(['prefix' => 'user'], function () {
+    Route::post('/user_add', [UsersController::class, 'create']);
+});
+Route::group(['prefix' => 'room'], function () {
+    Route::post('/room_add', [RoomController::class, 'create']);
+});
+Route::group(['prefix' => 'reservation'], function () {
+    Route::post('/add_reservation', [ReservationController::class, 'create']);
+});

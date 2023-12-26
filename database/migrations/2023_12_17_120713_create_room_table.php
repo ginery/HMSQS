@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('rooms')) {
+            Schema::dropIfExists('rooms');
+        }
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('room_name');
