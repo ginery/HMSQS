@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\ReservationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,8 +28,9 @@ Route::get('/dashboard', function () {
 //     return view('rooms');
 // })->middleware(['auth', 'verified'])->name('rooms');
 
-Route::get('/rooms', [RoomController::class, 'index'])->name('rooms');
+Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'verified'])->name('rooms');
 
+Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');
 
 // Route::get('/users', function () {
 //     return view('users');

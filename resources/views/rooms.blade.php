@@ -37,8 +37,8 @@
                     <a href="" class="w-3/5">
                         <img alt="Midone Tailwind HTML Admin Template" class="rounded-md" src="assets/uploads/rooms/{{$room->image}}">
                     </a>
-                    <a href="" class="block font-medium mt-4 text-center truncate"></a> 
-                    <div class="text-gray-600 text-xs text-center">{{$room->room_name}}</div>
+                    <a href="#" class="block font-medium mt-4 text-center truncate">{{$room->room_name}}</a> 
+                    <div class="text-gray-600 text-xs text-center">Php. {{number_format($room->price, 2)}}</div>
                     <div class="absolute top-0 right-0 mr-2 mt-2 dropdown ml-auto">
                         <a class="dropdown-toggle w-5 h-5 block" href="javascript:;"> <i data-feather="more-vertical" class="w-5 h-5 text-gray-500"></i> </a>
                         <div class="dropdown-box mt-5 absolute w-40 top-0 right-0 z-10">
@@ -54,7 +54,7 @@
         </div>
         <!-- END: Directory & Files -->
         <!-- BEGIN: Pagination -->
-        <div class="intro-y flex flex-wrap sm:flex-row sm:flex-no-wrap items-center mt-6">
+        {{-- <div class="intro-y flex flex-wrap sm:flex-row sm:flex-no-wrap items-center mt-6">
             <ul class="pagination">
                 <li>
                     <a class="pagination__link" href=""> <i class="w-4 h-4" data-feather="chevrons-left"></i> </a>
@@ -80,7 +80,7 @@
                 <option>35</option>
                 <option>50</option>
             </select>
-        </div>
+        </div> --}}
         <!-- END: Pagination -->
     </div>
 </div>
