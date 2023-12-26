@@ -26,6 +26,7 @@ Route::group(['prefix' => 'user'], function () {
 });
 Route::group(['prefix' => 'room'], function () {
     Route::post('/room_add', [RoomController::class, 'create']);
+    Route::post('/room_delete', [RoomController::class, 'delete']);
 });
 Route::group(['prefix' => 'reservation'], function () {
     Route::post('/add_reservation', [ReservationController::class, 'create']);
