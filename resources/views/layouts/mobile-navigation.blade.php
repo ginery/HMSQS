@@ -19,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="menu">
+            <a href="{{ route('rooms') }}" class="menu">
                 <div class="menu__icon"> <i data-feather="book"></i> </div>
                 <div class="menu__title"> Reservations </div>
             </a>
