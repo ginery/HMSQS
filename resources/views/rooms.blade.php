@@ -10,18 +10,24 @@
                 
             </div>
             <div class="w-full sm:w-auto flex">
+                <div class="flex items-center text-gray-700 sm:ml-20 sm:pl-5 pr-3 mr-3 bg-white">
+                    <input type="checkbox" class="input border mr-2" id="cb-check-all" onchange="selectAll()">
+                    <label class="cursor-pointer select-none" for="horizontal-remember-me">Select All</label>
+                </div>
                 <button type="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Room</button>
-                <div class="dropdown relative">
+                <button type="button" onclick="deleteRooms()" class="button text-white bg-theme-6 shadow-md mr-2">Delete Room</button>
+                <!-- <div class="dropdown relative">
                     <button class="dropdown-toggle button px-2 box text-gray-700">
-                        <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
+                        <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="more-vertical"></i> </span>
                     </button>
                     <div class="dropdown-box mt-10 absolute w-40 top-0 right-0 z-20">
                         <div class="dropdown-box__content box p-2">
-                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Select All </a>
-                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="square" class="w-4 h-4 mr-2"></i> De-select All </a>
+                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="checkAll()"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Select All </a>
+                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="uncheckAll()"> <i data-feather="square" class="w-4 h-4 mr-2"></i> De-select All </a>
+                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="deleteRooms()"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete selected </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- END: File Manager Filter -->
@@ -32,7 +38,7 @@
             <div class="intro-y col-span-6 sm:col-span-4 md:col-span-3 xxl:col-span-2">
                 <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
                     <div class="absolute left-0 top-0 mt-3 ml-3">
-                        <input class="input border border-gray-500" type="checkbox">
+                        <input class="input border border-gray-500 room-checkbox" value="{{$room->id}}" type="checkbox">
                     </div>
                     <a href="" class="w-3/5">
                         <img alt="Midone Tailwind HTML Admin Template" class="rounded-md" src="assets/uploads/rooms/{{$room->image}}">
@@ -89,6 +95,7 @@
     function addModal() {        
         $("#add-modal").modal("show");       
     }
+
     $(document).ready(function(){
         $('#addForm').submit(function(e) {
             e.preventDefault();
@@ -103,7 +110,7 @@
                     // console.log("response: ", response);
                     $.toast('Success! New room was added.');
                     $("#add-modal").modal('hide');
-                    window.location.reload();
+                    setTimeout(()=>{ window.location.reload(); },1000)
                 },
                 error: function(error) {
                     console.log("error: ", error);
@@ -112,6 +119,56 @@
 
         });
     });
+
+    function checkAll(){
+        $('.room-checkbox').prop("checked", true);
+    }
+
+    function uncheckAll(){
+        $('.room-checkbox').prop("checked", false);
+    }
+
+    function selectAll(){
+        var cb = $("#cb-check-all").is(":checked");
+        if(cb){
+            checkAll();
+        }else{
+            uncheckAll();
+        }
+    }
+
+    function deleteRooms(){
+        var rooms = [];
+        $(".room-checkbox:checked").each(function(){
+            rooms.push($(this).val());
+        });
+
+        if(rooms.length > 0){
+            if(confirm("Are you sure to delete selected room/s?")){
+                $.ajax({
+                    url: 'api/room/room_delete', // Replace with your upload endpoint
+                    type: 'POST',
+                    data: {rooms: rooms},
+                    success: function(response) {
+                        // console.log("response: ", response);
+                        if(response > 0){
+                            $.toast('Success! Selected room/s was removed.');
+                            setTimeout(()=>{ window.location.reload(); },2000)
+                        }else{
+                            $.toast('Error! Something was wrong.');
+                        }
+                    },
+                    error: function(error) {
+                        console.log("error: ", error);
+                    }
+                });
+            }
+        }else{
+            $.toast('Please select room/s to be deleted.');
+        }
+
+
+    }
 
 </script>
 </x-app-layout>
