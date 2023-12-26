@@ -84,7 +84,7 @@
         <!-- END: Pagination -->
     </div>
 </div>
-@include('modals.add-rooms');
+@include('modals.add-rooms')
 <script>
     function addModal() {        
         $("#add-modal").modal("show");       
