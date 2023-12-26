@@ -13,6 +13,7 @@ class RoomController extends Controller
 
         return view('rooms', ['rooms' => $rooms]);
     }
+
     public function create(Request $request){
     
         $image = $request->image;
@@ -35,5 +36,15 @@ class RoomController extends Controller
             echo 0;
         }
         
+    }
+
+    public function delete(Request $request){
+        $deleted = 0;
+        foreach($request->rooms as $val){
+            $res = Room::where('id', $val)->delete();
+            $deleted += $res ? 1 : 0;
+        }
+
+        echo $deleted;
     }
 }
