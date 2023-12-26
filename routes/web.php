@@ -18,8 +18,10 @@ use App\Http\Controllers\ReservationController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('guest');
-
+})->middleware('guest')->name('welcome');
+Route::get('/book', function () {
+    return view('book');
+})->name('book');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

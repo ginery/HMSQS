@@ -52,11 +52,44 @@
                 ></span>
               </button>
               <nav
-                id="navbarCollapse"
-                class="absolute right-4 top-full hidden w-full max-w-[250px] rounded-lg bg-white py-5 shadow-lg dark:bg-dark-2 lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:px-4 lg:py-0 lg:shadow-none dark:lg:bg-transparent xl:px-6"
-              >
-             
-              </nav>
+              id="navbarCollapse"
+              class="absolute right-4 top-full hidden w-full max-w-[250px] rounded-lg bg-white py-5 shadow-lg dark:bg-dark-2 lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:px-4 lg:py-0 lg:shadow-none dark:lg:bg-transparent xl:px-6"
+            >
+              <ul class="blcok lg:flex 2xl:ml-20">
+                <li class="group relative">
+                  <a
+                    href="#home"
+                    class="ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70"
+                  >
+                    Home
+                  </a>
+                </li>
+                <li class="group relative">
+                  <a
+                    href="#about"
+                    class="ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:ml-7 lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-10"
+                  >
+                    About
+                  </a>
+                </li>
+                <li class="group relative">
+                  <a
+                    href="#book"
+                    class="ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:ml-7 lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-10"
+                  >
+                    Book
+                  </a>
+                </li>                
+                <li class="group relative">
+                  <a
+                    href="#contact"
+                    class="ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:ml-7 lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-10"
+                  >
+                    Contact
+                  </a>
+                </li>              
+              </ul>
+            </nav>
             </div>
             <div class="flex items-center  justify-end pr-16 lg:pr-0">
               <label
@@ -1548,10 +1581,7 @@
     <!-- ====== Features Section End -->
 
     <!-- ====== About Section Start -->
-    <section
-      id="about"
-      class="bg-gray-1 pb-8 pt-20 dark:bg-dark-2 lg:pb-[70px] lg:pt-[120px]"
-    >
+    <section  id="about" class="bg-gray-1 pb-8 pt-20 dark:bg-dark-2 lg:pb-[70px] lg:pt-[120px]">
       <div class="container">
         <div class="wow fadeInUp" data-wow-delay=".2s">
           <div class="-mx-4 flex flex-wrap items-center">
@@ -1742,9 +1772,7 @@
     <!-- ====== About Section End -->
 
     <!-- ====== CTA Section Start -->
-    <section
-      class="relative z-10 overflow-hidden bg-primary py-20 lg:py-[115px]"
-    >
+    <section id="book" class="relative z-10 overflow-hidden bg-primary py-20 lg:py-[115px]">
       <div class="container mx-auto">
         <div class="relative overflow-hidden">
           <div class="-mx-4 flex flex-wrap items-stretch">
@@ -1764,7 +1792,7 @@
                   There are many variations to choose from.
                 </p>
                 <a
-                  href="javascript:void(0)"
+                  href="{{ route('book') }}"
                   class="inline-block rounded-md border border-transparent bg-white px-7 py-3 text-base font-medium text-blue transition hover:bg-[#8095fb]"
                 >
                   Book Now

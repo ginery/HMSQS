@@ -24,7 +24,7 @@ created by: ginx
                 <div class="block xl:grid grid-cols-2 gap-4">
                     <!-- BEGIN: Register Info -->
                     <div class="hidden xl:flex flex-col min-h-screen">
-                        <a href="" class="-intro-x flex items-center pt-5">
+                        <a href="{{route('welcome')}}" class="-intro-x flex items-center pt-5">
                             <img alt="hometel-logo" class="w-6" style="width: 94px;" src="assets/images/logo-3.jpg">
                         </a>
                         <div class="my-auto">

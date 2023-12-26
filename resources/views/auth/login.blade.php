@@ -34,7 +34,7 @@ created by: ginx
                 
                 <!-- BEGIN: Login Info -->
                 <div class="hidden xl:flex flex-col min-h-screen">
-                    <a href="#" class="-intro-x flex items-center pt-5">
+                    <a href="{{route('welcome')}}" class="-intro-x flex items-center pt-5">
                         <img alt="Midone Tailwind HTML Admin Template" class="w-6" style="width: 94px;" src="assets/images/logo-3.jpg">
                         
                     </a>
