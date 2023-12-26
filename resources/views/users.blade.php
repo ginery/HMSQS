@@ -94,14 +94,19 @@
     <script>
         $("#add-user-form").submit( function(e){
             e.preventDefault();
-            // var data = $("#add-user-form").serialize();
+            var data = $("#add-user-form").serialize();
 
-            // console.log(data);
             $.ajax({
                 type: 'POST',
                 url: 'api/user_add',
-                success: function(response){
-                    console.log(response);
+                data: data,
+                success: function(response) {
+                    $.toast('Success! New user was added.');
+                    $("#add-user-modal").modal('hide');
+                    window.location.reload();
+                },
+                error: function(error) {
+                    console.log("error: ", error);
                 }
             })
         });

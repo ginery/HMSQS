@@ -25,7 +25,7 @@
             </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
                 <button type="button" class="button w-20 border text-gray-700 mr-1" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="button w-20 bg-theme-1 text-white">Send</button>
+                <button type="submit" class="button w-20 bg-theme-1 text-white">Add</button>
             </div>
         </form>
     </div>

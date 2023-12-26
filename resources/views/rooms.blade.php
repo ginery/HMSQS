@@ -100,7 +100,10 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log("response: ", response);
+                    // console.log("response: ", response);
+                    $.toast('Success! New room was added.');
+                    $("#add-modal").modal('hide');
+                    window.location.reload();
                 },
                 error: function(error) {
                     console.log("error: ", error);
