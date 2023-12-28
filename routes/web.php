@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +36,8 @@ Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'ver
 
 Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');
 
+Route::get('/services', [ServicesController::class, 'index'])->middleware(['auth', 'verified'])->name('services');
+Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('payment');
 // Route::get('/users', function () {
 //     return view('users');
 // })->middleware(['auth', 'verified'])->name('users');

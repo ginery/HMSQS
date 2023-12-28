@@ -1,8 +1,8 @@
 <x-app-layout>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-            <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Reservation</button>
-            <button button="button" onclick="scanQr()" class="button box flex text-white bg-theme-9 shadow-md mr-2"><i data-feather="maximize" class="mr-1"></i> QR Scan</button>
+            <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Payment</button>
+           
             <div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">
@@ -98,29 +98,8 @@
             </div>
         </div>
     </div>
-@include('modals.add-reservation')
-@include('modals.scan-qr')
+@include('modals.add-payment')
 <script>
-const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-function onScanSuccess(decodedText, decodedResult) {
-// handle the scanned code as you like, for example:
-    console.log(`Code matched = ${decodedText}`, decodedResult);
-}
-
-function onScanFailure(error) {
-// handle scan failure, usually better to ignore and keep scanning.
-// for example:
-    console.warn(`Code scan error = ${error}`);
-}
-let html5QrcodeScanner = new Html5QrcodeScanner(
-"reader",
-{ fps: 10, qrbox: {width: 250, height: 250} },
-/* verbose= */ false);
-html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-function scanQr(){
-    $("#scan_qr").modal("show");
-}
 function addModal() {        
     $("#add-modal").modal("show");       
 }
@@ -129,7 +108,7 @@ $(document).ready(function(){
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
-            url: 'api/reservation/add_reservation',
+            url: 'api/services/add_services',
             type: 'POST',
             data: formData,
             processData: false,

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Middleware\Authenticate;
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,7 @@ Route::group(['prefix' => 'room'], function () {
 Route::group(['prefix' => 'reservation'], function () {
     Route::post('/add_reservation', [ReservationController::class, 'create']);
 });
+Route::group(['prefix' => 'services'], function () {
+    Route::post('/add_services', [ServicesController::class, 'create']);
+});
+

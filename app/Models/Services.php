@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-class Reservation extends Authenticatable
+
+class Services extends Authenticatable
 {
-    protected $table = 'reservation';
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -18,10 +18,9 @@ class Reservation extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'room_id',
-        'user_id',
-        'checkin_date',
-        'checkout_date',
+        'service_name',
+        'price',
+        'description',
         'status'
     ];
 

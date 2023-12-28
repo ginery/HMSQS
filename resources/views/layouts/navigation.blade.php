@@ -27,7 +27,13 @@ $currentPageName = Route::current()->getName();
             </a>
         </li>
         <li>
-            <a href="#" class="side-menu">
+            <a href="{{ route('services') }}" class="side-menu">
+                <div class="side-menu__icon"> <i data-feather="star"></i> </div>
+                <div class="side-menu__title"> Services </div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('payment') }}" class="side-menu">
                 <div class="side-menu__icon"> <i data-feather="dollar-sign"></i> </div>
                 <div class="side-menu__title"> Payments </div>
             </a>
