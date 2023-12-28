@@ -7,6 +7,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ScanqrController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +39,9 @@ Route::get('/reservation', [ReservationController::class, 'index'])->middleware(
 
 Route::get('/services', [ServicesController::class, 'index'])->middleware(['auth', 'verified'])->name('services');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('payment');
-// Route::get('/users', function () {
-//     return view('users');
-// })->middleware(['auth', 'verified'])->name('users');
+Route::get('/scanqr', [ScanqrController::class, 'index'])->middleware(['auth', 'verified'])->name('scanqr');
+
+
 Route::get('/users', [UsersController::class, 'index'])->name('users');
 
 Route::middleware('auth')->group(function () {

@@ -21,21 +21,27 @@ $currentPageName = Route::current()->getName();
             </a>
         </li>
         <li>
-            <a href="{{ route('reservation') }}" class="side-menu">
+            <a href="{{ route('reservation') }}" class="<?= $currentPageName == 'reservation' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="book"></i> </div>
                 <div class="side-menu__title"> Reservations </div>
             </a>
         </li>
         <li>
-            <a href="{{ route('services') }}" class="side-menu">
+            <a href="{{ route('services') }}" class="<?= $currentPageName == 'services' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="star"></i> </div>
                 <div class="side-menu__title"> Services </div>
             </a>
         </li>
         <li>
-            <a href="{{ route('payment') }}" class="side-menu">
+            <a href="{{ route('payment') }}" class="<?= $currentPageName == 'payment' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="dollar-sign"></i> </div>
                 <div class="side-menu__title"> Payments </div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('scanqr') }}" class="<?= $currentPageName == 'scanqr' ? 'side-menu side-menu--active':'side-menu'?>">
+                <div class="side-menu__icon"> <i data-feather="maximize"></i> </div>
+                <div class="side-menu__title"> Scan QR </div>
             </a>
         </li>
     </ul>
