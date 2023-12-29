@@ -47,4 +47,10 @@ class RoomController extends Controller
 
         echo $deleted;
     }
+
+    public function available_rooms() : View {
+        $rooms = Room::where('status', 1)->get();
+
+        return view('available-rooms', ['rooms' => $rooms]);
+    }
 }

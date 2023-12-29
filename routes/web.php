@@ -28,11 +28,15 @@ Route::get('/book', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/available-rooms', function () {
+//     return view('available-rooms');
+// })->name('available-rooms');
 
 // Route::get('/rooms', function () {
 //     return view('rooms');
 // })->middleware(['auth', 'verified'])->name('rooms');
 
+Route::get('/available-rooms', [RoomController::class, 'available_rooms'])->name('available-rooms');
 Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'verified'])->name('rooms');
 
 Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');

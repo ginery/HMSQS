@@ -160,7 +160,9 @@
     });
     $('#checkin_date, #checkout_date').datepicker({
       'format': 'd MM, yyyy',
-      'autoclose': true
+      'autoclose': true,
+      'startDate': new Date(),
+      'multidate': false
     });
     $('#m_time').timepicker();
   };

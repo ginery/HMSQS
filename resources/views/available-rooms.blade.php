@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="assets/sogo/css/animate.css">
     <link rel="stylesheet" href="assets/sogo/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/sogo/css/aos.css">
-    <link rel="stylesheet" href="assets/sogo/css/bootstrap-datepicker.css"> 
-    <link rel="stylesheet" href="assets/sogo/css/jquery.timepicker.css"> 
+    <link rel="stylesheet" href="assets/sogo/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="assets/sogo/css/jquery.timepicker.css">
     <link rel="stylesheet" href="assets/sogo/css/fancybox.min.css">
     
     <link rel="stylesheet" href="assets/sogo/fonts/ionicons/css/ionicons.min.css">
@@ -33,14 +33,14 @@
           <div class="col-6 col-lg-8">
 
 
-            <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
+            <!-- <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
               <span></span>
               <span></span>
               <span></span>
-            </div>
+            </div> -->
             <!-- END menu-toggle -->
 
-            <div class="site-navbar js-site-navbar">
+            <!-- <div class="site-navbar js-site-navbar">
               <nav role="navigation">
                 <div class="container">
                   <div class="row full-height align-items-center">
@@ -57,7 +57,7 @@
                   </div>
                 </div>
               </nav>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
         <div class="row check-availabilty" id="next">
           <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
-            <form id="check-available-rooms" action="#">
+            <form action="#">
               <div class="row">
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
@@ -135,7 +135,7 @@
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-3 align-self-end">
-                  <button type="submit" class="btn btn-primary btn-block text-white">Check Availabilty</button>
+                  <button class="btn btn-primary btn-block text-white">Check Availabilty</button>
                 </div>
               </div>
             </form>
@@ -146,7 +146,7 @@
       </div>
     </section>
 
-    <section class="py-5 bg-light">
+    <!-- <section class="py-5 bg-light">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-12 col-lg-7 ml-auto order-lg-2 position-relative mb-5" data-aos="fade-up">
@@ -163,9 +163,9 @@
           
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <section class="section">
+    <section id="rooms-list" class="section py-5 bg-light">
       <div class="container">
         <div class="row justify-content-center text-center mb-5">
           <div class="col-md-7">
@@ -173,21 +173,23 @@
             <p data-aos="fade-up" data-aos-delay="100">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
           </div>
         </div>
+        {{-- {{dd(json_encode($data))}} --}}
         <div class="row">
+          @foreach ($rooms as $room)
           <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room">
+            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
               <figure class="img-wrap">
-                <img src="assets/sogo/images/img_1.jpg" alt="Free website template" class="img-fluid mb-3">
+                <img src="assets/uploads/rooms/{{$room->image}}" alt="Free website template" class="img-fluid mb-3">
               </figure>
               <div class="p-3 text-center room-info">
-                <h2>Single Room</h2>
-                <span class="text-uppercase letter-spacing-1">90$ / per night</span>
+                <h2>{{$room->room_name}}</h2>
+                <span class="text-uppercase letter-spacing-1">PHP {{number_format($room->price,2)}} / per night</span>
               </div>
             </a>
           </div>
 
-          <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room">
+          <!-- <div class="col-md-6 col-lg-4" data-aos="fade-up">
+            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
               <figure class="img-wrap">
                 <img src="assets/sogo/images/img_2.jpg" alt="Free website template" class="img-fluid mb-3">
               </figure>
@@ -199,7 +201,7 @@
           </div>
 
           <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room">
+            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
               <figure class="img-wrap">
                 <img src="assets/sogo/images/img_3.jpg" alt="Free website template" class="img-fluid mb-3">
               </figure>
@@ -208,8 +210,8 @@
                 <span class="text-uppercase letter-spacing-1">250$ / per night</span>
               </div>
             </a>
-          </div>
-
+          </div> -->
+          @endforeach
 
         </div>
       </div>
@@ -542,7 +544,7 @@
             </div>
           </div>
         </div>
-      </section>
+    </section>
 
     <footer class="section footer-section">
       <div class="container">
@@ -597,6 +599,21 @@
       </div>
     </footer>
     
+    <!-- Modal -->
+    <div class="modal fade" id="modal-reservation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3>You must login in order to proceed.</h3>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btn-login">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <script src="assets/sogo/js/jquery-3.3.1.min.js"></script>
     <script src="assets/sogo/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="assets/sogo/js/popper.min.js"></script>
@@ -609,31 +626,24 @@
     <script src="assets/sogo/js/aos.js"></script>
     
     <script src="assets/sogo/js/bootstrap-datepicker.js"></script> 
-    <script src="assets/sogo/js/jquery.timepicker.min.js"></script>
-
-    
+    <script src="assets/sogo/js/jquery.timepicker.min.js"></script> 
 
     <script src="assets/sogo/js/main.js"></script>
     <script>
-
-      $("#check-available-rooms").submit( function(){
-      
-        const checkInDate = $("#checkin_date").val();
-        const checkOutDate = $("#checkout_date").val();
-        const adults = $("#adults").val();
-        const children = $("#children").val();
-
-        window.location.href="/available-rooms?checkInDate="+checkInDate+"&checkOutDate="+checkOutDate+"&adults="+adults+"&children="+children;
+      $(document).ready(function() {
+          var rooms = $("#rooms-list")[0];
+          rooms.scrollIntoView({behavior: "smooth"});
       });
 
-      // function setCheckOutDate(){
-      //   let date = new Date(checkInDate);
-      //   date.setDate(date.getDate() + 1);
-      //   $("#checkout_date").datepicker({
-      //     "startDate": date
-      //   });
-      // }
-      
+      $(".btn-login").click( function(){
+        window.location.href="/login";
+      });
+
+      $("#checkin_date").val("{{request()->input('checkInDate');}}");
+      $("#checkout_date").val("{{request()->input('checkOutDate');}}");
+      $("#adults").val("{{request()->input('adults');}}");
+      $("#children").val("{{request()->input('children');}}");
+
     </script>
   </body>
 </html>
