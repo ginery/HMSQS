@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('reservation_id');
             $table->string('payment_type');
-            $table->string('reference_number');
+            $table->string('reference_number')->nullable();
             $table->float('total_amount');
             $table->timestamps();
             $table->integer('status');

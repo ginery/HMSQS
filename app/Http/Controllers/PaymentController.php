@@ -12,14 +12,17 @@ class PaymentController extends Controller
     public function index() : View {
         $rooms = Room::where('status', '1')->get();
         $reservations = Reservation::orderBy('created_at', 'DESC')->get();
-        return view('payment', ['rooms' => $rooms, 'reservations' => $reservations]);
+        $payments = Payment::where('status', '1')->get();
+        return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments]);
     }
     public function create(Request $request){
 
         $result = Payment::create([
             'user_id' => $request->user_id,
-            'book_id' => $request->book_id,
-            'total_amount' => $request->description,
+            'reservation_id' => $request->reservation_id,
+            'payment_type' => $request->payment_type,
+            'reference_number' => $request->reference_number,
+            'total_amount' => $request->total_amount,
             'status' => 1,
         ]);
         if($result){

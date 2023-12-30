@@ -6,7 +6,9 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\Authenticate;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,4 +37,8 @@ Route::group(['prefix' => 'reservation'], function () {
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);
 });
+Route::group(['prefix' => 'payment'], function () {
+    Route::post('/add_payment', [PaymentController::class, 'create']);
+});
+
 

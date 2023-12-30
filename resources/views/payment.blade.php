@@ -16,31 +16,32 @@
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
-                        <th class="whitespace-no-wrap">ROOMS</th>
-                        <th class="whitespace-no-wrap">ROOM NAME</th>
-                        <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
-                        <th class="text-center whitespace-no-wrap">STATUS</th>
+                        <th class="whitespace-no-wrap">PAYMENT ID</th>
+                        <th class="whitespace-no-wrap">RESERVATION ID</th>
+                        <th class="text-center whitespace-no-wrap">PAYMENT TYPE</th>
+                        <th class="text-center whitespace-no-wrap">REFERENCE NUMBER</th>
+                        <th class="text-center whitespace-no-wrap">AMOUNT</th>
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($reservations as $reservation)                       
+                    @foreach ($payments as $payment)                       
                     
                     <tr class="intro-x">
                         <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="{{getRoomName($reservation->room_id)}}" class="tooltip rounded-full" src="{{getRoomImage($reservation->room_id)}}" title="{{getRoomName($reservation->room_id)}}">
-                                </div>
-                            </div>
+                            {{$payment->id}}
                         </td>
                         <td>
-                            <a href="" class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}}</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format(getRoomPrice($reservation->room_id),2)}}</div>
+                           {{$payment->reservation_id}}
                         </td>
-                        <td class="text-center">{{$reservation->checkin_date}} - {{$reservation->checkin_date}}</td>
+                        <td class="text-center">
+                            {{$payment->payment_type == 'C' ? 'Cash':'Online'}}
+                        </td>
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> {{$reservation->status}} </div>
+                            {{$payment->reference_number}}
+                        </td>
+                        <td class="w-40">
+                            Php. {{number_format($payment->total_amount, 2)}}
                         </td>
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
@@ -104,11 +105,21 @@ function addModal() {
     $("#add-modal").modal("show");       
 }
 $(document).ready(function(){
+    $('#payment_type').on('change', function() {
+        let val_selected = $(this).val();
+        if(val_selected == 'O'){
+            $("#reference_number").show();
+        }else{
+            $("#reference_number").val("");
+            $("#reference_number").hide();
+        }
+        // console.log($(this).val());
+    });
     $('#addForm').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
-            url: 'api/services/add_services',
+            url: 'api/payment/add_payment',
             type: 'POST',
             data: formData,
             processData: false,

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 class Payment extends Authenticatable
 {
+    protected $table = 'payment';
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -18,7 +19,7 @@ class Payment extends Authenticatable
      */
     protected $fillable = [
         'user_id',
-        'book_id',
+        'reservation_id',
         'payment_type',
         'reference_number',
         'total_amount',
