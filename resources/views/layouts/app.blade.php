@@ -13,10 +13,10 @@ create by: ginx
         <meta name="author" content="LEFT4CODE">
         <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- BEGIN: CSS Assets-->
-        <link rel="stylesheet" href="dist/css/app.css" />
+        <link rel="stylesheet" href="{{asset('dist/css/app.css')}}" />
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-        <script src="assets/js/jquery-3.7.1.min.js" type="text/javascript"></script>
-        <script src="assets/js/jquery-qrcode.min.js" type="text/javascript"></script>
+        <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/jquery-qrcode.min.js')}}" type="text/javascript"></script>
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->
@@ -53,7 +53,7 @@ create by: ginx
         
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
-        <script src="dist/js/app.js"></script>
+        <script src="{{asset('dist/js/app.js')}}"></script>
         
         <!-- END: JS Assets-->
         

@@ -53,6 +53,7 @@ class ReservationController extends Controller
                 ];
             }
             $result = Reservation::where('id', $request->reservation_id)->update($data);
+            $result = Room::where('id', $reservation->room_id)->update($data);
             if($result){
                 return 1;
             }else{

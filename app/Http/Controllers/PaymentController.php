@@ -31,4 +31,18 @@ class PaymentController extends Controller
             echo 0;
         }
     }
+    public function invoice($payment_id) : View {
+        $payment = Payment::where('id', $payment_id)->where('status','1')->get()->first();
+        $payments = Payment::where('id', $payment_id)->where('status','1')->get(); 
+       
+        $reservations = [];
+        foreach($payments as $pm){
+            $reservation =  Reservation::where('id', $pm->reservation_id)->get();
+           
+            array_push($reservations, $reservation);
+           
+        }
+        // dd(json_encode($reservations[0]));
+        return view('invoice', ['payment'=> $payment, 'reservations' => $reservations[0]]);
+    }
 }

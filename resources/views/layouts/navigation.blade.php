@@ -4,7 +4,7 @@ $currentPageName = Route::current()->getName();
 
 <nav class="side-nav">
     <a href="" class="intro-x flex items-center pl-5 pt-4">
-        <img alt="hometel-logo" class="w-6" style="width: 94px;" src="assets/images/logo-3.jpg">
+        <img alt="hometel-logo" class="w-6" style="width: 94px;" src="{{asset('assets/images/logo-3.jpg')}}">
     </a>
     <div class="side-nav__devider my-6"></div>
     <ul>

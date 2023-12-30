@@ -20,6 +20,12 @@ if (!function_exists('getRoomName')) {
        return $rooms ? $rooms->room_name: 'N/A';
     }
 }
+if (!function_exists('getServiceName')) {   
+    function getServiceName($service_id) {
+        $service = Services::where('id', $service_id)->get()->first();
+       return $service ? $service->service_name: 'N/A';
+    }
+}
 if (!function_exists('getRoomPrice')) {   
     function getRoomPrice($room_id) {
         $rooms = Room::where('id', $room_id)->get()->first();
@@ -41,7 +47,13 @@ if (!function_exists('getRoomImage')) {
 if (!function_exists('getUserName')) {   
     function getUserName($user_id) {
         $user = User::where('id', $user_id)->get()->first();
-       return $user ? $user->first_name." ".$user->last_name. " [".$user_id."]": 'N/A';
+       return $user ? $user->first_name." ".$user->last_name: 'N/A';
+    }
+}
+if (!function_exists('getUserEmail')) {   
+    function getUserEmail($user_id) {
+        $user = User::where('id', $user_id)->get()->first();
+       return $user ? $user->email: 'N/A';
     }
 }
 ?>

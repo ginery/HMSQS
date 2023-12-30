@@ -43,6 +43,7 @@ Route::get('/reservation', [ReservationController::class, 'index'])->middleware(
 
 Route::get('/services', [ServicesController::class, 'index'])->middleware(['auth', 'verified'])->name('services');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('payment');
+Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoice'])->middleware(['auth', 'verified'])->name('invoice');
 Route::get('/scanqr', [ScanqrController::class, 'index'])->middleware(['auth', 'verified'])->name('scanqr');
 
 

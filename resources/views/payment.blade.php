@@ -106,6 +106,7 @@ function addModal() {
 }
 function viewInvoice(payment_id){
     console.log("test", payment_id);
+    window.location.href = "/invoice/"+payment_id;
 }
 $(document).ready(function(){
     $('#payment_type').on('change', function() {
