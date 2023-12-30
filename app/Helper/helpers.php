@@ -1,6 +1,7 @@
 <?php
 use App\Models\Room;
 use App\Models\User;
+use App\Models\Services;
 
 if (!function_exists('getRole')) {
     function getRole($role) {
@@ -13,11 +14,9 @@ if (!function_exists('getRole')) {
         }
     }
 }
-if (!function_exists('getRoomName')) {
-   
+if (!function_exists('getRoomName')) {   
     function getRoomName($room_id) {
-        $rooms = Room::where('id', $room_id)->get()->first();
-        
+        $rooms = Room::where('id', $room_id)->get()->first();        
        return $rooms ? $rooms->room_name: 'N/A';
     }
 }
@@ -25,6 +24,12 @@ if (!function_exists('getRoomPrice')) {
     function getRoomPrice($room_id) {
         $rooms = Room::where('id', $room_id)->get()->first();
        return $rooms ? $rooms->price: 0;
+    }
+}
+if (!function_exists('getServicePrice')) {   
+    function getServicePrice($service_id) {
+        $service = Services::where('id', $service_id)->get()->first();
+       return $service ? $service->price: 0;
     }
 }
 if (!function_exists('getRoomImage')) {   

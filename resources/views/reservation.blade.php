@@ -1,10 +1,12 @@
 <x-app-layout>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-            @if (Auth::user()->role == 0)
-            <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Reservation</button>
+            @if (Auth::user()->role != 2)
+                <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Reservation </button>
             @endif
-            <button button="button" onclick="scanQr()" class="button box flex text-white bg-theme-9 shadow-md mr-2"><i data-feather="maximize" class="mr-1"></i> QR Scan</button>
+            @if (Auth::user()->role == 2)
+                <button button="button" onclick="scanQr()" class="button box flex text-white bg-theme-9 shadow-md mr-2"><i data-feather="maximize" class="mr-1"></i> QR Scan</button>
+            @endif
             <div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">
@@ -23,7 +25,9 @@
                         <th class="whitespace-no-wrap">CUSTOMER NAME</th>
                         <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
+                        @if (Auth::user()->role != '2')  
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -39,24 +43,50 @@
                         </td>
                         <td>
                             <a href="" class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}}</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format(getRoomPrice($reservation->room_id),2)}}</div>
+                            <div class="text-gray-600 text-xs whitespace-no-wrap"> Total: {{number_format($reservation->total_amount,2)}}</div>
                         </td>
                         <td>
                             {{getUserName($reservation->user_id)}}
                         </td>
-                        <td class="text-center">{{$reservation->checkin_date}} - {{$reservation->checkin_date}}</td>
+                        <td class="text-center">{{date('F j, Y H:i:A', strtotime($reservation->checkin_date))}} - {{date('F j, Y H:i:A', strtotime($reservation->checkout_date))}}</td>                       
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> {{$reservation->status}} </div>
+                            <div class="text-xs <?=$reservation->status == 0 ? 'bg-gray-600':'bg-blue-600'?> px-1 rounded-md text-white ml-auto">{{$reservation->status == 0 ? 'Occupied':'Available'}}</div>
+                           
                         </td>
+                        @if (Auth::user()->role != '2')                     
                         <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
+                            {{-- <div class="flex justify-center items-center">
+                               
                                 <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                            
+                                
                                 <a class="flex items-center mr-3 text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                              
-                                <a class="flex items-center mr-3" onclick="generateQR({{$reservation->room_id}})" href="#"> <i data-feather="maximize" class="w-4 h-4 mr-1"></i> Generate </a>
+                        
+                                <a class="flex items-center mr-3" onclick="generateQR({{$reservation->id}})" href="#"> <i data-feather="maximize" class="w-4 h-4 mr-1"></i> Generate</a>
+                               
+                            </div> --}}
+                            <div class="dropdown relative"> <a href="#" class="dropdown-toggle button inline-block text-black"><i data-feather="settings" class="w-6 h-6 text-gray-700"></i></a>
+                                <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 -mr-12 sm:mr-0 z-20">
+                                    <div class="dropdown-box__content box">
+                                        <div class="p-4 border-b border-gray-200 font-medium">Action</div>
+
+                                        <div class="p-2"> 
+                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="check-square" class="w-4 h-4 text-gray-700 mr-2"></i> Edit </a> 
+
+
+                                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
+                                            
+                                            <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="maximize" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a> 
+                                            
+                                        </div>
+                                        <div class="px-3 py-3 border-t border-gray-200 font-medium flex"> 
+                                            <button type="button" onclick="approve({{$reservation->id}})" class="button button--sm bg-theme-1 text-white">Approve</button> 
+                                            <button type="button" onclick="decline({{$reservation->id}})" class="button button--sm bg-theme-6 text-white ml-auto">Decline</button> 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -110,8 +140,37 @@
 @include('modals.add-reservation')
 @include('modals.scan-qr')
 @include('modals.generate-qr')
+@include('modals.success-scan')
 <script>
     $(document).ready(function(){
+        var room_price = 0;
+        var service_price = 0;
+        $('#room_id').on('change', function() {  
+            var val = $(this).val();           
+           $.ajax({
+               url: 'api/get-room-price/' + val,
+               type: 'GET',
+               success: function(response) {
+                    room_price = response.price;
+                    var total = room_price + service_price;
+                    $("#total_amount").val(total);
+               }
+           });        
+        });
+        $('#service_id').on('change', function() {
+            var val = $(this).val();
+           
+            $.ajax({
+                url: 'api/get-service-price/' + val,
+                type: 'GET',
+                success: function(response) {
+                    service_price = response.price;
+                    var total = room_price + service_price;
+                    $("#total_amount").val(total);
+                }
+            });
+        });
+       
         if ($('#generate-qr').is('hidden')) {
             console.log('Modal closed!');
             // Your logic for when the modal is closed goes here
@@ -141,14 +200,10 @@
     
     const html5QrCode = new Html5Qrcode(/* element id */ "reader");
     function onScanSuccess(decodedText, decodedResult) {
-    // handle the scanned code as you like, for example:
-        // console.log(`Code matched = ${decodedText}`, decodedResult);
         checkInCheckOut(`${decodedText}`);
     }
 
     function onScanFailure(error) {
-    // handle scan failure, usually better to ignore and keep scanning.
-    // for example:
         console.warn(`Code scan error = ${error}`);
     }
 
@@ -178,20 +233,68 @@
         $('#generate-qr').on('click', function(e) {
             e.stopPropagation();
         });
-        // , {
-        //     drawer: 'png',
-        //     text: "test",
-        //     width: 300,
-        //     height: 300,
-        // }
         var qrcode = new QRCode(document.getElementById("qrcode"));
         qrcode.makeCode("HOMETEL-"+room_id);
-        // qrcode.clear();
     }
 
     function checkInCheckOut(id){
+        let user_id  = '{{Auth::user()->id}}';
         let explode = id.split('HOMETEL-');
         console.log("Scaned: ", explode[1]);
+        $("#success-modal").modal("show");
+        var formData = new FormData();
+
+        formData.append("user_id", user_id);
+        formData.append("reservation_id", explode[1]);
+        $.ajax({
+            url: 'api/reservation/check',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("response: ", response);
+            },
+            error: function(error) {
+                console.log("error: ", error);
+            }
+        });
+    }
+    function approve(reservation_id){
+        var formData = new FormData();
+        formData.append("reservation_id", reservation_id);
+
+        $.ajax({
+            url: 'api/reservation/approve',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("response: ", response);
+            },
+            error: function(error) {
+                console.log("error: ", error);
+            }
+        });
+    }
+    function decline(reservation_id){
+        var formData = new FormData();
+        formData.append("reservation_id", reservation_id);
+
+        $.ajax({
+            url: 'api/reservation/decline',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("response: ", response);
+            },
+            error: function(error) {
+                console.log("error: ", error);
+            }
+        });
     }
     
 </script>

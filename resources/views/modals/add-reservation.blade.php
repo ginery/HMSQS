@@ -9,7 +9,7 @@
                 <input type="hidden" name="user_id" value="{{Auth::id()}}">
                 <div class="col-span-12 sm:col-span-12">
                     <label>Room</label>
-                    <select name="room_id" class="select2 w-full border mt-2 flex-1">
+                    <select name="room_id" id="room_id" class="select2 w-full border mt-2 flex-1">
                         <option value="0">--Select Room--</option>
                         @foreach ($rooms as $room)
                         <option value="{{$room->id}}">{{$room->room_name}}</option>
@@ -19,16 +19,16 @@
                 </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Services</label>
-                    <select name="service_id" class="select2 w-full border mt-2 flex-1">
+                    <select name="service_id" id="service_id" class="select2 w-full border mt-2 flex-1">
                         <option value="0">--Select Service--</option>
                         @foreach ($services as $service)
-                        <option value="{{$service->id}}">{{$service->service_name}}</option>
+                        <option value="{{$service->id}}">{{$service->service_name}} - {{getServicePrice($service->id)}}</option>
                         @endforeach
                         
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
-                    <label>No. Adult</label>
+                    <label>No. Adult </label>
                     <select name="adult" class="select2 w-full border mt-2 flex-1">
                         <option value="0">0</option>
                         <option value="1">1</option>                        
@@ -49,10 +49,11 @@
                         <option value="5">5</option>                       
                     </select>
                 </div>
-                {{-- <div class="col-span-12 sm:col-span-12">
-                    <label>Check-In</label>
-                    <input type="datetime-local" name="checkin" class="input w-full border mt-2 flex-1">
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Total Amount</label>
+                    <input type="text" name="total_amount" id="total_amount" class="input w-full border mt-2 flex-1">
                 </div>
+                 {{--
                 <div class="col-span-12 sm:col-span-12">
                     <label>Check-Out</label>
                     <input type="datetime-local" name="checkout" class="input w-full border mt-2 flex-1">

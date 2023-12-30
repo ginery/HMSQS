@@ -27,7 +27,7 @@
                 <tbody>
                     @foreach ($payments as $payment)                       
                     
-                    <tr class="intro-x">
+                    <tr class="intro-x" style="cursor: pointer" onclick="viewInvoice({{$payment->id}})">
                         <td class="w-40">
                             {{$payment->id}}
                         </td>
@@ -103,6 +103,9 @@
 <script>
 function addModal() {        
     $("#add-modal").modal("show");       
+}
+function viewInvoice(payment_id){
+    console.log("test", payment_id);
 }
 $(document).ready(function(){
     $('#payment_type').on('change', function() {

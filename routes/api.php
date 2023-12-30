@@ -33,6 +33,9 @@ Route::group(['prefix' => 'room'], function () {
 });
 Route::group(['prefix' => 'reservation'], function () {
     Route::post('/add_reservation', [ReservationController::class, 'create']);
+    Route::post('/check', [ReservationController::class, 'reserve']);
+    Route::post('/approve', [ReservationController::class, 'approve']);
+    Route::post('/decline', [ReservationController::class, 'decline']);
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);
@@ -40,5 +43,18 @@ Route::group(['prefix' => 'services'], function () {
 Route::group(['prefix' => 'payment'], function () {
     Route::post('/add_payment', [PaymentController::class, 'create']);
 });
+
+// for javascript
+
+Route::get('/get-service-price/{id}', function ($id) {
+    $price = getServicePrice($id); // Call the Laravel helper function
+    return response()->json(['price' => $price]);
+});
+
+Route::get('/get-room-price/{id}', function ($id) {
+    $price = getRoomPrice($id); // Call the Laravel helper function
+    return response()->json(['price' => $price]);
+});
+
 
 
