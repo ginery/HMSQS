@@ -90,6 +90,7 @@
         </div>
         <!-- END: Pagination -->
     </div>
+
     @include('modals.add-user')
     <script>
         $("#add-user-form").submit( function(e){

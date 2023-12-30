@@ -26,7 +26,7 @@
                 <tbody>
                     @foreach ($reservations as $reservation)                       
                     
-                    <tr class="intro-x">
+                    <tr class="intro-x" style="cursor: pointer">
                         <td class="w-40">
                             <div class="flex">
                                 <div class="w-10 h-10 image-fit zoom-in">
@@ -45,7 +45,10 @@
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                            
+                                <a class="flex items-center mr-3 text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                              
+                                <a class="flex items-center mr-3" onclick="generateQR({{$reservation->room_id}})" href="#"> <i data-feather="maximize" class="w-4 h-4 mr-1"></i> Generate </a>
                             </div>
                         </td>
                     </tr>
@@ -100,49 +103,86 @@
     </div>
 @include('modals.add-reservation')
 @include('modals.scan-qr')
+@include('modals.generate-qr')
 <script>
-const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-function onScanSuccess(decodedText, decodedResult) {
-// handle the scanned code as you like, for example:
-    console.log(`Code matched = ${decodedText}`, decodedResult);
-}
+    $(document).ready(function(){
+        if ($('#generate-qr').is('hidden')) {
+            console.log('Modal closed!');
+            // Your logic for when the modal is closed goes here
+        } else {
+            // If modal is open, perform some action or continue monitoring
+        }
+        $('#addForm').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: 'api/reservation/add_reservation',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log("response: ", response);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
 
-function onScanFailure(error) {
-// handle scan failure, usually better to ignore and keep scanning.
-// for example:
-    console.warn(`Code scan error = ${error}`);
-}
-let html5QrcodeScanner = new Html5QrcodeScanner(
-"reader",
-{ fps: 10, qrbox: {width: 250, height: 250} },
-/* verbose= */ false);
-html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-function scanQr(){
-    $("#scan_qr").modal("show");
-}
-function addModal() {        
-    $("#add-modal").modal("show");       
-}
-$(document).ready(function(){
-    $('#addForm').submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: 'api/reservation/add_reservation',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                console.log("response: ", response);
-            },
-            error: function(error) {
-                console.log("error: ", error);
-            }
         });
-
     });
-});
+
+    
+    const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+    function onScanSuccess(decodedText, decodedResult) {
+    // handle the scanned code as you like, for example:
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+    }
+
+    function onScanFailure(error) {
+    // handle scan failure, usually better to ignore and keep scanning.
+    // for example:
+        console.warn(`Code scan error = ${error}`);
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: {width: 250, height: 250} },
+    /* verbose= */ false);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    
+    function scanQr(){
+        $("#scan_qr").modal("show");
+    }
+
+    function addModal() {        
+        $("#add-modal").modal("show");       
+    }
+    function closeModal(id){
+        console.log("QR Cleared", id);
+        $("#"+id).modal('hide');
+        var qrcode = new QRCode(document.getElementById("qrcode"));
+        qrcode.clear();
+    }
+    function generateQR(room_id){
+        
+        console.log("generate qr:", room_id);
+        $("#generate-qr").modal('show');
+        $('#generate-qr').on('click', function(e) {
+            e.stopPropagation();
+        });
+        // , {
+        //     drawer: 'png',
+        //     text: "test",
+        //     width: 300,
+        //     height: 300,
+        // }
+        var qrcode = new QRCode(document.getElementById("qrcode"));
+        qrcode.makeCode(room_id);
+        // qrcode.clear();
+    }
+
+
+    
 </script>
 </x-app-layout>

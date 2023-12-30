@@ -9,9 +9,8 @@ use App\Models\Services;
 class ServicesController extends Controller
 {
     public function index() : View {
-        $rooms = Room::where('status', '1')->get();
-        $reservations = Reservation::orderBy('created_at', 'DESC')->get();
-        return view('services', ['rooms' => $rooms, 'reservations' => $reservations]);
+        $services = Services::where('status', '1')->get();
+        return view('services', ['services' => $services]);
     }
     public function create(Request $request){
 

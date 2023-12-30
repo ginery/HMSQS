@@ -16,31 +16,23 @@
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
-                        <th class="whitespace-no-wrap">ROOMS</th>
-                        <th class="whitespace-no-wrap">ROOM NAME</th>
-                        <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
+                        <th class="whitespace-no-wrap">SERVICE NAME</th>
+                        <th class="text-center whitespace-no-wrap">DESCRIPTION</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($reservations as $reservation)                       
+                    @foreach ($services as $services)                       
                     
-                    <tr class="intro-x">
-                        <td class="w-40">
-                            <div class="flex">
-                                <div class="w-10 h-10 image-fit zoom-in">
-                                    <img alt="{{getRoomName($reservation->room_id)}}" class="tooltip rounded-full" src="{{getRoomImage($reservation->room_id)}}" title="{{getRoomName($reservation->room_id)}}">
-                                </div>
-                            </div>
-                        </td>
+                    <tr class="intro-x">                       
                         <td>
-                            <a href="" class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}}</a> 
-                            <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format(getRoomPrice($reservation->room_id),2)}}</div>
+                            <a href="" class="font-medium whitespace-no-wrap">{{$services->service_name}}</a> 
+                            <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format($services->price,2)}}</div>
                         </td>
-                        <td class="text-center">{{$reservation->checkin_date}} - {{$reservation->checkin_date}}</td>
+                        <td class="text-center">{{$services->description}}</td>
                         <td class="w-40">
-                            <div class="flex items-center justify-center text-theme-6"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> {{$reservation->status}} </div>
+                            <div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> {{$services->status}} </div>
                         </td>
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
