@@ -19,6 +19,8 @@ class Payment extends Authenticatable
     protected $fillable = [
         'user_id',
         'book_id',
+        'payment_type',
+        'reference_number',
         'total_amount',
         'status'
     ];

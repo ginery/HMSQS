@@ -20,6 +20,8 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('book_id');
+            $table->string('payment_type');
+            $table->string('reference_number');
             $table->float('total_amount');
             $table->timestamps();
             $table->integer('status');

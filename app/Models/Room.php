@@ -19,6 +19,7 @@ class Room extends Authenticatable
      */
     protected $fillable = [
         'room_name',
+        'room_type',
         'price',
         'description',
         'image',

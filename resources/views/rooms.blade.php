@@ -15,24 +15,11 @@
                     <label class="cursor-pointer select-none" for="horizontal-remember-me">Select All</label>
                 </div>
                 <button type="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Room</button>
-                <button type="button" onclick="deleteRooms()" class="button text-white bg-theme-6 shadow-md mr-2">Delete Room</button>
-                <!-- <div class="dropdown relative">
-                    <button class="dropdown-toggle button px-2 box text-gray-700">
-                        <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="more-vertical"></i> </span>
-                    </button>
-                    <div class="dropdown-box mt-10 absolute w-40 top-0 right-0 z-20">
-                        <div class="dropdown-box__content box p-2">
-                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="checkAll()"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> Select All </a>
-                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="uncheckAll()"> <i data-feather="square" class="w-4 h-4 mr-2"></i> De-select All </a>
-                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="deleteRooms()"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete selected </a>
-                        </div>
-                    </div>
-                </div> -->
+                <button type="button" onclick="deleteRooms()" class="button text-white bg-theme-6 shadow-md mr-2">Delete Room</button>                
             </div>
         </div>
         <!-- END: File Manager Filter -->
         <!-- BEGIN: Directory & Files -->
-        {{-- {{dd(json_encode($data))}} --}}
         <div class="intro-y grid grid-cols-12 gap-3 sm:gap-6 mt-5">
             @foreach ($rooms as $room)                 
             <div class="intro-y col-span-6 sm:col-span-4 md:col-span-3 xxl:col-span-2">

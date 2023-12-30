@@ -7,11 +7,17 @@
         <div>
             <form id="addForm" class="p-5 grid grid-cols-12 gap-4 row-gap-3" enctype="multipart/form-data">
                 <div class="col-span-12 sm:col-span-12">
-                    <label>Services Name</label>
-                    <input type="text" name="service_name" class="input w-full border mt-2 flex-1" placeholder="Room Name">
+                    <label>Payment Type</label>
+                    <select name="room_id" class="select2 w-full border mt-2 flex-1">
+                        <option value="0">--Select Type--</option>
+                        <option value="">Cash</option>
+                        <option value="">Online</option>
+                       
+                        
+                    </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
-                    <label>Room</label>
+                    <label>Customer Name</label>
                     <select name="room_id" class="select2 w-full border mt-2 flex-1">
                         <option value="0">--Select Room--</option>
                         @foreach ($rooms as $room)
@@ -21,7 +27,7 @@
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
-                    <label>price</label>
+                    <label>Total Price</label>
                     <input type="number" name="price" class="input w-full border mt-2 flex-1" placeholder="Price">
                 </div>
                 <div class="col-span-12 sm:col-span-12">

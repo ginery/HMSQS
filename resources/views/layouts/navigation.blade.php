@@ -14,24 +14,28 @@ $currentPageName = Route::current()->getName();
                 <div class="side-menu__title"> Dashboard </div>
             </a>
         </li>
+        @if (Auth::user()->role == 0)
         <li>
             <a href="{{ route('rooms') }}" class="<?= $currentPageName == 'rooms' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="inbox"></i> </div>
                 <div class="side-menu__title"> Rooms </div>
             </a>
         </li>
+        @endif
         <li>
             <a href="{{ route('reservation') }}" class="<?= $currentPageName == 'reservation' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="book"></i> </div>
                 <div class="side-menu__title"> Reservations </div>
             </a>
         </li>
+        @if (Auth::user()->role == 0)
         <li>
             <a href="{{ route('services') }}" class="<?= $currentPageName == 'services' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="star"></i> </div>
                 <div class="side-menu__title"> Services </div>
             </a>
         </li>
+        @endif
         <li>
             <a href="{{ route('payment') }}" class="<?= $currentPageName == 'payment' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="dollar-sign"></i> </div>

@@ -18,10 +18,14 @@ class Reservation extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'room_id',
         'user_id',
+        'room_id',
+        'service_id',
+        'pax',
+        'total_amount',
         'checkin_date',
         'checkout_date',
+        'terms',
         'status'
     ];
 

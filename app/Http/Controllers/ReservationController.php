@@ -28,4 +28,7 @@ class ReservationController extends Controller
             echo 0;
         }
     }
+    public function reserve(Request $request){
+
+    }
 }

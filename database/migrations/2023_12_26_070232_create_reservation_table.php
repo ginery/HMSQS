@@ -17,9 +17,13 @@ return new class extends Migration
             Schema::dropIfExists('reservation');
         }
         Schema::create('reservation', function (Blueprint $table) {
-            $table->id();
-            $table->integer('room_id');
+            $table->id();           
             $table->integer('user_id');
+            $table->integer('room_id');
+            $table->integer('service_id');
+            $table->string('pax');
+            $table->string('total_amount');
+            $table->string('terms');
             $table->dateTime('checkin_date');
             $table->dateTime('checkout_date');
             $table->integer('status');

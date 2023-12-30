@@ -11,6 +11,10 @@
                     <input type="text" name="room_name" class="input w-full border mt-2 flex-1" placeholder="Room Name">
                 </div>
                 <div class="col-span-12 sm:col-span-12">
+                    <label>Room Type</label>
+                    <input type="number" name="price" class="input w-full border mt-2 flex-1" placeholder="Price">
+                </div>
+                <div class="col-span-12 sm:col-span-12">
                     <label>Price</label>
                     <input type="number" name="price" class="input w-full border mt-2 flex-1" placeholder="Price">
                 </div>
