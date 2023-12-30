@@ -80,4 +80,24 @@ class ReservationController extends Controller
         ];
         $result = Reservation::where('id', $request->reservation_id)->update($data);
     }
+    public function create_guest(Request $request){
+        $pax = array($request->adult, $request->child);
+        $paxString = implode(', ', $pax);
+        $result = Reservation::create([
+            'room_id' => $request->room_id,
+            'user_id' => $request->user_id,
+            'service_id' => $request->service_id,
+            'pax' => $paxString,
+            'total_amount' => $request->total_amount,
+            'terms' => 3,
+            'status' => 0,
+            'reservedate_in' => $request->checkin,
+            'reservedate_out' => $request->checkout
+        ]);
+        if($result){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }

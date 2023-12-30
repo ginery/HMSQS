@@ -25,6 +25,8 @@ class Reservation extends Authenticatable
         'total_amount',
         'checkin_date',
         'checkout_date',
+        'reservedate_in',
+        'reservedate_out',
         'terms',
         'status'
     ];

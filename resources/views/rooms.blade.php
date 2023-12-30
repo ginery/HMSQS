@@ -32,7 +32,7 @@
                     </a>
                     <a href="#" class="block font-medium mt-4 text-center truncate">{{$room->room_name}}</a> 
                     <div class="text-gray-600 text-xs text-center">Php. {{number_format($room->price, 2)}}</div>
-                    <div class="absolute top-0 right-0 mr-2 mt-2 dropdown ml-auto">
+                    <!-- <div class="absolute top-0 right-0 mr-2 mt-2 dropdown ml-auto">
                         <a class="dropdown-toggle w-5 h-5 block" href="javascript:;"> <i data-feather="more-vertical" class="w-5 h-5 text-gray-500"></i> </a>
                         <div class="dropdown-box mt-5 absolute w-40 top-0 right-0 z-10">
                             <div class="dropdown-box__content box p-2">
@@ -40,7 +40,7 @@
                                 <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete </a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             @endforeach

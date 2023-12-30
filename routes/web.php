@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
 //     return view('rooms');
 // })->middleware(['auth', 'verified'])->name('rooms');
 
-Route::get('/available-rooms', [RoomController::class, 'available_rooms'])->name('available-rooms');
+Route::get('/book', [RoomController::class, 'available_rooms'])->name('book');
 Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'verified'])->name('rooms');
 
 Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');

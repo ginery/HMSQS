@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('terms');
             $table->dateTime('checkin_date')->nullable();
             $table->dateTime('checkout_date')->nullable();
+            $table->dateTime('reservedate_in')->nullable();
+            $table->dateTime('reservedate_out')->nullable();
             $table->integer('status');
             $table->timestamps();
         });

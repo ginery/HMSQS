@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\View\View;
@@ -28,6 +30,15 @@ class UsersController extends Controller
             echo 1;
         }else{
             echo 0;
+        }
+    }
+
+    public function login(LoginRequest $request){
+        if($request->authenticate() === null){
+            $request->session()->regenerate();
+            return 1;
+        } else {
+            return 0;
         }
     }
 }

@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="assets/sogo/css/animate.css">
     <link rel="stylesheet" href="assets/sogo/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/sogo/css/aos.css">
-    <link rel="stylesheet" href="assets/sogo/css/bootstrap-datepicker.css"> 
-    <link rel="stylesheet" href="assets/sogo/css/jquery.timepicker.css"> 
+    <link rel="stylesheet" href="assets/sogo/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="assets/sogo/css/jquery.timepicker.css">
     <link rel="stylesheet" href="assets/sogo/css/fancybox.min.css">
     
     <link rel="stylesheet" href="assets/sogo/fonts/ionicons/css/ionicons.min.css">
@@ -33,14 +33,14 @@
           <div class="col-6 col-lg-8">
 
 
-            <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
+            <!-- <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
               <span></span>
               <span></span>
               <span></span>
-            </div>
+            </div> -->
             <!-- END menu-toggle -->
 
-            <div class="site-navbar js-site-navbar">
+            <!-- <div class="site-navbar js-site-navbar">
               <nav role="navigation">
                 <div class="container">
                   <div class="row full-height align-items-center">
@@ -57,7 +57,7 @@
                   </div>
                 </div>
               </nav>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -94,14 +94,14 @@
                   <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkin_date" class="form-control">
+                    <input type="text" id="checkin_date" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                   <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                   <div class="field-icon-wrap">
                     <div class="icon"><span class="icon-calendar"></span></div>
-                    <input type="text" id="checkout_date" class="form-control">
+                    <input type="text" id="checkout_date" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
@@ -110,7 +110,7 @@
                       <label for="adults" class="font-weight-bold text-black">Adults</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="adults" class="form-control">
+                        <select name="" id="adults" class="form-control" required>
                           <option value="0">0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -123,7 +123,7 @@
                       <label for="children" class="font-weight-bold text-black">Children</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="children" class="form-control">
+                        <select name="" id="children" class="form-control" required>
                           <option value="0">0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -146,7 +146,7 @@
       </div>
     </section>
 
-    <section class="py-5 bg-light">
+    <!-- <section class="py-5 bg-light">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-12 col-lg-7 ml-auto order-lg-2 position-relative mb-5" data-aos="fade-up">
@@ -163,9 +163,9 @@
           
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <section class="section">
+    <section id="rooms-list" class="section py-5 bg-light">
       <div class="container">
         <div class="row justify-content-center text-center mb-5">
           <div class="col-md-7">
@@ -174,20 +174,22 @@
           </div>
         </div>
         <div class="row">
+          @if(count($rooms) > 0)
+          @foreach ($rooms as $room)
           <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room">
+            <a href="#" class="room" onclick="onSelectRoom('{{$room->id}}')">
               <figure class="img-wrap">
-                <img src="assets/sogo/images/img_1.jpg" alt="Free website template" class="img-fluid mb-3">
+                <img src="assets/uploads/rooms/{{$room->image}}" alt="Free website template" class="img-fluid mb-3">
               </figure>
               <div class="p-3 text-center room-info">
-                <h2>Single Room</h2>
-                <span class="text-uppercase letter-spacing-1">90$ / per night</span>
+                <h2>{{$room->room_name}}</h2>
+                <span class="text-uppercase letter-spacing-1">PHP {{number_format($room->price,2)}} / per night</span>
               </div>
             </a>
           </div>
 
-          <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room">
+          <!-- <div class="col-md-6 col-lg-4" data-aos="fade-up">
+            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
               <figure class="img-wrap">
                 <img src="assets/sogo/images/img_2.jpg" alt="Free website template" class="img-fluid mb-3">
               </figure>
@@ -199,7 +201,7 @@
           </div>
 
           <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room">
+            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
               <figure class="img-wrap">
                 <img src="assets/sogo/images/img_3.jpg" alt="Free website template" class="img-fluid mb-3">
               </figure>
@@ -208,9 +210,13 @@
                 <span class="text-uppercase letter-spacing-1">250$ / per night</span>
               </div>
             </a>
-          </div>
-
-
+          </div> -->
+          @endforeach
+          @else
+            <div class="col-12 d-flex align-items-center">
+              <h2 class="heading text-center" data-aos="fade-up">No rooms available.</h2>
+            </div>
+          @endif
         </div>
       </div>
     </section>
@@ -542,7 +548,7 @@
             </div>
           </div>
         </div>
-      </section>
+    </section>
 
     <footer class="section footer-section">
       <div class="container">
@@ -597,6 +603,94 @@
       </div>
     </footer>
     
+    <!-- Modal -->
+    <div class="modal fade" id="modal-reservation" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+          @if(!Auth::check())
+            <h3 class="mb-3"><i class="fa fa-exclamation-circle"></i> Login required</h3>
+            <form id="form-login">
+            @csrf
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+          @else
+            <form id="addForm" enctype="multipart/form-data">
+                  <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                  <div class="form-group">
+                      <label>Room</label>
+                      <select id="room_id" name="room_id" class="select2 form-control">
+                          <option value="0">--Select Room--</option>
+                          @foreach ($rooms as $room)
+                          <option value="{{$room->id}}">{{$room->room_name}}</option>
+                          @endforeach
+                          
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Services</label>
+                      <select name="service_id" class="select2 form-control">
+                          <option value="0">--Select Service--</option>
+                          @foreach ($services as $service)
+                          <option value="{{$service->id}}">{{$service->service_name}}</option>
+                          @endforeach
+                          
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>No. Adult</label>
+                      <select name="adult" class="select2 form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>                        
+                          <option value="2">2</option> 
+                          <option value="3">3</option> 
+                          <option value="4">4</option> 
+                          <option value="5">5</option> 
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>No. Child</label>
+                      <select name="child" class="select2 form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>                        
+                          <option value="2">2</option> 
+                          <option value="3">3</option> 
+                          <option value="4">4</option> 
+                          <option value="5">5</option>                       
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Check-In</label>
+                      <input type="date" name="checkin" class="input form-control" value="{{date('Y-m-d', strtotime(request()->input('checkInDate')))}}">
+                  </div>
+                  <div class="form-group">
+                      <label>Check-Out</label>
+                      <input type="date" name="checkout" class="input form-control" value="{{date('Y-m-d', strtotime(request()->input('checkOutDate')))}}">
+                  </div>
+                  <input type="hidden" name="total_amount" value="0"/>
+              </div>
+              <div class="px-5 py-3 text-right border-t border-gray-200">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+          </form>
+          @endif
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <script src="assets/sogo/js/jquery-3.3.1.min.js"></script>
     <script src="assets/sogo/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="assets/sogo/js/popper.min.js"></script>
@@ -609,31 +703,95 @@
     <script src="assets/sogo/js/aos.js"></script>
     
     <script src="assets/sogo/js/bootstrap-datepicker.js"></script> 
-    <script src="assets/sogo/js/jquery.timepicker.min.js"></script>
-
-    
+    <script src="assets/sogo/js/jquery.timepicker.min.js"></script> 
 
     <script src="assets/sogo/js/main.js"></script>
     <script>
+      $(document).ready(function() {
 
-      $("#check-available-rooms").submit( function(){
-      
+      });
+
+      $("#check-available-rooms").submit( function(e){
+        e.preventDefault();
         const checkInDate = $("#checkin_date").val();
         const checkOutDate = $("#checkout_date").val();
         const adults = $("#adults").val();
         const children = $("#children").val();
-
-        window.location.href="/available-rooms?checkInDate="+checkInDate+"&checkOutDate="+checkOutDate+"&adults="+adults+"&children="+children;
+        if(adults == "0"){
+          alert("Please fill in required fields.")
+        }else{
+          window.location.href="/book?checkInDate="+checkInDate+"&checkOutDate="+checkOutDate+"&adults="+adults+"&children="+children;
+        }
       });
 
-      // function setCheckOutDate(){
-      //   let date = new Date(checkInDate);
-      //   date.setDate(date.getDate() + 1);
-      //   $("#checkout_date").datepicker({
-      //     "startDate": date
-      //   });
-      // }
-      
+      if("{{request()->input('checkInDate');}}" !== ""){
+        
+        var rooms = $("#rooms-list")[0];
+        rooms.scrollIntoView({behavior: "smooth"});
+
+        $("#checkin_date").val("{{request()->input('checkInDate')}}");
+        $("#checkout_date").val("{{request()->input('checkOutDate')}}");
+        $("#adults").val("{{request()->input('adults')}}");
+        $("#children").val("{{request()->input('children')}}");
+
+        $.ajax({
+          type: "POST",
+          url: "api/room/rooms_available",
+          data: {checkin_date: "{{request()->input('checkInDate')}}"},
+          success: function(res){
+            if(res == 1){
+              window.location.reload();
+            }
+          }
+        })
+      }
+
+      $("#form-login").submit(function(e){
+        e.preventDefault();
+        var data = $(this).serialize();
+
+        $.ajax({
+          type: "POST",
+          url: "api/user/login-user",
+          data: data,
+          success: function(res){
+            if(res == 1){
+              window.location.reload();
+            }else{
+              alert("Username or Password is incorrect.");
+            }
+          }
+        })
+      });
+
+      function onSelectRoom(roomId){
+        console.log(roomId)
+        $("select[name=adult]").val("{{request()->input('adults')}}");
+        $("select[name=child]").val("{{request()->input('children')}}");
+        $("#modal-reservation").modal();
+        $("#room_id").val(roomId);
+      }
+
+      $('#addForm').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: 'api/reservation/add_guest_reservation',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  if(response == 1){
+                    window.location.href="/reservation";
+                  }
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
+
+        });
     </script>
   </body>
 </html>

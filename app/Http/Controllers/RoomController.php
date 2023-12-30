@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Room;
+use App\Models\Services;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 class RoomController extends Controller
 {
     //
@@ -49,9 +52,20 @@ class RoomController extends Controller
         echo $deleted;
     }
 
-    public function available_rooms() : View {
-        $rooms = Room::where('status', 1)->get();
+    public function available_rooms(Request $request) : View {
+        $services = Services::all();
 
-        return view('available-rooms', ['rooms' => $rooms]);
+        $checkInDate = $request->checkin_date;
+        $rooms = DB::connection('mysql')
+        ->table('rooms')
+        ->whereNotIn('id', function($query) use ($checkInDate) {
+            $query->select('room_id')
+                ->from('reservation')
+                ->whereDate('reservedate_in', '=', $checkInDate)
+                ->where('status', 1);
+        })
+        ->get();
+
+        return view('book', ['rooms' => $rooms, 'services' => $services]);
     }
 }
