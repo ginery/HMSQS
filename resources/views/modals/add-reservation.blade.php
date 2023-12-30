@@ -8,11 +8,21 @@
             <form id="addForm" class="p-5 grid grid-cols-12 gap-4 row-gap-3" enctype="multipart/form-data">
                 <input type="hidden" name="user_id" value="{{Auth::id()}}">
                 <div class="col-span-12 sm:col-span-12">
-                    <label>Book</label>
-                    <select name="book_id" class="select2 w-full border mt-2 flex-1">
+                    <label>Room</label>
+                    <select name="room_id" class="select2 w-full border mt-2 flex-1">
                         <option value="0">--Select Room--</option>
                         @foreach ($rooms as $room)
                         <option value="{{$room->id}}">{{$room->room_name}}</option>
+                        @endforeach
+                        
+                    </select>
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Services</label>
+                    <select name="service_id" class="select2 w-full border mt-2 flex-1">
+                        <option value="0">--Select Service--</option>
+                        @foreach ($services as $service)
+                        <option value="{{$service->id}}">{{$service->service_name}}</option>
                         @endforeach
                         
                     </select>
