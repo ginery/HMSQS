@@ -18,6 +18,7 @@
                     <tr>
                         <th class="whitespace-no-wrap">ROOMS</th>
                         <th class="whitespace-no-wrap">ROOM NAME</th>
+                        <th class="whitespace-no-wrap">CUSTOMER NAME</th>
                         <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
@@ -37,6 +38,9 @@
                         <td>
                             <a href="" class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}}</a> 
                             <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format(getRoomPrice($reservation->room_id),2)}}</div>
+                        </td>
+                        <td>
+                            {{getUserName($reservation->user_id)}}
                         </td>
                         <td class="text-center">{{$reservation->checkin_date}} - {{$reservation->checkin_date}}</td>
                         <td class="w-40">
@@ -136,7 +140,8 @@
     const html5QrCode = new Html5Qrcode(/* element id */ "reader");
     function onScanSuccess(decodedText, decodedResult) {
     // handle the scanned code as you like, for example:
-        console.log(`Code matched = ${decodedText}`, decodedResult);
+        // console.log(`Code matched = ${decodedText}`, decodedResult);
+        checkInCheckOut(`${decodedText}`);
     }
 
     function onScanFailure(error) {
@@ -178,11 +183,14 @@
         //     height: 300,
         // }
         var qrcode = new QRCode(document.getElementById("qrcode"));
-        qrcode.makeCode(room_id);
+        qrcode.makeCode("HOMETEL-"+room_id);
         // qrcode.clear();
     }
 
-
+    function checkInCheckOut(id){
+        let explode = id.split('HOMETEL-');
+        console.log("Scaned: ", explode[1]);
+    }
     
 </script>
 </x-app-layout>

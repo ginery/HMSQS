@@ -95,12 +95,14 @@
     <script>
         $("#add-user-form").submit( function(e){
             e.preventDefault();
-            var data = $("#add-user-form").serialize();
+            var formData = new FormData(this);
 
             $.ajax({
-                type: 'POST',
                 url: 'api/user/user_add',
-                data: data,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(response) {
                     $.toast('Success! New user was added.');
                     $("#add-user-modal").modal('hide');
