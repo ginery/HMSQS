@@ -12,7 +12,12 @@
                 </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Room Type</label>
-                    <input type="number" name="price" class="input w-full border mt-2 flex-1" placeholder="Price">
+                    <select name="room_type" class="select2 w-full border mt-2 flex-1">
+                        <option value="0">-- Select Type --</option>
+                        <option value="1">Single</option>                        
+                        <option value="2">Family</option> 
+                        <option value="3">Presidential</option> 
+                    </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Price</label>

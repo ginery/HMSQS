@@ -24,6 +24,7 @@ class RoomController extends Controller
 
         $result = Room::create([
             'room_name' => $request->room_name,
+            'room_type' => $request->room_type,
             'price' => $request->price,
             'description' => $request->description,
             'image' => $imageName, 

@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('room_name');
-            $table->string('room_type');
+            $table->integer('room_type');
             $table->float('price');
             $table->string('description');
             $table->string('image');
