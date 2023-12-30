@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('book_id');
+            $table->integer('reservation_id');
             $table->string('payment_type');
             $table->string('reference_number');
             $table->float('total_amount');
