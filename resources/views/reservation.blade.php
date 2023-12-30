@@ -50,7 +50,7 @@
                         </td>
                         <td class="text-center">{{date('F j, Y H:i:A', strtotime($reservation->checkin_date))}} - {{date('F j, Y H:i:A', strtotime($reservation->checkout_date))}}</td>                       
                         <td class="w-40">
-                            <div class="text-xs <?=$reservation->status == 0 ? 'bg-gray-600':'bg-blue-600'?> px-1 rounded-md text-white ml-auto">{{$reservation->status == 0 ? 'Occupied':'Available'}}</div>
+                            <div class="text-xs <?=$reservation->status == 0 ? 'bg-gray-600':'bg-blue-600'?> px-1 rounded-md text-white ml-auto">{{$reservation->status == 0 ? 'Pending':'Approve'}}</div>
                            
                         </td>
                         @if (Auth::user()->role != '2')                     
