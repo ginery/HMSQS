@@ -37,6 +37,14 @@ create by: ginx
                     <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="{{route('dashboard')}}" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">{{ucfirst(Route::current()->getName())}}</a> </div>
                     <!-- END: Breadcrumb -->
                     <!-- BEGIN: Account Menu -->
+                     <!-- BEGIN: Search -->
+                     <div class="intro-x relative mr-3 sm:mr-6">
+                    </div>
+                    <!-- END: Search -->
+                    <!-- BEGIN: Notifications -->
+                    <div class="intro-x dropdown relative mr-auto sm:mr-6">
+                    </div>
+                    <!-- END: Notifications -->
                     @include('layouts.profile-dropdown')
                     <!-- END: Account Menu -->
                 </div>

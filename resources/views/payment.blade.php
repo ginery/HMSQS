@@ -27,7 +27,7 @@
                 <tbody>
                     @foreach ($payments as $payment)                       
                     
-                    <tr class="intro-x" style="cursor: pointer" onclick="viewInvoice({{$payment->id}})">
+                    <tr class="intro-x" style="cursor: pointer" onclick="">
                         <td class="w-40">
                             {{$payment->id}}
                         </td>
@@ -43,12 +43,32 @@
                         <td class="w-40">
                             Php. {{number_format($payment->total_amount, 2)}}
                         </td>
+                        @if (Auth::user()->role != '2')                     
                         <td class="table-report__action w-56">
-                            <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                            <div class="dropdown relative"> <a href="#" class="dropdown-toggle button inline-block text-black"><i data-feather="settings" class="w-6 h-6 text-gray-700"></i></a>
+                                <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 -mr-12 sm:mr-0 z-20">
+                                    <div class="dropdown-box__content box">
+                                        <div class="p-4 border-b border-gray-200 font-medium">Action</div>
+
+                                        <div class="p-2"> 
+                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="check-square" class="w-4 h-4 text-gray-700 mr-2"></i> Edit </a> 
+
+
+                                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
+                                            
+                                            <a href="#" onclick="generateQR({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="maximize" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a> 
+                                            
+                                        </div>
+                                        <div class="px-3 py-3 border-t border-gray-200 font-medium flex"> 
+                                            <button type="button" onclick="" class="button button--sm bg-theme-1 text-white">Approve</button> 
+                                            <button type="button" onclick="" class="button button--sm bg-theme-6 text-white ml-auto">Decline</button> 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
+                        @endif
+                  
                     </tr>
                     @endforeach
                 </tbody>
@@ -100,6 +120,8 @@
         </div>
     </div>
 @include('modals.add-payment')
+@include('modals.generate-qr')
+
 <script>
 function addModal() {        
     $("#add-modal").modal("show");       
@@ -107,6 +129,20 @@ function addModal() {
 function viewInvoice(payment_id){
     console.log("test", payment_id);
     window.location.href = "/invoice/"+payment_id;
+}
+function closeModal(id){
+    console.log("QR Cleared", id);
+    $("#"+id).modal('hide');
+    var qrcode = new QRCode(document.getElementById("qrcode"));
+    qrcode.clear();
+}
+function generateQR(id){        
+    $("#generate-qr").modal('show');
+    $('#generate-qr').on('click', function(e) {
+        e.stopPropagation();
+    });
+    var qrcode = new QRCode(document.getElementById("qrcode"));
+    qrcode.makeCode("HOMETEL-PAY-"+id);
 }
 $(document).ready(function(){
     $('#payment_type').on('change', function() {

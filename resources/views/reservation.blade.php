@@ -48,22 +48,13 @@
                         <td>
                             {{getUserName($reservation->user_id)}}
                         </td>
-                        <td class="text-center">{{date('F j, Y H:i:A', strtotime($reservation->checkin_date))}} - {{date('F j, Y H:i:A', strtotime($reservation->checkout_date))}}</td>                       
+                        <td class="text-center">{{$reservation->checkin_date ? date('F j, Y H:i:A', strtotime($reservation->checkin_date)):'N/A' }} - {{ $reservation->checkout_date ? date('F j, Y H:i:A', strtotime($reservation->checkout_date)):'N/A'}}</td>                       
                         <td class="w-40">
                             <div class="text-xs <?=$reservation->status == 0 ? 'bg-gray-600':'bg-blue-600'?> px-1 rounded-md text-white ml-auto">{{$reservation->status == 0 ? 'Pending':'Approve'}}</div>
                            
                         </td>
                         @if (Auth::user()->role != '2')                     
                         <td class="table-report__action w-56">
-                            {{-- <div class="flex justify-center items-center">
-                               
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                
-                                <a class="flex items-center mr-3 text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
-                        
-                                <a class="flex items-center mr-3" onclick="generateQR({{$reservation->id}})" href="#"> <i data-feather="maximize" class="w-4 h-4 mr-1"></i> Generate</a>
-                               
-                            </div> --}}
                             <div class="dropdown relative"> <a href="#" class="dropdown-toggle button inline-block text-black"><i data-feather="settings" class="w-6 h-6 text-gray-700"></i></a>
                                 <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 -mr-12 sm:mr-0 z-20">
                                     <div class="dropdown-box__content box">
@@ -170,13 +161,6 @@
                 }
             });
         });
-       
-        if ($('#generate-qr').is('hidden')) {
-            console.log('Modal closed!');
-            // Your logic for when the modal is closed goes here
-        } else {
-            // If modal is open, perform some action or continue monitoring
-        }
         $('#addForm').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
@@ -234,7 +218,7 @@
             e.stopPropagation();
         });
         var qrcode = new QRCode(document.getElementById("qrcode"));
-        qrcode.makeCode("HOMETEL-"+room_id);
+        qrcode.makeCode("HOMETEL-RES-"+room_id);
     }
 
     function checkInCheckOut(id){
@@ -245,7 +229,7 @@
         var formData = new FormData();
 
         formData.append("user_id", user_id);
-        formData.append("reservation_id", explode[1]);
+        formData.append("reservation_id", explode[2]);
         $.ajax({
             url: 'api/reservation/check',
             type: 'POST',

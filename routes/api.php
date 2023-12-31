@@ -7,6 +7,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ScanqrController;
 use App\Http\Middleware\Authenticate;
 
 /*
@@ -45,6 +46,9 @@ Route::group(['prefix' => 'services'], function () {
 });
 Route::group(['prefix' => 'payment'], function () {
     Route::post('/add_payment', [PaymentController::class, 'create']);
+});
+Route::group(['prefix' => 'qr'], function () {
+    Route::post('/scanqr', [ScanqrController::class, 'scanqr']);
 });
 
 // for javascript

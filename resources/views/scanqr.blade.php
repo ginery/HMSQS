@@ -22,16 +22,15 @@
         </div>
     </div>
 @include('modals.scan-qr')
+@include('modals.success-scan')
 <script>
 const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 function onScanSuccess(decodedText, decodedResult) {
-// handle the scanned code as you like, for example:
     console.log(`Code matched = ${decodedText}`, decodedResult);
+    scanQR(decodedText);
 }
 
 function onScanFailure(error) {
-// handle scan failure, usually better to ignore and keep scanning.
-// for example:
     console.warn(`Code scan error = ${error}`);
 }
 let html5QrcodeScanner = new Html5QrcodeScanner(
@@ -39,7 +38,25 @@ let html5QrcodeScanner = new Html5QrcodeScanner(
 { fps: 10, qrbox: {width: 250, height: 250} },
 /* verbose= */ false);
 html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
+function scanQR(scan_data){
+    // console.log(scan_data);
+    $("#success-modal").modal("show");
+    var formData = new FormData();
+        formData.append("scan_data", scan_data);
+        $.ajax({
+            url: 'api/qr/scanqr',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log("response: ", response);
+            },
+            error: function(error) {
+                console.log("error: ", error);
+            }
+        });
+}
 
 </script>
 </x-app-layout>
