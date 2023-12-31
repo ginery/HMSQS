@@ -173,50 +173,8 @@
             <p data-aos="fade-up" data-aos-delay="100">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
           </div>
         </div>
-        <div class="row">
-          @if(count($rooms) > 0)
-          @foreach ($rooms as $room)
-          <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room" onclick="onSelectRoom('{{$room->id}}')">
-              <figure class="img-wrap">
-                <img src="assets/uploads/rooms/{{$room->image}}" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>{{$room->room_name}}</h2>
-                <span class="text-uppercase letter-spacing-1">PHP {{number_format($room->price,2)}} / per night</span>
-              </div>
-            </a>
-          </div>
-
-          <!-- <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
-              <figure class="img-wrap">
-                <img src="assets/sogo/images/img_2.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Family Room</h2>
-                <span class="text-uppercase letter-spacing-1">120$ / per night</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="#" class="room" data-toggle="modal" data-target="#modal-reservation">
-              <figure class="img-wrap">
-                <img src="assets/sogo/images/img_3.jpg" alt="Free website template" class="img-fluid mb-3">
-              </figure>
-              <div class="p-3 text-center room-info">
-                <h2>Presidential Room</h2>
-                <span class="text-uppercase letter-spacing-1">250$ / per night</span>
-              </div>
-            </a>
-          </div> -->
-          @endforeach
-          @else
-            <div class="col-12 d-flex align-items-center">
-              <h2 class="heading text-center" data-aos="fade-up">No rooms available.</h2>
-            </div>
-          @endif
+        <div id="rooms-available" class="row">
+          
         </div>
       </div>
     </section>
@@ -708,7 +666,11 @@
     <script src="assets/sogo/js/main.js"></script>
     <script>
       $(document).ready(function() {
-
+        if("{{request()->input('checkInDate')}}" !== ""){
+          get_available_rooms("{{request()->input('checkInDate')}}");
+        }else{
+          get_available_rooms("{{date('Y-m-d')}}");
+        }
       });
 
       $("#check-available-rooms").submit( function(e){
@@ -733,17 +695,6 @@
         $("#checkout_date").val("{{request()->input('checkOutDate')}}");
         $("#adults").val("{{request()->input('adults')}}");
         $("#children").val("{{request()->input('children')}}");
-
-        $.ajax({
-          type: "POST",
-          url: "api/room/rooms_available",
-          data: {checkin_date: "{{request()->input('checkInDate')}}"},
-          success: function(res){
-            if(res == 1){
-              window.location.reload();
-            }
-          }
-        })
       }
 
       $("#form-login").submit(function(e){
@@ -752,7 +703,7 @@
 
         $.ajax({
           type: "POST",
-          url: "api/user/login-user",
+          url: "login-user",
           data: data,
           success: function(res){
             if(res == 1){
@@ -792,6 +743,37 @@
             });
 
         });
+
+        function get_available_rooms(date){
+          $.ajax({
+            type: "POST",
+            url: "api/room/rooms_available",
+            data: {checkin_date: date},
+            success: function(res){
+              var o = JSON.parse(res);
+              let container = $('#rooms-available');
+                if(o.length != 0){
+                    o.forEach(item => {
+                        const toAppend = `
+                        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                          <a href="#" class="room" onclick="onSelectRoom(${item.id})">
+                            <figure class="img-wrap">
+                              <img src="assets/uploads/rooms/${item.image}" alt="Free website template" class="img-fluid mb-3">
+                            </figure>
+                            <div class="p-3 text-center room-info">
+                              <h2>${item.room_name}</h2>
+                              <span class="text-uppercase letter-spacing-1">PHP ${Number(item.price).toFixed(2)} / per night</span>
+                            </div>
+                          </a>
+                        </div>`;
+                        container.append(toAppend);
+                    });
+                }else{
+                    container.append("<h6>No data available.</h6>")
+                }
+            }
+          });
+        }
     </script>
   </body>
 </html>

@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
 //     return view('rooms');
 // })->middleware(['auth', 'verified'])->name('rooms');
 
-Route::get('/book', [RoomController::class, 'available_rooms'])->name('book');
+Route::get('/book', [RoomController::class, 'get_services'])->name('book');
 Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'verified'])->name('rooms');
 
 Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');
@@ -48,6 +48,7 @@ Route::get('/scanqr', [ScanqrController::class, 'index'])->middleware(['auth', '
 
 
 Route::get('/users', [UsersController::class, 'index'])->name('users');
+Route::post('/login-user', [UsersController::class, 'login'])->name('login-user');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

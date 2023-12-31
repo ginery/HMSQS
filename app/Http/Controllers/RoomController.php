@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\Services;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 class RoomController extends Controller
 {
     //
@@ -52,10 +53,17 @@ class RoomController extends Controller
         echo $deleted;
     }
 
-    public function available_rooms(Request $request) : View {
+    public function get_services() : View {
+        $rooms = Room::where('status', 1)->get();
         $services = Services::all();
 
-        $checkInDate = $request->checkin_date;
+        return view('book', ['rooms' => $rooms, 'services' => $services]);
+    }
+
+    public function available_rooms(Request $request){
+        Config::set('app.timezone', 'Asia/Manila');
+        $checkInDate = date("Y-m-d", strtotime(str_replace(",","", $request->checkin_date)));
+        
         $rooms = DB::connection('mysql')
         ->table('rooms')
         ->whereNotIn('id', function($query) use ($checkInDate) {
@@ -66,6 +74,6 @@ class RoomController extends Controller
         })
         ->get();
 
-        return view('book', ['rooms' => $rooms, 'services' => $services]);
+        echo json_encode($rooms);
     }
 }
