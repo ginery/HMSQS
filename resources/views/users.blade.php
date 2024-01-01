@@ -106,7 +106,7 @@
                 success: function(response) {
                     $.toast('Success! New user was added.');
                     $("#add-user-modal").modal('hide');
-                    window.location.reload();
+                    setTimeout(()=>{window.location.reload();},2000);
                 },
                 error: function(error) {
                     console.log("error: ", error);

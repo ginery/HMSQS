@@ -21,7 +21,9 @@
                         <th class="text-center whitespace-no-wrap">PAYMENT TYPE</th>
                         <th class="text-center whitespace-no-wrap">REFERENCE NUMBER</th>
                         <th class="text-center whitespace-no-wrap">AMOUNT</th>
+                        @if (Auth::user()->role != '2')
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -164,7 +166,12 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        console.log("response: ", response);
+                        // console.log("response: ", response);
+                        if(response == 1){
+                            $.toast('Success! New payment was added.');
+                            $("#add-modal").modal('hide');
+                            setTimeout(()=>{window.location.reload();},2000);
+                        }
                     },
                     error: function(error) {
                         console.log("error: ", error);

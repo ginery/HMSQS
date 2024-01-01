@@ -110,7 +110,11 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        console.log("response: ", response);
+                        if(response == 1){
+                            $.toast('Success! New service was added.');
+                            $("#add-modal").modal('hide');
+                            setTimeout(()=>{window.location.reload();},2000);
+                        }
                     },
                     error: function(error) {
                         console.log("error: ", error);

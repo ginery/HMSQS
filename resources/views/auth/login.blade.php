@@ -62,8 +62,8 @@ created by: ginx
                         </h2>
                         <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Email" name="email" :value="old('email')"">
-                            <input type="password" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password">
+                            <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" placeholder="Email" name="email" :value="old('email')"" required>
+                            <input type="password" name="password" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Password" required>
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                             <button type="submit" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Login</button>
