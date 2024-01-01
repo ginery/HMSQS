@@ -735,6 +735,10 @@
                 success: function(response) {
                   if(response == 1){
                     window.location.href="/reservation";
+                  }else{
+                    if(response == 2){
+                      alert("Notice: You already have a reservation for this room.");
+                    }
                   }
                 },
                 error: function(error) {
