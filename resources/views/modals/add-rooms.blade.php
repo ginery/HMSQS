@@ -14,9 +14,30 @@
                     <label>Room Type</label>
                     <select name="room_type" class="select2 w-full border mt-2 flex-1">
                         <option value="0">-- Select Type --</option>
-                        <option value="1">Single</option>                        
-                        <option value="2">Family</option> 
-                        <option value="3">Presidential</option> 
+                        <option value="1">Single</option>
+                        <option value="2">Family</option>
+                        <option value="3">Presidential</option>
+                    </select>
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>No. Adult </label>
+                    <select name="adult" class="select2 w-full border mt-2 flex-1">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>No. Child</label>
+                    <select name="child" class="select2 w-full border mt-2 flex-1">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
@@ -30,12 +51,12 @@
                 <div class="col-span-12 sm:col-span-12">
                     <label>Image</label>
                     <input type="file" name="image" class="input w-full border mt-2 flex-1" placeholder="Password">
-                </div>                
-            </div>
-            <div class="px-5 py-3 text-right border-t border-gray-200">
-                <button type="button" class="button w-20 border text-gray-700 mr-1" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="button w-20 bg-theme-1 text-white">Add</button>
-            </div>
+                </div>
+        </div>
+        <div class="px-5 py-3 text-right border-t border-gray-200">
+            <button type="button" class="button w-20 border text-gray-700 mr-1" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="button w-20 bg-theme-1 text-white">Add</button>
+        </div>
         </form>
     </div>
 </div>

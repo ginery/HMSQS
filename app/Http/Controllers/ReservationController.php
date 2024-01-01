@@ -8,15 +8,18 @@ use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\Services;
 use Illuminate\Support\Facades\Config;
+
 class ReservationController extends Controller
 {
-    public function index() : View {
+    public function index(): View
+    {
         $rooms = Room::where('status', '1')->get();
         $services = Services::all();
         $reservations = Reservation::orderBy('created_at', 'DESC')->get();
         return view('reservation', ['rooms' => $rooms, 'reservations' => $reservations, 'services' => $services]);
     }
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $pax = array($request->adult, $request->child);
         $paxString = implode(', ', $pax);
         $result = Reservation::create([
@@ -28,24 +31,25 @@ class ReservationController extends Controller
             'terms' => 3,
             'status' => 0,
         ]);
-        if($result){
+        if ($result) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
-    public function reserve(Request $request){
+    public function reserve(Request $request)
+    {
         Config::set('app.timezone', 'Asia/Manila');
-        $reservation = Reservation::where('id', $request->reservation_id)->get()->first();        
+        $reservation = Reservation::where('id', $request->reservation_id)->get()->first();
         $date = date('Y-m-d H:i:s');
-        if($reservation->checkin_date == NULL || $reservation->checkout_date == NULL){
-            if($reservation->checkin_date == NULL){
+        if ($reservation->checkin_date == NULL || $reservation->checkout_date == NULL) {
+            if ($reservation->checkin_date == NULL) {
                 $data = [
                     'checkin_date' => $date,
                     // 'status' => 0            
                     // Add more fields as needed
                 ];
-            }else{
+            } else {
                 $data = [
                     'checkout_date' => $date,
                     // 'status' => 1            
@@ -54,17 +58,17 @@ class ReservationController extends Controller
             }
             $result = Reservation::where('id', $request->reservation_id)->update($data);
             $result = Room::where('id', $reservation->room_id)->update($data);
-            if($result){
+            if ($result) {
                 return 1;
-            }else{
+            } else {
                 return 0;
             }
-        }else{
+        } else {
             return 0;
         }
-       
     }
-    public function approve(Request $request){
+    public function approve(Request $request)
+    {
         $data = [
             'status' => 1,
             // 'status' => 0            
@@ -72,15 +76,17 @@ class ReservationController extends Controller
         ];
         $result = Reservation::where('id', $request->reservation_id)->update($data);
     }
-    public function decline(Request $request){
+    public function decline(Request $request)
+    {
         $data = [
-            'status' => 0,
+            'status' => 2,
             // 'status' => 0            
             // Add more fields as needed
         ];
         $result = Reservation::where('id', $request->reservation_id)->update($data);
     }
-    public function create_guest(Request $request){
+    public function create_guest(Request $request)
+    {
         $pax = array($request->adult, $request->child);
         $paxString = implode(', ', $pax);
         $result = Reservation::create([
@@ -94,9 +100,9 @@ class ReservationController extends Controller
             'reservedate_in' => $request->checkin,
             'reservedate_out' => $request->checkout
         ]);
-        if($result){
+        if ($result) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
