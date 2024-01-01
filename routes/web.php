@@ -40,7 +40,7 @@ Route::get('/book', [RoomController::class, 'get_services'])->name('book');
 Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'verified'])->name('rooms');
 
 Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');
-
+Route::get('/view-reservation/{payment_id}', [ReservationController::class, 'view_details'])->middleware(['auth', 'verified'])->name('view reservation');
 Route::get('/services', [ServicesController::class, 'index'])->middleware(['auth', 'verified'])->name('services');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('payment');
 Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoice'])->middleware(['auth', 'verified'])->name('invoice');
@@ -56,4 +56,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

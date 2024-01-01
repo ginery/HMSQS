@@ -106,4 +106,8 @@ class ReservationController extends Controller
             return 0;
         }
     }
+    public function view_details($reservation_id): View
+    {
+        return view('reservation-details');
+    }
 }
