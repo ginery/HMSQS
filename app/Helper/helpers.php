@@ -113,3 +113,26 @@ if (!function_exists('getPaymentStatus')) {
         return $return;
     }
 }
+if (!function_exists('getServiceType')) {
+    function getServiceType($service_id)
+    {
+        $result = Services::where('id', $service_id)->get()->first();
+
+        if ($result) {
+            if ($result->service_type == 0) {
+                $return = '<strong>N/A</strong>';
+            } else if ($result->service_type == 1) {
+                $return = '<strong>Foods</strong>';
+            } else if ($result->service_type == 2) {
+                $return = '<strong>Others</strong>';
+            } else {
+                $return = "N/A";
+            }
+        } else {
+            $return = "N/A";
+        }
+
+
+        return $return;
+    }
+}

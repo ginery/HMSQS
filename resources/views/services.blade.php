@@ -2,12 +2,12 @@
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
             <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Service</button>
-           
+
             <div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">
                     <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search...">
-                    <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i> 
+                    <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
                 </div>
             </div>
         </div>
@@ -17,18 +17,22 @@
                 <thead>
                     <tr>
                         <th class="whitespace-no-wrap">SERVICE NAME</th>
+                        <th class="text-center whitespace-no-wrap">TYPE</th>
                         <th class="text-center whitespace-no-wrap">DESCRIPTION</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($services as $services)                       
-                    
-                    <tr class="intro-x">                       
+                    @foreach ($services as $services)
+
+                    <tr class="intro-x">
                         <td>
-                            <a href="" class="font-medium whitespace-no-wrap">{{$services->service_name}}</a> 
+                            <a href="" class="font-medium whitespace-no-wrap">{{$services->service_name}}</a>
                             <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format($services->price,2)}}</div>
+                        </td>
+                        <td>
+                            {!!getServiceType($services->id)!!}
                         </td>
                         <td class="text-center">{{$services->description}}</td>
                         <td class="w-40">
@@ -80,7 +84,7 @@
     <div class="modal" id="delete-confirmation-modal">
         <div class="modal__content">
             <div class="p-5 text-center">
-                <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i> 
+                <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
                 <div class="text-3xl mt-5">Are you sure?</div>
                 <div class="text-gray-600 mt-2">Do you really want to delete these records? This process cannot be undone.</div>
             </div>
@@ -90,30 +94,30 @@
             </div>
         </div>
     </div>
-@include('modals.add-services')
-<script>
-function addModal() {        
-    $("#add-modal").modal("show");       
-}
-$(document).ready(function(){
-    $('#addForm').submit(function(e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        $.ajax({
-            url: 'api/services/add_services',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                console.log("response: ", response);
-            },
-            error: function(error) {
-                console.log("error: ", error);
-            }
-        });
+    @include('modals.add-services')
+    <script>
+        function addModal() {
+            $("#add-modal").modal("show");
+        }
+        $(document).ready(function() {
+            $('#addForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: 'api/services/add_services',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log("response: ", response);
+                    },
+                    error: function(error) {
+                        console.log("error: ", error);
+                    }
+                });
 
-    });
-});
-</script>
+            });
+        });
+    </script>
 </x-app-layout>
