@@ -4,35 +4,39 @@
             Reservation Details
         </h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <button class="button text-white bg-theme-1 shadow-md mr-2">Add Service</button>
-            <div class="dropdown relative ml-auto sm:ml-0">
-                <button class="dropdown-toggle button px-2 box text-gray-700">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
-                </button>
-            </div>
+            <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="addOns()" class="button text-white bg-theme-1 shadow-md mr-2">Add-ons </button>
         </div>
     </div>
-    {{-- {{dd($reservations)}} --}}
+    
     <!-- BEGIN: Invoice -->
     <div class="intro-y box overflow-hidden mt-5">
         <div class="flex flex-col lg:flex-row pt-10 px-5 sm:px-20 sm:pt-20 lg:pb-20 text-center sm:text-left">
-            <div class="font-semibold text-theme-1 text-3xl">RESERVATION - #{{$reservations->id}}</div>
+            <div class="font-semibold text-theme-1 text-3xl">RESERVATION - #{{$reservation->id}}</div>
             <div class="mt-20 lg:mt-0 lg:ml-auto lg:text-right">
-                <div class="text-xl text-theme-1 font-medium">{{getUserName($reservations->user_id)}}</div>
-                <div class="mt-1">{{getUserEmail($reservations->user_id)}}</div>
+                <div class="text-xl text-theme-1 font-medium">{{getUserName($reservation->user_id)}}</div>
+                <div class="mt-1">{{getUserEmail($reservation->user_id)}}</div>
             </div>
         </div>
         <div class="flex flex-col lg:flex-row border-b px-5 sm:px-20 pt-10 pb-10 sm:pb-20 text-center sm:text-left">
             <div>
                 <div class="text-base text-gray-600">Client Details</div>
-                <div class="text-lg font-medium text-theme-1 mt-2">{{getUserName($reservations->user_id)}}</div>
-                <div class="mt-1">{{getUserEmail($reservations->user_id)}}</div>
+                <div class="text-lg font-medium text-theme-1 mt-2">{{getUserName($reservation->user_id)}}</div>
+                <div class="mt-1">{{getUserEmail($reservation->user_id)}}</div>
             </div>
+            @if ($payment)               
+        
             <div class="mt-10 lg:mt-0 lg:ml-auto lg:text-right">
                 <div class="text-base text-gray-600">Receipt</div>
-                <div class="text-lg text-theme-1 font-medium mt-2">#1923195</div>
-                <div class="mt-1">Jan 02, 2021</div>
+                <div class="text-lg text-theme-1 font-medium mt-2">#{{$payment->id}}</div>
+                <div class="mt-1">{{$payment->created_at}}</div>
             </div>
+            @else
+            <div class="mt-10 lg:mt-0 lg:ml-auto lg:text-right">
+                <div class="text-base text-gray-600">Receipt</div>
+                <div class="text-lg text-theme-1 font-medium mt-2"># Unpaid</div>
+                <div class="mt-1"> Unpaid</div>
+            </div>
+            @endif
         </div>
         <div class="px-5 sm:px-16 py-10 sm:py-20">
             <div class="overflow-x-auto">
@@ -40,48 +44,35 @@
                     <thead>
                         <tr>
                             <th class="border-b-2 whitespace-no-wrap">DESCRIPTION</th>
-                            <th class="border-b-2 text-right whitespace-no-wrap">QTY</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">PAX</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
-                            <th class="border-b-2 text-right whitespace-no-wrap">SUBTOTAL</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody>                            
+                        @foreach ($reservations as $reservation)                           
                         <tr>
                             <td class="border-b">
-                                <div class="font-medium whitespace-no-wrap">Midone HTML Admin Template</div>
-                                <div class="text-gray-600 text-xs whitespace-no-wrap">Regular License</div>
+                                <div class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}} </div>
+                                <div class="text-gray-600 text-xs whitespace-no-wrap">Reservation</div>
                             </td>
-                            <td class="text-right border-b w-32">2</td>
-                            <td class="text-right border-b w-32">$25</td>
-                            <td class="text-right border-b w-32 font-medium">$50</td>
+                            <td class="text-right border-b"><?php $ex = explode(',',$reservation->pax); 
+                            
+                            echo "Adult: ".$ex[0].", Child: ".$ex[1];
+                            
+                            ?></td>
+                            <td class="text-right border-b w-32">{{number_format(getRoomPrice($reservation->room_id),2)}}</td>
                         </tr>
-                        <tr>
+                        @endforeach
+                        @foreach ($add_ons as $add_on)
+                        <tr class="bg-gray-200">
                             <td class="border-b">
-                                <div class="font-medium whitespace-no-wrap">Vuejs Admin Template</div>
-                                <div class="text-gray-600 text-xs whitespace-no-wrap">Regular License</div>
+                                <div class="font-medium whitespace-no-wrap">1 </div>
+                                <div class="text-gray-600 text-xs whitespace-no-wrap">Add ons</div>
                             </td>
-                            <td class="text-right border-b w-32">1</td>
-                            <td class="text-right border-b w-32">$25</td>
-                            <td class="text-right border-b w-32 font-medium">$25</td>
+                            <td class="text-right border-b">2</td>
+                            <td class="text-right border-b w-32">3</td>
                         </tr>
-                        <tr>
-                            <td class="border-b">
-                                <div class="font-medium whitespace-no-wrap">React Admin Template</div>
-                                <div class="text-gray-600 text-xs whitespace-no-wrap">Regular License</div>
-                            </td>
-                            <td class="text-right border-b w-32">1</td>
-                            <td class="text-right border-b w-32">$25</td>
-                            <td class="text-right border-b w-32 font-medium">$25</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="font-medium whitespace-no-wrap">Laravel Admin Template</div>
-                                <div class="text-gray-600 text-xs whitespace-no-wrap">Regular License</div>
-                            </td>
-                            <td class="text-right w-32">3</td>
-                            <td class="text-right w-32">$25</td>
-                            <td class="text-right w-32 font-medium">$75</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -100,4 +91,35 @@
             </div>
         </div>
     </div>
+@include('modals.add-ons')
+<script> 
+function addOns(){
+    $("#add-modal").modal('show');
+}
+$(document).ready(function(){
+    $('#addForm').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: '../api/reservation/add_ons',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // console.log("response: ", response);
+                if(response == 1){
+                    $.toast('Add-ons successfully added.');
+                    $("#add-modal").modal('hide');
+                    setTimeout(()=>{window.location.reload();},2000);
+                }
+            },
+            error: function(error) {
+                console.log("error: ", error);
+            }
+        });
+
+    });
+});
+</script>
 </x-app-layout>

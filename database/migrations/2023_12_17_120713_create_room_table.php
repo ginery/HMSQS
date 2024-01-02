@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('room_name');
             $table->integer('room_type');
             $table->float('price');
+            $table->string('pax');
             $table->string('description');
             $table->string('image');
             $table->timestamps();

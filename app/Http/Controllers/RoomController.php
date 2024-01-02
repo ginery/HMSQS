@@ -24,15 +24,17 @@ class RoomController extends Controller
         $imageName = $image->getClientOriginalName();
         $imagePath = public_path('assets/uploads/rooms/' . $imageName); 
         $image->move(public_path('assets/uploads/rooms'), $imageName);
-
+        $pax = array($request->adult, $request->child);
+        $paxString = implode(', ', $pax);
 
         $result = Room::create([
-            'room_name' => $request->room_name,
-            'room_type' => $request->room_type,
-            'price' => $request->price,
-            'description' => $request->description,
-            'image' => $imageName, 
-            'status' => 1,
+            'room_name'     => $request->room_name,
+            'room_type'     => $request->room_type,
+            'pax'           => $paxString,
+            'price'         => $request->price,
+            'description'   => $request->description,
+            'image'         => $imageName, 
+            'status'        => 1,
         ]);
      
         if($result){

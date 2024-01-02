@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\Services;
+use App\Models\Payment;
+use App\Models\AddOns;
 use Illuminate\Support\Facades\Config;
 
 class ReservationController extends Controller
@@ -122,8 +124,27 @@ class ReservationController extends Controller
     }
     public function view_details($reservation_id): View
     {
-        $reservations = Reservation::where('id',$reservation_id)->get()->first();
-      
-        return view('reservation-details', ['reservations' => $reservations]);
+        $reservation = Reservation::where('id',$reservation_id)->get()->first();
+        $reservations = Reservation::where('id',$reservation_id)->get();
+        $payment = Payment::where('id',$reservation_id)->get()->first();
+        $add_ons = AddOns::where('id',$reservation_id)->get();
+        $services = Services::all();
+        return view('reservation-details', ['reservation' => $reservation, 'payment' => $payment, 'services' => $services, 'reservations' => $reservations, 'add_ons' => $add_ons]);
+    }
+    public function add_ons(Request $request, ){
+        $service = Services::where('id',$request->service_id)->get()->first();
+        $result = AddOns::create([
+            'user_id' => $request->user_id,
+            'service_id' => $request->service_id,
+            'reservation_id' => $request->reservation_id,
+            'total_amount' => $service->price,
+            'status' => 0,
+        ]);
+        if ($result) {
+            return 1;
+        } else {
+            return 0;
+        }
+       
     }
 }

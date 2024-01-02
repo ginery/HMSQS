@@ -39,6 +39,7 @@ Route::group(['prefix' => 'reservation'], function () {
     Route::post('/check', [ReservationController::class, 'reserve']);
     Route::post('/approve', [ReservationController::class, 'approve']);
     Route::post('/decline', [ReservationController::class, 'decline']);
+    Route::post('/add_ons', [ReservationController::class, 'add_ons']);
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);

@@ -18,8 +18,9 @@ class AddOns extends Authenticatable
      */
     protected $fillable = [
         'user_id',
-        'reservation_id',
         'service_id',
+        'reservation_id',
+        'total_amount',        
         'status'
     ];
 
