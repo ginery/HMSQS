@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('service_name');
-            $table->int('service_type');
+            $table->integer('service_type');
             $table->float('price');
             $table->string('description');
             $table->timestamps();
