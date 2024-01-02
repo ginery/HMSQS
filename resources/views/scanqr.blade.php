@@ -39,23 +39,35 @@ let html5QrcodeScanner = new Html5QrcodeScanner(
 /* verbose= */ false);
 html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 function scanQR(scan_data){
-    // console.log(scan_data);
-    $("#success-modal").modal("show");
-    var formData = new FormData();
-        formData.append("scan_data", scan_data);
-        $.ajax({
-            url: 'api/qr/scanqr',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                console.log("response: ", response);
-            },
-            error: function(error) {
-                console.log("error: ", error);
-            }
-        });
+        // console.log(scan_data);
+        $("#success-modal").modal("show");
+
+        let explode = scan_data.split('-');
+        console.log("Scaned: ", scan_data);
+        if(explode[1] == "RES"){
+            var formData = new FormData();
+            formData.append("scan_data", scan_data);
+            $.ajax({
+                url: 'api/qr/scanqr',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log("response: ", response);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
+        }else{
+            $.toast('Success! Redirecting to invoice..');
+            $("#add-modal").modal('hide');
+            setTimeout(()=>{
+                window.location.href = "/invoice/" + explode[2];
+            },2000);
+           
+        }
 }
 
 </script>

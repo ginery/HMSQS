@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Reservation;
 use App\Models\Room;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Config;
 class ScanqrController extends Controller
 {
     public function index() : View {
         return view('scanqr');
     }
-    public function scanQR(Request $request) {
+    public function scanQR(Request $request)  {
 
         $explode = explode('-', $request->scan_data);
         if($explode[1] == 'RES'){
@@ -43,10 +44,7 @@ class ScanqrController extends Controller
                     return 0;
                 }
             }
-        }else{
-
         }
-
     
     }
 }
