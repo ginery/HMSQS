@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('services')) {
-            Schema::dropIfExists('services');
-        }
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('add_ons', function (Blueprint $table) {
             $table->id();
-            $table->string('service_name');
-            $table->int('service_type');
-            $table->float('price');
-            $table->string('description');
-            $table->timestamps();
+            $table->integer('user_id');
+            $table->integer('reservation_id');
+            $table->float('total_amount');
             $table->integer('status');
+            $table->timestamps();
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('add_ons');
     }
 };

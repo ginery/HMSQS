@@ -122,6 +122,8 @@ class ReservationController extends Controller
     }
     public function view_details($reservation_id): View
     {
-        return view('reservation-details');
+        $reservations = Reservation::where('id',$reservation_id)->get()->first();
+      
+        return view('reservation-details', ['reservations' => $reservations]);
     }
 }

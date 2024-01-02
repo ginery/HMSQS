@@ -1,20 +1,32 @@
 <x-app-layout>
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto">
+            Reservation Details
+        </h2>
+        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+            <button class="button text-white bg-theme-1 shadow-md mr-2">Add Service</button>
+            <div class="dropdown relative ml-auto sm:ml-0">
+                <button class="dropdown-toggle button px-2 box text-gray-700">
+                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    {{-- {{dd($reservations)}} --}}
     <!-- BEGIN: Invoice -->
     <div class="intro-y box overflow-hidden mt-5">
         <div class="flex flex-col lg:flex-row pt-10 px-5 sm:px-20 sm:pt-20 lg:pb-20 text-center sm:text-left">
-            <div class="font-semibold text-theme-1 text-3xl">INVOICE</div>
+            <div class="font-semibold text-theme-1 text-3xl">RESERVATION - #{{$reservations->id}}</div>
             <div class="mt-20 lg:mt-0 lg:ml-auto lg:text-right">
-                <div class="text-xl text-theme-1 font-medium">Left4code</div>
-                <div class="mt-1">left4code@gmail.com</div>
-                <div class="mt-1">8023 Amerige Street Harriman, NY 10926.</div>
+                <div class="text-xl text-theme-1 font-medium">{{getUserName($reservations->user_id)}}</div>
+                <div class="mt-1">{{getUserEmail($reservations->user_id)}}</div>
             </div>
         </div>
         <div class="flex flex-col lg:flex-row border-b px-5 sm:px-20 pt-10 pb-10 sm:pb-20 text-center sm:text-left">
             <div>
                 <div class="text-base text-gray-600">Client Details</div>
-                <div class="text-lg font-medium text-theme-1 mt-2">Arnold Schwarzenegger</div>
-                <div class="mt-1">arnodlschwarzenegger@gmail.com</div>
-                <div class="mt-1">260 W. Storm Street New York, NY 10025.</div>
+                <div class="text-lg font-medium text-theme-1 mt-2">{{getUserName($reservations->user_id)}}</div>
+                <div class="mt-1">{{getUserEmail($reservations->user_id)}}</div>
             </div>
             <div class="mt-10 lg:mt-0 lg:ml-auto lg:text-right">
                 <div class="text-base text-gray-600">Receipt</div>
