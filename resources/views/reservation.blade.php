@@ -7,7 +7,7 @@
             @if (Auth::user()->role == 2)
             <button button="button" onclick="scanQr()" class="button box flex text-white bg-theme-9 shadow-md mr-2"><i data-feather="maximize" class="mr-1"></i> QR Scan</button>
             @endif
-            <div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>
+            {{--<div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>--}}
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">
                     <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search...">
@@ -69,7 +69,7 @@
 
                                             <a href="{{ route('view-reservation', $reservation->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
 
-                                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
+                                            <a href="#" onclick="deleteReservation({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
 
                                             <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="maximize" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
 
@@ -89,6 +89,7 @@
             </table>
         </div>
         <!-- END: Data List -->
+        {{--
         <!-- BEGIN: Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
             <ul class="pagination">
@@ -118,6 +119,7 @@
             </select>
         </div>
         <!-- END: Pagination -->
+        --}}
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->
     <div class="modal" id="delete-confirmation-modal">
@@ -300,6 +302,29 @@
                     console.log("error: ", error);
                 }
             });
+        }
+
+        function deleteReservation(reservation_id) {
+            if(confirm("Are you sure to delete reservation?")){
+                var formData = new FormData();
+                formData.append("reservation_id", reservation_id);
+
+                $.ajax({
+                    url: 'api/reservation/delete',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $.toast("Success! Selected reservation was removed.");
+                        $(".intro-x").fadeOut(500)
+                        setTimeout(()=>{window.location.reload();},2000);
+                    },
+                    error: function(error) {
+                        console.log("error: ", error);
+                    }
+                });
+            }
         }
     </script>
 </x-app-layout>

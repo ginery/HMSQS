@@ -22,7 +22,7 @@ class UsersController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => Hash::make('12345'),
+            'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
 
@@ -39,6 +39,23 @@ class UsersController extends Controller
             return 1;
         } else {
             return 0;
+        }
+    }
+
+    public function update(Request $request){
+        $data = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ];
+
+        $res = User::where('id', $request->id)->update($data);
+
+        if($res){
+            echo 1;
+        }else{
+            echo 0;
         }
     }
 }

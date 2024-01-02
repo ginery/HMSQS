@@ -34,7 +34,7 @@ create by: ginx
                 <div class="top-bar">
 
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="{{route('dashboard')}}" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">{{ucfirst(Route::current()->getName())}}</a> </div>
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="{{route('dashboard')}}" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">{{ucfirst(str_replace("-"," ", Route::current()->getName()))}}</a> </div>
                     <!-- END: Breadcrumb -->
                     <!-- BEGIN: Account Menu -->
                      <!-- BEGIN: Search -->

@@ -147,4 +147,9 @@ class ReservationController extends Controller
         }
        
     }
+
+    public function delete(Request $request){
+        $res = Reservation::where('id', $request->reservation_id)->delete();
+        echo $res ? 1 : 0;
+    }
 }

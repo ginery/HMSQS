@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'user'], function () {
     Route::post('/user_add', [UsersController::class, 'create']);
+    Route::post('/user_edit', [UsersController::class, 'update']);
 });
 Route::group(['prefix' => 'room'], function () {
     Route::post('/room_add', [RoomController::class, 'create']);
@@ -40,6 +41,7 @@ Route::group(['prefix' => 'reservation'], function () {
     Route::post('/approve', [ReservationController::class, 'approve']);
     Route::post('/decline', [ReservationController::class, 'decline']);
     Route::post('/add_ons', [ReservationController::class, 'add_ons']);
+    Route::post('/delete', [ReservationController::class, 'delete']);
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);
