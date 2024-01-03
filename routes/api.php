@@ -45,6 +45,8 @@ Route::group(['prefix' => 'reservation'], function () {
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);
+    Route::post('/update', [ServicesController::class, 'update']);
+    Route::post('/delete', [ServicesController::class, 'delete']);
 });
 Route::group(['prefix' => 'payment'], function () {
     Route::post('/add_payment', [PaymentController::class, 'create']);

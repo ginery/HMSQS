@@ -34,7 +34,7 @@
                 <tbody>
                     @foreach ($reservations as $reservation)
 
-                    <tr class="intro-x" style="cursor: pointer">
+                    <tr class="intro-x reservation-{{$reservation->id}}" style="cursor: pointer">
                         <td class="w-40">
                             <div class="flex">
                                 <div class="w-10 h-10 image-fit zoom-in">
@@ -65,7 +65,7 @@
                                         <div class="p-4 border-b border-gray-200 font-medium">Action</div>
 
                                         <div class="p-2">
-                                            <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="check-square" class="w-4 h-4 text-gray-700 mr-2"></i> Edit </a>
+                                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="view_reservation_details('{{$reservation}}')"> <i data-feather="check-square" class="w-4 h-4 text-gray-700 mr-2"></i> Edit </a>
 
                                             <a href="{{ route('view-reservation', $reservation->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
 
@@ -128,14 +128,16 @@
                 <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
                 <div class="text-3xl mt-5">Are you sure?</div>
                 <div class="text-gray-600 mt-2">Do you really want to delete these records? This process cannot be undone.</div>
+                <input type="hidden" id="reservation_id">
             </div>
             <div class="px-5 pb-8 text-center">
                 <button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Cancel</button>
-                <button type="button" class="button w-24 bg-theme-6 text-white">Delete</button>
+                <button type="button" class="button w-24 bg-theme-6 text-white delete-btn">Delete</button>
             </div>
         </div>
     </div>
     @include('modals.add-reservation')
+    @include('modals.edit-reservation')
     @include('modals.scan-qr')
     @include('modals.generate-qr')
     @include('modals.success-scan')
@@ -258,7 +260,9 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log("response: ", response);
+                    // console.log("response: ", response);
+                    $.toast("Success! Scan successful.");
+                    setTimeout(()=>{window.location.reload();},2000);
                 },
                 error: function(error) {
                     console.log("error: ", error);
@@ -277,7 +281,9 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log("response: ", response);
+                    // console.log("response: ", response);
+                    $.toast("Success! Selected reservation was approved.");
+                    setTimeout(()=>{window.location.reload();},2000);
                 },
                 error: function(error) {
                     console.log("error: ", error);
@@ -296,7 +302,9 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log("response: ", response);
+                    // console.log("response: ", response);
+                    $.toast("Success! Selected reservation was declined.");
+                    setTimeout(()=>{window.location.reload();},2000);
                 },
                 error: function(error) {
                     console.log("error: ", error);
@@ -305,26 +313,45 @@
         }
 
         function deleteReservation(reservation_id) {
-            if(confirm("Are you sure to delete reservation?")){
-                var formData = new FormData();
-                formData.append("reservation_id", reservation_id);
+            $("#delete-confirmation-modal").modal("show");
+            $("#reservation_id").val(reservation_id);
+        }
 
-                $.ajax({
-                    url: 'api/reservation/delete',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        $.toast("Success! Selected reservation was removed.");
-                        $(".intro-x").fadeOut(500)
-                        setTimeout(()=>{window.location.reload();},2000);
-                    },
-                    error: function(error) {
-                        console.log("error: ", error);
-                    }
-                });
-            }
+        $(".delete-btn").click( function(){
+            $("#delete-confirmation-modal").modal("hide");
+            var reservation_id = $("#reservation_id").val();
+            var formData = new FormData();
+            formData.append("reservation_id", reservation_id);
+
+            $.ajax({
+                url: 'api/reservation/delete',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $.toast("Success! Selected reservation was removed.");
+                    $(".reservation-"+reservation_id).fadeOut(500)
+                    setTimeout(()=>{window.location.reload();},2000);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
+        });
+
+        function view_reservation_details(reservation_data){
+            $("#edit-modal").modal('show');
+            var o = JSON.parse(reservation_data);
+            console.log(o)
+            var pax = o.pax.split(", ");
+
+            $("#e_id").val(o.id);
+            $("#e_room_id").val(o.room_id).trigger('change');
+            $("#e_service_id").val(o.service_id).trigger('change');
+            $("#e_adult").val(pax[0]).trigger('change');
+            $("#e_child").val(pax[1]).trigger('change');
+            $("#e_total_amount").val(o.total_amount);
         }
     </script>
 </x-app-layout>

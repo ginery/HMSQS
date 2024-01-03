@@ -26,7 +26,7 @@
                 <tbody>
                     @foreach ($services as $services)
 
-                    <tr class="intro-x">
+                    <tr class="intro-x service-{{$services->id}}">
                         <td>
                             <a href="" class="font-medium whitespace-no-wrap">{{$services->service_name}}</a>
                             <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format($services->price,2)}}</div>
@@ -40,8 +40,8 @@
                         </td>
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
-                                <a class="flex items-center mr-3" href="javascript:;"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                <a class="flex items-center mr-3" href="javascript:;" onclick="view_service_details('{{$services}}')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal" onclick="setDeleteService('{{$services->id}}')"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                             </div>
                         </td>
                     </tr>
@@ -89,14 +89,16 @@
                 <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
                 <div class="text-3xl mt-5">Are you sure?</div>
                 <div class="text-gray-600 mt-2">Do you really want to delete these records? This process cannot be undone.</div>
+                <input type="hidden" id="service_id" />
             </div>
             <div class="px-5 pb-8 text-center">
                 <button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Cancel</button>
-                <button type="button" class="button w-24 bg-theme-6 text-white">Delete</button>
+                <button type="button" class="button w-24 bg-theme-6 text-white delete-btn">Delete</button>
             </div>
         </div>
     </div>
     @include('modals.add-services')
+    @include('modals.edit-services')
     <script>
         function addModal() {
             $("#add-modal").modal("show");
@@ -123,6 +125,69 @@
                     }
                 });
 
+            });
+        });
+
+        function setDeleteService(service_id){
+            $("#service_id").val(service_id);
+        }
+
+        $(".delete-btn").click( function(){
+            $("#delete-confirmation-modal").modal("hide");
+            var service_id = $("#service_id").val();
+            var formData = new FormData();
+            formData.append("service_id", service_id);
+
+            $.ajax({
+                url: 'api/services/delete',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $.toast("Success! Selected service was removed.");
+                    $(".service-"+service_id).fadeOut(500)
+                    setTimeout(()=>{window.location.reload();},2000);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
+        });
+
+        function view_service_details(service_data){
+            $("#edit-modal").modal('show');
+            var o = JSON.parse(service_data);
+            console.log(o);
+
+            $("#id").val(o.id);
+            $("#service_name").val(o.service_name);
+            $("#service_type").val(o.service_type).trigger('change');
+            $("#price").val(o.price);
+            $("#description").val(o.description);
+
+        }
+
+        
+
+        $("#editForm").submit( function(e){
+            e.preventDefault();
+            $("#edit-modal").modal("hide");
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: 'api/services/update',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $.toast("Success! Service details was updated.");
+                    setTimeout(()=>{window.location.reload();},2000);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
             });
         });
     </script>

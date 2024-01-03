@@ -31,4 +31,33 @@ class ServicesController extends Controller
             echo 0;
         }
     }
+
+    public function delete(Request $request)
+    {
+
+        $result = Services::where('id', $request->service_id)->delete();
+        if ($result) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
+    
+    public function update(Request $request)
+    {
+        $data = [
+            'service_name' => $request->service_name,
+            'service_type' => $request->service_type,
+            'price' => $request->price,
+            'description' => $request->description,
+        ];
+
+        $result = Services::where('id', $request->id)->update($data);
+        if ($result) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
 }
