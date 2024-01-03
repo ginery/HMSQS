@@ -61,8 +61,8 @@ function scanQR(scan_data){
                 }
             });
         }else{
-            $.toast('Success! Redirecting to invoice..');
-            $("#add-modal").modal('hide');
+            $("#success-modal").modal('hide');
+            $.toast('Success! Redirecting to invoice..');            
             setTimeout(()=>{
                 window.location.href = "/invoice/" + explode[2];
             },2000);
