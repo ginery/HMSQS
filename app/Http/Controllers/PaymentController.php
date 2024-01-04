@@ -7,11 +7,12 @@ use Illuminate\View\View;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
 class PaymentController extends Controller
 {
     public function index() : View {
         $rooms = Room::where('status', '1')->get();
-        $reservations = Reservation::orderBy('created_at', 'DESC')->get();
+        $reservations = Reservation::where('status', '1')->orderBy('created_at', 'DESC')->get();
         $payments = Payment::where('status', '1')->get();
         return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments]);
     }
@@ -37,12 +38,26 @@ class PaymentController extends Controller
        
         $reservations = [];
         foreach($payments as $pm){
-            $reservation =  Reservation::where('id', $pm->reservation_id)->get();
-           
-            array_push($reservations, $reservation);
-           
+            $reservation =  Reservation::where('id', $pm->reservation_id)->get();           
+            array_push($reservations, $reservation);           
         }
-        // dd(json_encode($reservations[0]));
-        return view('invoice', ['payment'=> $payment, 'reservations' => $reservations[0]]);
+        $payment_data = DB::connection('mysql')->table('payment as p')
+        ->join('reservation as r', 'r.id', '=', 'p.reservation_id')
+        ->join('add_ons as ao', 'p.reservation_id', '=', 'ao.reservation_id')
+        ->select(
+            'r.id',
+            'r.room_id',
+            'r.total_amount',
+            'ao.total_amount as ao_total',
+            'p.payment_type',
+            'p.reference_number',
+            'r.total_amount as r_total',
+            DB::raw('(r.total_amount + ao.total_amount) AS total_amount'),
+            'ao.service_id'
+        )
+        ->where('p.id', '=', $payment_id)
+        ->get();
+        // dd(json_encode($payment_data));
+        return view('invoice', ['payment'=> $payment, 'payment_data' => $payment_data]);
     }
 }

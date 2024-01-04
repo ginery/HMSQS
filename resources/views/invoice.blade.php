@@ -33,15 +33,27 @@
                     </thead>
                     <tbody>
                         {{-- {{dd(json_encode($reservations))}} --}}
-                        @foreach ($reservations as $reservation)                         
+                        @php
+                            $total_amount = 0;
+                        @endphp
+                        @foreach ($payment_data as $pd)
+                        @php
+                            $total_amount += $pd->total_amount;
+                        @endphp                  
                                 <tr>
                                     <td class="border-b">
-                                        <div class="font-medium whitespace-no-wrap">{{$reservation->id}}</div>
+                                        <div class="font-medium whitespace-no-wrap">{{$pd->id}}</div>
                                         <div class="text-gray-600 text-xs whitespace-no-wrap">test</div>
                                     </td>
-                                    <td class="text-right border-b">{{getRoomName($reservation->room_id)}}</td>
-                                    <td class="text-right border-b">{{getServiceName($reservation->service_id)}}</td>
-                                    <td class="text-right border-b font-medium">Php. {{number_format($reservation->total_amount,2)}}</td>
+                                    <td class="text-right border-b">
+                                        <div class="font-medium whitespace-no-wrap">{{getRoomName($pd->room_id)}}</div>
+                                        <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format($pd->r_total,2)}}</div>
+                                    </td>
+                                    <td class="text-right border-b">
+                                        <div class="font-medium whitespace-no-wrap"> {{getServiceName($pd->service_id)}}</div>
+                                        <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format($pd->ao_total,2)}}</div>
+                                    </td>
+                                    <td class="text-right border-b font-medium">Php. {{number_format($pd->total_amount,2)}}</td>
                                 </tr>
                         @endforeach
                     </tbody>
@@ -56,7 +68,7 @@
             </div>
             <div class="text-center sm:text-right sm:ml-auto">
                 <div class="text-base text-gray-600">Total Amount</div>
-                <div class="text-xl text-theme-1 font-medium mt-2">{{number_format($reservation->total_amount,2)}}</div>
+                <div class="text-xl text-theme-1 font-medium mt-2">{{number_format($total_amount,2)}}</div>
                 <div class="mt-1 tetx-xs">Taxes included</div>
             </div>
         </div>
