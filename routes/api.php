@@ -42,6 +42,7 @@ Route::group(['prefix' => 'reservation'], function () {
     Route::post('/decline', [ReservationController::class, 'decline']);
     Route::post('/add_ons', [ReservationController::class, 'add_ons']);
     Route::post('/delete', [ReservationController::class, 'delete']);
+    Route::post('/update', [ReservationController::class, 'update']);
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'services'], function () {
 });
 Route::group(['prefix' => 'payment'], function () {
     Route::post('/add_payment', [PaymentController::class, 'create']);
+    Route::post('/delete', [PaymentController::class, 'delete']);
 });
 Route::group(['prefix' => 'qr'], function () {
     Route::post('/scanqr', [ScanqrController::class, 'scanqr']);

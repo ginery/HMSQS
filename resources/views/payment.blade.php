@@ -29,12 +29,12 @@
                 <tbody>
                     @foreach ($payments as $payment)
 
-                    <tr class="intro-x" style="cursor: pointer" onclick="">
+                    <tr class="intro-x payment-{{$payment->id}}" style="cursor: pointer" onclick="">
                         <td class="w-40">
                             {{$payment->id}}
                         </td>
                         <td>
-                            {{$payment->reservation_id}}
+                            {{$payment->payment_id}}
                         </td>
                         <td class="text-center">
                             {{$payment->payment_type == 'C' ? 'Cash':'Online'}}
@@ -56,7 +56,7 @@
 
                                             <a href="{{route('invoice', $payment->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
 
-                                            <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
+                                            <a href="#" onclick="deletePayment({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
 
                                             <a href="#" onclick="generateQR({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="repeat" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
 
@@ -112,10 +112,11 @@
                 <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
                 <div class="text-3xl mt-5">Are you sure?</div>
                 <div class="text-gray-600 mt-2">Do you really want to delete these records? This process cannot be undone.</div>
+                <input type="hidden" id="payment_id"/>
             </div>
             <div class="px-5 pb-8 text-center">
                 <button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Cancel</button>
-                <button type="button" class="button w-24 bg-theme-6 text-white">Delete</button>
+                <button type="button" class="button w-24 bg-theme-6 text-white delete-btn">Delete</button>
             </div>
         </div>
     </div>
@@ -180,6 +181,34 @@
                     }
                 });
 
+            });
+        });
+
+        function deletePayment(payment_id) {
+            $("#delete-confirmation-modal").modal("show");
+            $("#payment_id").val(payment_id);
+        }
+
+        $(".delete-btn").click( function(){
+            $("#delete-confirmation-modal").modal("hide");
+            var payment_id = $("#payment_id").val();
+            var formData = new FormData();
+            formData.append("payment_id", payment_id);
+
+            $.ajax({
+                url: 'api/payment/delete',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $.toast("Success! Selected payment was removed.");
+                    $(".payment-"+payment_id).fadeOut(500)
+                    setTimeout(()=>{window.location.reload();},2000);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
             });
         });
     </script>

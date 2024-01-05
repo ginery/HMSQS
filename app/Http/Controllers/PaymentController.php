@@ -67,4 +67,15 @@ class PaymentController extends Controller
         // dd(json_encode($payment_data));
         return view('invoice', ['payment'=> $payment, 'payment_data' => $payment_data]);
     }
+    
+    public function delete(Request $request){
+
+        $result = Payment::where('id', $request->payment_id)->delete();
+
+        if($result){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
 }
