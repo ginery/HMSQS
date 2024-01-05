@@ -4,9 +4,6 @@
             @if (Auth::user()->role != 2)
             <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Reservation </button>
             @endif
-            @if (Auth::user()->role == 2)
-            <button button="button" onclick="scanQr()" class="button box flex text-white bg-theme-9 shadow-md mr-2"><i data-feather="maximize" class="mr-1"></i> QR Scan</button>
-            @endif
             {{--<div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>--}}
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">
@@ -71,7 +68,7 @@
 
                                             <a href="#" onclick="deleteReservation({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
 
-                                            <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="maximize" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
+                                            <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="repeat" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
 
                                         </div>
                                         <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
@@ -195,32 +192,6 @@
             });
         });
 
-
-        const html5QrCode = new Html5Qrcode( /* element id */ "reader");
-
-        function onScanSuccess(decodedText, decodedResult) {
-            checkInCheckOut(`${decodedText}`);
-        }
-
-        function onScanFailure(error) {
-            console.warn(`Code scan error = ${error}`);
-        }
-
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader", {
-                fps: 10,
-                qrbox: {
-                    width: 250,
-                    height: 250
-                }
-            },
-            /* verbose= */
-            false);
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-        function scanQr() {
-            $("#scan_qr").modal("show");
-        }
 
         function addModal() {
             $("#add-modal").modal("show");

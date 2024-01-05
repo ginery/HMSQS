@@ -3,17 +3,7 @@
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
             <div class="text-center"> <a href="javascript:;" data-toggle="modal" data-target="#add-user-modal" class="button text-white bg-theme-1 shadow-md mr-2">Add New User</a> </div>
             <!-- <button class="" >Add New User</button> -->
-            <div class="dropdown relative mr-3">
-                <button class="dropdown-toggle button px-2 box text-gray-700">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
-                </button>
-                <div class="dropdown-box mt-10 absolute w-40 top-0 left-0 z-20">
-                    <div class="dropdown-box__content box p-2">
-                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="users" class="w-4 h-4 mr-2"></i> Add Group </a>
-                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="message-circle" class="w-4 h-4 mr-2"></i> Send Message </a>
-                    </div>
-                </div>
-            </div>
+        
             {{--<div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>--}}
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">

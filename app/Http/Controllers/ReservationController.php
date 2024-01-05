@@ -10,14 +10,20 @@ use App\Models\Services;
 use App\Models\Payment;
 use App\Models\AddOns;
 use Illuminate\Support\Facades\Config;
-
+use Illuminate\Support\Facades\Auth;
 class ReservationController extends Controller
 {
     public function index(): View
     {
-        $rooms = Room::where('status', '1')->get();
+        $user_id = Auth::id();
+        if(Auth::user()->role > 0){
+            $reservations = Reservation::where('user_id', $user_id)->orderBy('created_at', 'DESC')->get();
+        }else{
+            $reservations = Reservation::orderBy('created_at', 'DESC')->get();
+        }
+        $rooms = Room::where('status', 1)->get();
         $services = Services::all();
-        $reservations = Reservation::orderBy('created_at', 'DESC')->get();
+        
         return view('reservation', ['rooms' => $rooms, 'reservations' => $reservations, 'services' => $services]);
     }
     public function create(Request $request)

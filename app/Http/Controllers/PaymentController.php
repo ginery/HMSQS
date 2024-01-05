@@ -8,12 +8,19 @@ use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
 {
     public function index() : View {
+        $user_id = Auth::id();
+        if(Auth::user()->role > 0){
+            $payments = Payment::where('status', 1)->where('user_id', $user_id)->get();            
+        }else{
+            $payments = Payment::where('status', 1)->get();
+        }
         $rooms = Room::where('status', '1')->get();
         $reservations = Reservation::where('status', '1')->orderBy('created_at', 'DESC')->get();
-        $payments = Payment::where('status', '1')->get();
+       
         return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments]);
     }
     public function create(Request $request){
