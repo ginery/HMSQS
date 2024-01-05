@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('service_type');
             $table->float('price');
             $table->string('description');
+            $table->string('image');
             $table->timestamps();
             $table->integer('status');
         });

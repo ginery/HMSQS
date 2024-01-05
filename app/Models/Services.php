@@ -22,6 +22,7 @@ class Services extends Authenticatable
         'service_type',
         'price',
         'description',
+        'image',
         'status'
     ];
 

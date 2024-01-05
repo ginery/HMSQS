@@ -136,3 +136,10 @@ if (!function_exists('getServiceType')) {
         return $return;
     }
 }
+if (!function_exists('getServiceImage')) {
+    function getServiceImage($service_id)
+    {
+        $service = Services::where('id', $service_id)->get()->first();
+        return $service ? 'assets/uploads/service/' . $service->image : 'dist/images/preview-4.jpg';
+    }
+}

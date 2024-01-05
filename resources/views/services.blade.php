@@ -16,6 +16,7 @@
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
+                        <th class="whitespace-no-wrap"></th>
                         <th class="whitespace-no-wrap">SERVICE NAME</th>
                         <th class="text-center whitespace-no-wrap">TYPE</th>
                         <th class="text-center whitespace-no-wrap">DESCRIPTION</th>
@@ -27,6 +28,13 @@
                     @foreach ($services as $services)
 
                     <tr class="intro-x service-{{$services->id}}">
+                        <td class="w-40">
+                            <div class="flex">
+                                <div class="w-10 h-10 image-fit zoom-in">
+                                    <img alt="{{getServiceName($services->id)}}" class="tooltip rounded-full" src="{{getServiceImage($services->id)}}" title="{{getServiceName($services->id)}}">
+                                </div>
+                            </div>
+                        </td>
                         <td>
                             <a href="" class="font-medium whitespace-no-wrap">{{$services->service_name}}</a>
                             <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format($services->price,2)}}</div>
@@ -145,9 +153,11 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    $.toast("Success! Selected service was removed.");
-                    $(".service-"+service_id).fadeOut(500)
-                    setTimeout(()=>{window.location.reload();},2000);
+                    if(response === 1){
+                        $.toast("Success! Selected service was removed.");
+                        $(".service-"+service_id).fadeOut(500)
+                        setTimeout(()=>{window.location.reload();},2000);
+                    }
                 },
                 error: function(error) {
                     console.log("error: ", error);
@@ -182,8 +192,10 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    $.toast("Success! Service details was updated.");
-                    setTimeout(()=>{window.location.reload();},2000);
+                    if(response == 1){
+                        $.toast("Success! Service details was updated.");
+                        setTimeout(()=>{window.location.reload();},2000);
+                    }
                 },
                 error: function(error) {
                     console.log("error: ", error);
