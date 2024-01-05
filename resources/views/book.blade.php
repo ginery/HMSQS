@@ -695,6 +695,11 @@
         $("#checkout_date").val("{{request()->input('checkOutDate')}}");
         $("#adults").val("{{request()->input('adults')}}");
         $("#children").val("{{request()->input('children')}}");
+      }else{
+        $("#checkin_date").val("{{date('Y-m-d')}}");
+        $("#checkout_date").val("{{date('Y-m-d', strtotime('+1 day'))}}");
+        $("input[name=checkin]").val("{{date('Y-m-d')}}");
+        $("input[name=checkout]").val("{{date('Y-m-d', strtotime('+1 day'))}}");
       }
 
       $("#form-login").submit(function(e){

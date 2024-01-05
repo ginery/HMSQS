@@ -12,24 +12,42 @@
                 <div class="menu__title"> Dashboard </div>
             </a>
         </li>
+        @if (Auth::user()->role != 2)
         <li>
             <a href="{{ route('rooms') }}" class="menu">
                 <div class="menu__icon"> <i data-feather="inbox"></i> </div>
                 <div class="menu__title"> Rooms </div>
             </a>
         </li>
+        @endif
         <li>
             <a href="{{ route('reservation') }}" class="menu">
                 <div class="menu__icon"> <i data-feather="book"></i> </div>
                 <div class="menu__title"> Reservations </div>
             </a>
         </li>
+        @if (Auth::user()->role == 0)
         <li>
-            <a href="#" class="menu">
+            <a href="{{ route('services') }}" class="menu">
+                <div class="menu__icon"> <i data-feather="star"></i> </div>
+                <div class="menu__title"> Services </div>
+            </a>
+        </li>
+        @endif
+        <li>
+            <a href="{{ route('payment') }}" class="menu">
                 <div class="menu__icon"> <i data-feather="dollar-sign"></i> </div>
                 <div class="menu__title"> Payments </div>
             </a>
         </li>
+        @if (Auth::user()->role == 2)
+        <li>
+            <a href="{{ route('scanqr') }}" class="menu">
+                <div class="menu__icon"> <i data-feather="maximize"></i> </div>
+                <div class="menu__title"> Scan QR </div>
+            </a>
+        </li>
+        @endif
         
     </ul>
 </div>

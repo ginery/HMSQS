@@ -9,8 +9,8 @@ use App\Models\Room;
 use App\Models\Services;
 use App\Models\Payment;
 use App\Models\AddOns;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 class ReservationController extends Controller
 {
     public function index(): View
@@ -24,6 +24,11 @@ class ReservationController extends Controller
         $rooms = Room::where('status', 1)->get();
         $services = Services::all();
         
+        if(Auth::user()->role != 2){
+            $reservations = Reservation::orderBy('created_at', 'DESC')->get();
+        }else{
+            $reservations = Reservation::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        }
         return view('reservation', ['rooms' => $rooms, 'reservations' => $reservations, 'services' => $services]);
     }
     public function create(Request $request)
@@ -157,5 +162,24 @@ class ReservationController extends Controller
     public function delete(Request $request){
         $res = Reservation::where('id', $request->reservation_id)->delete();
         echo $res ? 1 : 0;
+    }
+
+    public function update(Request $request)
+    {
+        $pax = array($request->adult, $request->child);
+        $paxString = implode(', ', $pax);
+        $data = [
+            'room_id' => $request->room_id,
+            'service_id' => $request->service_id,
+            'pax' => $paxString,
+            'total_amount' => $request->total_amount,
+        ];
+        
+        $result = Reservation::where('id', $request->id)->update($data);
+        if ($result) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

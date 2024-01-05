@@ -23,9 +23,9 @@
                         <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
                         <th class="text-center whitespace-no-wrap">PAYMENT STATUS</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
-                        @if (Auth::user()->role != '2')
+                        {{--@if (Auth::user()->role != '2')--}}
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
-                        @endif
+                        {{--@endif--}}
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +54,7 @@
                             {!!getReservationStatus($reservation->id)!!}
 
                         </td>
-                        @if (Auth::user()->role != '2')
+                        
                         <td class="table-report__action w-56">
                             <div class="dropdown relative"> <a href="#" class="dropdown-toggle button inline-block text-black"><i data-feather="settings" class="w-6 h-6 text-gray-700"></i></a>
                                 <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 -mr-12 sm:mr-0 z-20">
@@ -67,19 +67,22 @@
                                             <a href="{{ route('view-reservation', $reservation->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
 
                                             <a href="#" onclick="deleteReservation({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
-
-                                            <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="repeat" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
-
+                                            @if (Auth::user()->role != '2')
+                                            <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="maximize" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
+                                            
+                        @endif
                                         </div>
+                                        @if (Auth::user()->role != '2')
                                         <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
                                             <button type="button" onclick="approve({{$reservation->id}})" class="button button--sm bg-theme-1 text-white">Approve</button>
                                             <button type="button" onclick="decline({{$reservation->id}})" class="button button--sm bg-theme-6 text-white ml-auto">Decline</button>
                                         </div>
+                                        
+                        @endif
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -154,6 +157,18 @@
                     }
                 });
             });
+            $('#e_room_id').on('change', function() {
+                var val = $(this).val();
+                $.ajax({
+                    url: 'api/get-room-price/' + val,
+                    type: 'GET',
+                    success: function(response) {
+                        room_price = response.price;
+                        var total = room_price + service_price;
+                        $("#e_total_amount").val(total);
+                    }
+                });
+            });
             $('#service_id').on('change', function() {
                 var val = $(this).val();
 
@@ -164,6 +179,19 @@
                         service_price = response.price;
                         var total = room_price + service_price;
                         $("#total_amount").val(total);
+                    }
+                });
+            });
+            $('#e_service_id').on('change', function() {
+                var val = $(this).val();
+
+                $.ajax({
+                    url: 'api/get-service-price/' + val,
+                    type: 'GET',
+                    success: function(response) {
+                        service_price = response.price;
+                        var total = room_price + service_price;
+                        $("#e_total_amount").val(total);
                     }
                 });
             });
@@ -324,5 +352,29 @@
             $("#e_child").val(pax[1]).trigger('change');
             $("#e_total_amount").val(o.total_amount);
         }
+        
+        $('#editForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: 'api/reservation/update',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // console.log("response: ", response);
+                        if(response == 1){
+                            $.toast('Success! Reservation details was updated.');
+                            $("#edit-modal").modal('hide');
+                            setTimeout(()=>{window.location.reload();},2000);
+                        }
+                    },
+                    error: function(error) {
+                        console.log("error: ", error);
+                    }
+                });
+
+            });
     </script>
 </x-app-layout>
