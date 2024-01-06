@@ -34,7 +34,7 @@ created by: ginx
                                 <br>
                                 sign up to your account.
                             </div>
-                            <div class="-intro-x mt-5 text-lg text-white">Manage all your e-commerce accounts in one place</div>
+                            
                         </div>
                     </div>
                     <!-- END: Register Info -->
