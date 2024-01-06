@@ -137,7 +137,7 @@
     <div class="intro-y box py-10 sm:py-20 mt-5">
         <div class="px-5 mt-10">
             <div class="font-medium text-center text-lg">Welcome to Hometel, <span style="color: #1C3FAA">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span></div>
-            <div class="text-gray-600 text-center mt-2">Enjoy our offeres exclusive for you.</div>
+            <div class="text-gray-600 text-center mt-2">Enjoy our offers exclusive for you.</div>
             <br>
             <center>
             <a href="{{route('book')}}" class="button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white"> <i data-feather="book" class="w-4 h-4 mr-2"></i> Book Now! </a>
