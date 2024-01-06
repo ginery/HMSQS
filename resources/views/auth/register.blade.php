@@ -47,7 +47,7 @@ created by: ginx
                             <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                                 Sign Up
                             </h2>
-                            <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
+                            <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account.</div>
                             <div class="intro-x mt-8">
                                 <input type="text" class="intro-x login__input input input--lg border border-gray-300 block" name="first_name" required autofocus placeholder="First Name">
                                 <input type="text" name="last_name" class="intro-x login__input input input--lg border border-gray-300 block mt-4" placeholder="Last Name">
