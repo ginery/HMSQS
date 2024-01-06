@@ -87,7 +87,26 @@
                   >
                     Contact
                   </a>
-                </li>              
+                </li>
+                <li class="group relative">
+                  <div class="lg:hidden block px-2">
+                      <a
+                      href="{{ route('login') }}"
+                      class="loginBtn px-[22px] py-2 text-base font-medium text-white hover:opacity-70"
+                      >
+                      Login
+                      </a>
+                      @if (Route::has('register'))
+                      <a
+                      href="{{ route('register') }}"
+                      class="signUpBtn rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+                      >
+                      
+                      Register
+                      </a>
+                      @endif
+                  </div> 
+                </li>           
               </ul>
             </nav>
             </div>
