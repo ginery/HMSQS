@@ -69,11 +69,7 @@ created by: ginx
                             <button type="submit" class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Login</button>
                             <button onclick="register()" type="button" class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0">Register</button>
                         </div>
-                        <div class="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">
-                            By signin up, you agree to our 
-                            <br>
-                            <a class="text-theme-1" href="">Terms and Conditions</a> & <a class="text-theme-1" href="">Privacy Policy</a> 
-                        </div>
+
                     </div>
                 </div>
           
