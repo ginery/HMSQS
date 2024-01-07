@@ -42,7 +42,7 @@ $currentPageName = Route::current()->getName();
                 <div class="side-menu__title"> Payments </div>
             </a>
         </li>
-        @if (Auth::user()->role == 2)
+        @if (Auth::user()->role != 2)
         <li>
             <a href="{{ route('scanqr') }}" class="<?= $currentPageName == 'scanqr' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="maximize"></i> </div>

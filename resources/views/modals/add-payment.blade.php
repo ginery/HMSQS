@@ -9,13 +9,14 @@
                 <input type="hidden" name="user_id" value="{{Auth::id()}}">
                 <div class="col-span-12 sm:col-span-12">
                     <label>Payment Type</label>
-                    <select name="payment_type" id="payment_type" class="select2 w-full border mt-2 flex-1">
+                    <input type="text" name="payment_type" disabled class="input w-full border mt-2 flex-1" value="Online">
+                    {{-- <select name="payment_type" id="payment_type" class="select2 w-full border mt-2 flex-1">
                         <option value="0">--Select Type--</option>
                         <option value="C">Cash</option>
                         <option value="O">Online</option>
                        
                         
-                    </select>
+                    </select> --}}
                 </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Reservation</label>
