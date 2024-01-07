@@ -4,7 +4,7 @@
             Reservation Details
         </h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="addOns()" class="button text-white bg-theme-1 shadow-md mr-2">Add-ons </button>
+            <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="addOns({{ request()->route('reservation_id') }})" class="button text-white bg-theme-1 shadow-md mr-2">Add-ons </button>
         </div>
     </div>
     
@@ -48,8 +48,16 @@
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
                         </tr>
                     </thead>
-                    <tbody>                            
-                        @foreach ($reservations as $reservation)                           
+                    <tbody>
+                        @php
+                            $total_reservation = 0;
+                            $total_service = 0;
+                            // echo count($add_ons);
+                        @endphp                            
+                        @foreach ($reservations as $reservation)  
+                        @php
+                            $total_reservation += getRoomPrice($reservation->room_id);
+                        @endphp                         
                         <tr>
                             <td class="border-b">
                                 <div class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}} </div>
@@ -63,14 +71,31 @@
                             <td class="text-right border-b w-32">{{number_format(getRoomPrice($reservation->room_id),2)}}</td>
                         </tr>
                         @endforeach
+    
+                    </tbody>
+                </table>
+            </br>
+            <hr style=" border: 1px solid #1C3FAA;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="border-b-2 whitespace-no-wrap">Service</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">Date</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($add_ons as $add_on)
+                        @php
+                            $total_reservation += $add_on->total_amount;
+                        @endphp
                         <tr class="bg-gray-200">
                             <td class="border-b">
-                                <div class="font-medium whitespace-no-wrap">1 </div>
+                                <div class="font-medium whitespace-no-wrap">{{getServiceName($add_on->service_id)}} </div>
                                 <div class="text-gray-600 text-xs whitespace-no-wrap">Add ons</div>
                             </td>
-                            <td class="text-right border-b">2</td>
-                            <td class="text-right border-b w-32">3</td>
+                            <td class="text-right border-b">{{date('F j, Y H:i:A', strtotime($add_on->created_at))}}</td>
+                            <td class="text-right border-b w-32">{{number_format($add_on->total_amount,2)}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -86,15 +111,16 @@
             </div>
             <div class="text-center sm:text-right sm:ml-auto">
                 <div class="text-base text-gray-600">Total Amount</div>
-                <div class="text-xl text-theme-1 font-medium mt-2">$20.600.00</div>
+                <div class="text-xl text-theme-1 font-medium mt-2">{{number_format($total_reservation,2)}}</div>
                 <div class="mt-1 tetx-xs">Taxes included</div>
             </div>
         </div>
     </div>
 @include('modals.add-ons')
 <script> 
-function addOns(){
-    $("#add-modal").modal('show');
+function addOns(reservation_id){
+    // $("#add-modal").modal('show');
+    window.location.href = "/view-reservation/add-ons/"+reservation_id;
 }
 $(document).ready(function(){
     $('#addForm').submit(function(e) {
@@ -111,7 +137,9 @@ $(document).ready(function(){
                 if(response == 1){
                     $.toast('Add-ons successfully added.');
                     $("#add-modal").modal('hide');
-                    setTimeout(()=>{window.location.reload();},2000);
+                    setTimeout(()=>{
+                        window.location.reload();
+                    },1000);
                 }
             },
             error: function(error) {

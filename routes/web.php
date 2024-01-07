@@ -41,6 +41,7 @@ Route::get('/rooms', [RoomController::class, 'index'])->middleware(['auth', 'ver
 
 Route::get('/reservation', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('reservation');
 Route::get('/view-reservation/{reservation_id}', [ReservationController::class, 'view_details'])->middleware(['auth', 'verified'])->name('view-reservation');
+Route::get('/view-reservation/add-ons/{reservation_id}', [ReservationController::class, 'view_add_ons'])->middleware(['auth', 'verified'])->name('add-ons');
 Route::get('/services', [ServicesController::class, 'index'])->middleware(['auth', 'verified'])->name('services');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('payment');
 Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoice'])->middleware(['auth', 'verified'])->name('invoice');

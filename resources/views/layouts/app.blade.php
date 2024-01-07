@@ -32,9 +32,25 @@ create by: ginx
             <div class="content">
                 <!-- BEGIN: Top Bar -->
                 <div class="top-bar">
-
+                    @php
+                        $currentUrl = url()->current();
+                        $url = explode('/',$currentUrl);
+                        // echo count($url);
+                        if(count($url) > 5){
+                            $breadcrumbs = route($url[3],$url[5]);
+                            $name = $url[3];
+                        }else if(count($url) > 4){
+                            $breadcrumbs = route($url[3],$url[4]);
+                            $name = $url[3];
+                            // $breadcrumbs = route("dashboard");
+                            // $name = "test";
+                        }else{
+                            $breadcrumbs = route("dashboard");
+                            $name = "test";
+                        }
+                    @endphp
                     <!-- BEGIN: Breadcrumb -->
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="{{route('dashboard')}}" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">{{ucfirst(str_replace("-"," ", Route::current()->getName()))}}</a> </div>
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="{{$breadcrumbs}}" class="">{{ucfirst(str_replace("-"," ", $name))}}</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">{{ucfirst(str_replace("-"," ", Route::current()->getName()))}}</a> </div>
                     <!-- END: Breadcrumb -->
                     <!-- BEGIN: Account Menu -->
                      <!-- BEGIN: Search -->
