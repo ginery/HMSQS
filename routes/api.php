@@ -43,6 +43,7 @@ Route::group(['prefix' => 'reservation'], function () {
     Route::post('/add_ons', [ReservationController::class, 'add_ons']);
     Route::post('/delete', [ReservationController::class, 'delete']);
     Route::post('/update', [ReservationController::class, 'update']);
+    Route::post('/add_ons_insert', [ReservationController::class, 'add_ons_insert']);
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);

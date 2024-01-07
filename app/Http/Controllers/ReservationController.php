@@ -187,4 +187,7 @@ class ReservationController extends Controller
 
         return view('add-ons', ['services' => $services]);
     }
+    public function add_ons_insert(Request $request){
+        return $request->service_id;
+    }
 }
