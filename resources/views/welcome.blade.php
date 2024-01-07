@@ -90,16 +90,29 @@
                 </li>
                 <li class="group relative">
                   <div class="lg:hidden block px-2">
+                    <a
+                      href="{{ route('login') }}"
+                      class="loginBtn px-[22px] py-2 text-base font-medium text-white hover:text-primary hidden dark:block"
+                      >
+                      Login
+                      </a>
                       <a
                       href="{{ route('login') }}"
-                      class="loginBtn px-[22px] py-2 text-base font-medium text-white hover:opacity-70"
+                      class="loginBtn px-[22px] py-2 text-base font-medium hover:text-primary dark:hidden block"
                       >
                       Login
                       </a>
                       @if (Route::has('register'))
                       <a
                       href="{{ route('register') }}"
-                      class="signUpBtn rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+                      class="signUpBtn rounded-md bg-white bg-opacity-20 px-[22px] py-2 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark hidden dark:block"
+                      >
+                      
+                      Register
+                      </a>
+                      <a
+                      href="{{ route('register') }}"
+                      class="signUpBtn rounded-md bg-dark bg-opacity-20 px-[22px] py-2 text-base font-medium text-dark duration-300 ease-in-out hover:bg-opacity-100 hover:text-white block dark:hidden"
                       >
                       
                       Register
