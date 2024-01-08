@@ -63,19 +63,24 @@
 
                                         <div class="p-2">
                                             <a href="{{ route('view-reservation', $reservation->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
+                                            
+                                        @if (date('Y-m-d', strtotime('+ '.$reservation->terms.' days', strtotime($reservation->created_at))) >= date('Y-m-d') || $reservation->status == 0)
                                             <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="view_reservation_details('{{$reservation}}')"> <i data-feather="check-square" class="w-4 h-4 text-gray-700 mr-2"></i> Edit </a>                                          
 
                                             <a href="#" onclick="deleteReservation({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
                                             @if (Auth::user()->role != '2')
                                             <a href="#" onclick="generateQR({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="maximize" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
                                             @endif
+                                            @endif
                                         </div>
                                         @if (Auth::user()->role != '2')
+                                        @if (date('Y-m-d', strtotime('+ '.$reservation->terms.' days', strtotime($reservation->created_at))) >= date('Y-m-d') || $reservation->status == 0)
                                         <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
-                                            <button type="button" onclick="approve({{$reservation->id}})" class="button button--sm bg-theme-1 text-white">Approve</button>
+                                            <button type="button" onclick="approve({{$reservation->id}})" class="button button--sm bg-theme-1 text-white" {{$reservation->overdue}}>Approve</button>
                                             <button type="button" onclick="decline({{$reservation->id}})" class="button button--sm bg-theme-6 text-white ml-auto">Decline</button>
                                         </div>
-                                        
+
+                                        @endif
                                         @endif
                                     </div>
                                 </div>

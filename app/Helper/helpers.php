@@ -71,13 +71,13 @@ if (!function_exists('getReservationStatus')) {
     function getReservationStatus($reservation_id)
     {
         $result = Reservation::where('id', $reservation_id)->get()->first();
-
+        $overDue = date('Y-m-d', strtotime('+ '.$result->terms.' days', strtotime($result->created_at))) <= date('Y-m-d') ? true : false;
         if ($result) {
-            if ($result->status == 0) {
+            if ($result->status == 0 && !$overDue) {
                 $return = '<div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending</div>';
             } else if ($result->status == 1) {
                 $return = '<div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Approved</div>';
-            } else if ($result->status == 2) {
+            } else if ($result->status == 2 || $overDue) {
                 $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Declined</div>';
             } else {
                 $return = "N/A";

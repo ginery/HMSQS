@@ -24,11 +24,12 @@ class ReservationController extends Controller
         $rooms = Room::where('status', 1)->get();
         $services = Services::all();
         
-        if(Auth::user()->role != 2){
-            $reservations = Reservation::orderBy('created_at', 'DESC')->get();
-        }else{
-            $reservations = Reservation::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
-        }
+        // if(Auth::user()->role != 2){
+        //     $reservations = Reservation::orderBy('created_at', 'DESC')->get();
+        // }else{
+        //     $reservations = Reservation::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        // }
+
         return view('reservation', ['rooms' => $rooms, 'reservations' => $reservations, 'services' => $services]);
     }
     public function create(Request $request)
