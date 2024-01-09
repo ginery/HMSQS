@@ -89,6 +89,7 @@
 
     function addOns(){
         let reservation_id = "{{ request()->route('reservation_id') }}";
+        let user_id = "{{Auth::id()}}";
         var service_id = [];
         $(".room-checkbox:checked").each(function(){
             service_id.push($(this).val());
@@ -100,7 +101,7 @@
                 $.ajax({
                     url: apiEndpoint, // Replace with your upload endpoint
                     type: 'POST',
-                    data: {service_id: service_id},
+                    data: {service_id: service_id, reservation_id: reservation_id, user_id: user_id},
                     success: function(response) {
                         console.log("response: ", response);
                         // if(response > 0){
