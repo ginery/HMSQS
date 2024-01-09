@@ -189,6 +189,22 @@ class ReservationController extends Controller
         return view('add-ons', ['services' => $services]);
     }
     public function add_ons_insert(Request $request){
-        return $request->service_id;
+        
+        foreach($request->service_id as $id){
+            $service = Services::where('id', $id)->get()->first();
+            $result = AddOns::create([
+                'user_id' => Auth::user()->id,
+                'service_id' => $service->service_id,
+                'reservation_id' => $service->reservation_id,
+                'total_amount' => $service->price,
+                'status' => 0,
+            ]);
+        }
+        if ($result) {
+            return 1;
+        } else {
+            return 0;
+        }
+        // return $request->service_id;
     }
 }
