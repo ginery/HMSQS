@@ -7,6 +7,8 @@ use Illuminate\View\View;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\Payment;
+use App\Models\Services;
+use App\Models\AddOns;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
@@ -14,21 +16,48 @@ class PaymentController extends Controller
     public function index() : View {
         $user_id = Auth::id();
         if(Auth::user()->role > 0){
-            $payments = Payment::where('status', 1)->where('user_id', $user_id)->get();            
+            $payments = Payment::where('status', 1)->where('user_id', $user_id)->get();  
+            // $add_ons = AddOns::where('status', 0)->where('user_id', $user_id)->get();  
+            $add_ons = DB::connection('mysql')->table('add_ons')
+            ->join('payments', 'payments.add_ons_id', '=', 'add_ons.id')
+            ->select('add_ons.*', 'payments.*')
+            ->where('add_ons.user_id', $user_id)
+            ->get();
+            $reservations = DB::connection('mysql')->table('reservation')
+            ->join('payment', 'payment.reservation_id', '=', 'reservation.id')
+            ->select('reservation.*', 'payment.*')
+            ->where('reservation.user_id', $user_id)
+            ->get();       
         }else{
             $payments = Payment::where('status', 1)->get();
+            $add_ons = AddOns::where('status', 0)->get(); 
+            $add_ons = DB::connection('mysql')->table('add_ons')->select('add_ons.*')
+            ->leftJoin('payment', 'payment.add_ons_id', '=', 'add_ons.id')
+            ->whereNull('payment.add_ons_id')
+            ->get();
+            // $reservations = DB::connection('mysql')->table('reservation')
+            // ->join('payment', 'payment.reservation_id', '=', 'reservation.id')
+            // ->select('reservation.*', 'payment.*')
+            // ->where('payment.status', 0)
+            // ->get();
+
+            $reservations = DB::connection('mysql')->table('reservation')->select('reservation.*')
+            ->leftJoin('payment', 'payment.reservation_id', '=', 'reservation.id')
+            ->whereNull('payment.reservation_id')
+            ->get();
         }
         $rooms = Room::where('status', '1')->get();
-        $reservations = Reservation::where('status', '1')->orderBy('created_at', 'DESC')->get();
        
-        return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments]);
+       
+        return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments, 'add_ons' => $add_ons]);
     }
     public function create(Request $request){
 
         $result = Payment::create([
             'user_id' => $request->user_id,
-            'reservation_id' => $request->reservation_id,
-            'payment_type' => $request->payment_type,
+            'add_ons_id' => $request->add_ons_id,
+            'reservation_id' => $request->reservation_id == 0 ? $request->input_reservation_id : $request->reservation_id,
+            'payment_type' => $request->payment_type  == 'Online' ? 'O': $request->payment_type,
             'reference_number' => $request->reference_number,
             'total_amount' => $request->total_amount,
             'status' => 1,
@@ -38,6 +67,7 @@ class PaymentController extends Controller
         }else{
             echo 0;
         }
+        // echo  $request->reservation_id == 0 ? $request->input_reservation_id : $request->reservation_id;
     }
     public function invoice($payment_id) : View {
         $payment = Payment::where('id', $payment_id)->where('status','1')->get()->first();

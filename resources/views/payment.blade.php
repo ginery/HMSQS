@@ -152,11 +152,24 @@
             $('#reservation').on('click', function() {
                 var reservation = $(this).val();
                 $('#service').prop('checked', false);
+                $("#service_dropdown").hide();
+                $("#reservation_dropdown").show();
+                $('#service').val(0);
                 console.log("reservation", reservation); // Output the selected value to the console
             });
             $('#service').on('click', function() {
                 var service = $(this).val();
+                $('#reservation').prop('checked', false);
+                $("#reservation_dropdown").hide();
+                $("#service_dropdown").show();
+                $('#reservation').val(0);
                 console.log("service", service); // Output the selected value to the console
+            });
+            $("#add_ons_id").on('change', function() {
+               
+                var reservation_id = $(this).find('option:selected').attr('class');
+                console.log(reservation_id);
+                $('#input_reservation_id').val(reservation_id);
             });
             $('#payment_type').on('change', function() {
                 let val_selected = $(this).val();
@@ -178,7 +191,7 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        // console.log("response: ", response);
+                        console.log("response: ", response);
                         if(response == 1){
                             $.toast('Success! New payment was added.');
                             $("#add-modal").modal('hide');

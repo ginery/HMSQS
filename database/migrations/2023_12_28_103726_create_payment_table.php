@@ -20,7 +20,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('reservation_id');
-            $table->integer('service_id');
+            $table->integer('add_ons_id');
             $table->string('payment_type');
             $table->string('reference_number')->nullable();
             $table->float('total_amount');

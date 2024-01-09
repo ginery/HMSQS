@@ -36,6 +36,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                          
                             <th class="border-b-2 whitespace-no-wrap">DESCRIPTION</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PAX</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
@@ -63,7 +64,7 @@
                             
                             ?></td>
                             <td class="text-right border-b w-32">{{number_format(getRoomPrice($reservation->room_id),2)}}</td>
-                            <td class="text-right border-b w-32">{!!getPaymentStatus1($reservation->id,$reservation->service_id)!!}</td>
+                            <td class="text-right border-b w-32">{!!getPaymentStatus1($reservation->id,0)!!}</td>
                         </tr>
                         @endforeach
     
@@ -74,6 +75,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th class="border-b-2 whitespace-no-wrap">ID</th>
                             <th class="border-b-2 whitespace-no-wrap">SERVICE</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">DATE</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
@@ -86,13 +88,14 @@
                             $total_reservation += $add_on->total_amount;
                         @endphp
                         <tr class="bg-gray-200">
+                            <td class="text-center border-b w-32">{{$add_on->id}}</td>
                             <td class="border-b">
                                 <div class="font-medium whitespace-no-wrap">{{getServiceName($add_on->service_id)}} </div>
                                 <div class="text-gray-600 text-xs whitespace-no-wrap">Add ons</div>
                             </td>
                             <td class="text-right border-b">{{date('F j, Y H:i:A', strtotime($add_on->created_at))}}</td>
                             <td class="text-right border-b w-32">{{number_format($add_on->total_amount,2)}}</td>
-                            <td class="text-right border-b w-32">{!!getPaymentStatus1($add_on->id,$add_on->service_id)!!}</td>
+                            <td class="text-right border-b w-32">{!!getPaymentStatus1($reservation->id,$add_on->id)!!}</td>
                         </tr>
                         @endforeach
                     </tbody>

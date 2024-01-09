@@ -145,9 +145,9 @@ if (!function_exists('getServiceImage')) {
 }
 
 if (!function_exists('getPaymentStatus1')) {
-    function getPaymentStatus1($reservation_id, $service_id)
+    function getPaymentStatus1($reservation_id, $add_ons_id)
     {
-        $result = Payment::where('reservation_id', $reservation_id)->where('service_id', $service_id)->get()->first();
+        $result = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', $add_ons_id)->get()->first();
        
        
             if ($result) {
