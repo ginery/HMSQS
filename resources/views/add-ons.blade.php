@@ -103,13 +103,12 @@
                     type: 'POST',
                     data: {service_id: service_id, reservation_id: reservation_id, user_id: user_id},
                     success: function(response) {
-                        console.log("response: ", response);
-                        // if(response > 0){
-                        //     $.toast('Success! Services added as add ons.');
-                        //     setTimeout(()=>{ window.location.reload(); },2000)
-                        // }else{
-                        //     $.toast('Error! Something was wrong.');
-                        // }
+                        if(response > 0){
+                            $.toast('Success! Services added as add ons.');
+                            setTimeout(()=>{ window.location.href="/view-reservation/"+reservation_id },2000)
+                        }else{
+                            $.toast('Error! Something was wrong.');
+                        }
                     },
                     error: function(error) {
                         console.log("error: ", error);
