@@ -1,3 +1,9 @@
+@php
+    $users = App\Models\User::where('role', 2)->get()->count();
+    $available = App\Models\Room::where('status', 1)->get()->count();
+    $occupied = App\Models\Room::where('status', 0)->get()->count();
+    $total_sales = App\Models\Payment::where('status', 1)->sum('total_amount');
+@endphp
 <x-app-layout>
     @if(Auth::user()->role != 2)
     <div class="grid grid-cols-12 gap-6">
@@ -19,7 +25,7 @@
                                     <div class="ml-auto">
                                     </div>
                                 </div>
-                                <div class="text-3xl font-bold leading-8 mt-6">4.510</div>
+                                <div class="text-3xl font-bold leading-8 mt-6">{{number_format($total_sales,2)}}</div>
                                 <div class="text-base text-gray-600 mt-1">Total Sales</div>
                             </div>
                         </div>
@@ -32,7 +38,7 @@
                                     <div class="ml-auto">
                                     </div>
                                 </div>
-                                <div class="text-3xl font-bold leading-8 mt-6">3.521</div>
+                                <div class="text-3xl font-bold leading-8 mt-6">{{$occupied}}</div>
                                 <div class="text-base text-gray-600 mt-1">Occupied Rooms</div>
                             </div>
                         </div>
@@ -45,7 +51,7 @@
                                     <div class="ml-auto">
                                     </div>
                                 </div>
-                                <div class="text-3xl font-bold leading-8 mt-6">2.145</div>
+                                <div class="text-3xl font-bold leading-8 mt-6">{{$available}}</div>
                                 <div class="text-base text-gray-600 mt-1">Available Rooms</div>
                             </div>
                         </div>
@@ -58,7 +64,7 @@
                                     <div class="ml-auto">
                                     </div>
                                 </div>
-                                <div class="text-3xl font-bold leading-8 mt-6">152.000</div>
+                                <div class="text-3xl font-bold leading-8 mt-6">{{$users}}</div>
                                 <div class="text-base text-gray-600 mt-1">Total Customer</div>
                             </div>
                         </div>
