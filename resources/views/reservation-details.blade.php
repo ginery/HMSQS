@@ -10,7 +10,13 @@
     
     <!-- BEGIN: Invoice -->
     <div class="intro-y box overflow-hidden mt-5">
+        @if ($reservation->checkin_date == NULL || $reservation->checkout_date == NULL)
+            <div id="qrcode" style=" display: flex; justify-content: center;">
+            </div>
+        @endif
+      
         <div class="flex flex-col lg:flex-row pt-10 px-5 sm:px-20 sm:pt-20 lg:pb-20 text-center sm:text-left">
+           
             <div class="font-semibold text-theme-1 text-3xl">RESERVATION - #{{$reservation->id}}</div>
             <div class="mt-20 lg:mt-0 lg:ml-auto lg:text-right">
                 <div class="text-xl text-theme-1 font-medium">{{getUserName($reservation->user_id)}}</div>
@@ -23,20 +29,7 @@
                 <div class="text-lg font-medium text-theme-1 mt-2">{{getUserName($reservation->user_id)}}</div>
                 <div class="mt-1">{{getUserEmail($reservation->user_id)}}</div>
             </div>
-            @if ($payment)               
-        
-            <div class="mt-10 lg:mt-0 lg:ml-auto lg:text-right">
-                <div class="text-base text-gray-600">Receipt</div>
-                <div class="text-lg text-theme-1 font-medium mt-2">#{{$payment->id}}</div>
-                <div class="mt-1">{{$payment->created_at}}</div>
-            </div>
-            @else
-            <div class="mt-10 lg:mt-0 lg:ml-auto lg:text-right">
-                <div class="text-base text-gray-600">Receipt</div>
-                <div class="text-lg text-theme-1 font-medium mt-2"># Unpaid</div>
-                <div class="mt-1"> Unpaid</div>
-            </div>
-            @endif
+           
         </div>
         <div class="px-5 sm:px-16 py-10 sm:py-20">
             <div class="overflow-x-auto">
@@ -46,6 +39,7 @@
                             <th class="border-b-2 whitespace-no-wrap">DESCRIPTION</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PAX</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">STATUS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,6 +63,7 @@
                             
                             ?></td>
                             <td class="text-right border-b w-32">{{number_format(getRoomPrice($reservation->room_id),2)}}</td>
+                            <td class="text-right border-b w-32">{!!getPaymentStatus1($reservation->id,$reservation->service_id)!!}</td>
                         </tr>
                         @endforeach
     
@@ -79,9 +74,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="border-b-2 whitespace-no-wrap">Service</th>
-                            <th class="border-b-2 text-right whitespace-no-wrap">Date</th>
+                            <th class="border-b-2 whitespace-no-wrap">SERVICE</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">DATE</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">STATUS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,6 +92,7 @@
                             </td>
                             <td class="text-right border-b">{{date('F j, Y H:i:A', strtotime($add_on->created_at))}}</td>
                             <td class="text-right border-b w-32">{{number_format($add_on->total_amount,2)}}</td>
+                            <td class="text-right border-b w-32">{!!getPaymentStatus1($add_on->id,$add_on->service_id)!!}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -105,9 +102,8 @@
         <div class="px-5 sm:px-20 pb-10 sm:pb-20 flex flex-col-reverse sm:flex-row">
             <div class="text-center sm:text-left mt-10 sm:mt-0">
                 <div class="text-base text-gray-600">Bank Transfer</div>
-                <div class="text-lg text-theme-1 font-medium mt-2">Elon Musk</div>
+                <div class="text-lg text-theme-1 font-medium mt-2">Owner Name</div>
                 <div class="mt-1">Bank Account : 098347234832</div>
-                <div class="mt-1">Code : LFT133243</div>
             </div>
             <div class="text-center sm:text-right sm:ml-auto">
                 <div class="text-base text-gray-600">Total Amount</div>
@@ -122,7 +118,14 @@ function addOns(reservation_id){
     // $("#add-modal").modal('show');
     window.location.href = "/view-reservation/add-ons/"+reservation_id;
 }
+function generateQR(room_id) {
+  
+    var qrcode = new QRCode(document.getElementById("qrcode"));
+    qrcode.makeCode("HOMETEL-RES-" + room_id);
+}
 $(document).ready(function(){
+    var res_id = '{{$reservation->id}}';
+    generateQR(res_id);
     $('#addForm').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);

@@ -149,6 +149,15 @@
             qrcode.makeCode("HOMETEL-PAY-" + id);
         }
         $(document).ready(function() {
+            $('#reservation').on('click', function() {
+                var reservation = $(this).val();
+                $('#service').prop('checked', false);
+                console.log("reservation", reservation); // Output the selected value to the console
+            });
+            $('#service').on('click', function() {
+                var service = $(this).val();
+                console.log("service", service); // Output the selected value to the console
+            });
             $('#payment_type').on('change', function() {
                 let val_selected = $(this).val();
                 if (val_selected == 'O') {

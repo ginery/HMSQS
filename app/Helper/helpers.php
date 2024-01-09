@@ -143,3 +143,21 @@ if (!function_exists('getServiceImage')) {
         return $service ? 'assets/uploads/service/' . $service->image : 'dist/images/preview-4.jpg';
     }
 }
+
+if (!function_exists('getPaymentStatus1')) {
+    function getPaymentStatus1($reservation_id, $service_id)
+    {
+        $result = Payment::where('reservation_id', $reservation_id)->where('service_id', $service_id)->get()->first();
+       
+       
+            if ($result) {
+                $return = '<div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>';
+            } else {
+                $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Unpaid</div>';
+            } 
+       
+
+
+        return $return;
+    }
+}

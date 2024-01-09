@@ -18,6 +18,22 @@
                         
                     </select> --}}
                 </div>
+                 
+
+               <div class="col-span-12 sm:col-span-12">
+                <div class="mt-3"> <label>Select Payment</label>
+                    <div class="flex flex-col sm:flex-row mt-2">
+                        <div class="flex items-center text-gray-700 mr-2"> 
+                            <input type="radio" class="input border mr-2" id="reservation" name="reservation" value="0" checked> 
+                            <label class="cursor-pointer select-none" for="reservation">Reservation</label> 
+                        </div>
+                        <div class="flex items-center text-gray-700 mr-2 mt-2 sm:mt-0"> 
+                            <input type="radio" class="input border mr-2" id="service" name="service" value="1"> 
+                            <label class="cursor-pointer select-none" for="service">Add Ons</label> 
+                        </div>
+                    </div>
+                </div>
+               </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Reservation</label>
                     <select name="reservation_id" class="select2 w-full border mt-2 flex-1">
