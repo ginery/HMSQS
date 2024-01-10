@@ -190,14 +190,17 @@ class ReservationController extends Controller
     }
     public function add_ons_insert(Request $request){
         $res = 0;
-        foreach($request->service_id as $val){ 
-        
+        foreach($request->service_data as $val){
+            $service_data = explode("-", $val);
+            
             $service = Services::where('id', $val)->get()->first();
+            $total_price = $service->price * $service_data[1];
+
             $result = AddOns::create([
                 'user_id' => $request->user_id,
-                'service_id' => $val,
+                'service_id' => $service_data[0],
                 'reservation_id' => $request->reservation_id,
-                'total_amount' => $service->price,
+                'total_amount' => $total_price,
                 'status' => 0,
             ]);
 
