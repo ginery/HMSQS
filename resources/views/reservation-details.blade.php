@@ -10,7 +10,7 @@
     
     <!-- BEGIN: Invoice -->
     <div class="intro-y box overflow-hidden mt-5">
-        @if ($reservation->checkin_date == NULL || $reservation->checkout_date == NULL)
+        @if (($reservation->checkin_date == NULL || $reservation->checkout_date == NULL ) && $reservation->status == 1)
             <div id="qrcode" style=" display: flex; justify-content: center;">
             </div>
         @endif

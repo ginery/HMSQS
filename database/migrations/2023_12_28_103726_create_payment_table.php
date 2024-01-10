@@ -26,6 +26,7 @@ return new class extends Migration
             $table->float('total_amount');
             $table->timestamps();
             $table->integer('status');
+            $table->text('image');
         });
     }
 

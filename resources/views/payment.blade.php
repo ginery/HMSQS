@@ -18,6 +18,7 @@
                     <tr>
                         <th class="whitespace-no-wrap">PAYMENT ID</th>
                         <th class="whitespace-no-wrap">RESERVATION ID</th>
+                        <th class="whitespace-no-wrap">SERVICE ID</th>
                         <th class="text-center whitespace-no-wrap">PAYMENT TYPE</th>
                         <th class="text-center whitespace-no-wrap">REFERENCE NUMBER</th>
                         <th class="text-center whitespace-no-wrap">AMOUNT</th>
@@ -34,7 +35,10 @@
                             {{$payment->id}}
                         </td>
                         <td>
-                            {{$payment->payment_id}}
+                            {{$payment->reservation_id}}
+                        </td>
+                        <td>
+                            {{$payment->service_id}}
                         </td>
                         <td class="text-center">
                             {{$payment->payment_type == 'C' ? 'Cash':'Online'}}

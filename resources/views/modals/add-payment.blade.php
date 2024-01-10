@@ -56,6 +56,10 @@
                 <div class="col-span-12 sm:col-span-12" id="reference_number" required>
                     <label>Reference Number</label>
                     <input type="text" name="reference_number" class="input w-full border mt-2 flex-1" placeholder="Reference Number">
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Image</label>
+                    <input type="file" name="image" class="input w-full border mt-2 flex-1" placeholder="Password" required>
                 </div>             
             </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
