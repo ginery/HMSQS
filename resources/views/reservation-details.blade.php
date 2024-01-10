@@ -60,7 +60,9 @@
                             </td>
                             <td class="text-right border-b"><?php $ex = explode(',',$reservation->pax); 
                             
-                            echo "Adult: ".$ex[0].", Child: ".$ex[1];
+                            // echo "Adult: ".$ex[0].", Child: ".$ex[1];
+                            echo $ex[0];
+
                             
                             ?></td>
                             <td class="text-right border-b w-32">{{number_format(getRoomPrice($reservation->room_id),2)}}</td>
