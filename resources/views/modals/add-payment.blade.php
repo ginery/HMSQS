@@ -7,12 +7,22 @@
         <div>
             <form id="addForm" class="p-5 grid grid-cols-12 gap-4 row-gap-3" enctype="multipart/form-data">
                 <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                @if (Auth::user()->role == 2)
                 <div class="col-span-12 sm:col-span-12">
                     <label>Payment Type</label>
-                    <input type="text" name="" class="input w-full border mt-2 flex-1" value="Online">
-                    <input type="hidden" name="payment_type" class="input w-full border mt-2 flex-1" value="Online">
+                    <input type="text" readonly name="payment_type" class="input w-full border mt-2 flex-1" value="Online">
+                   
                 </div>
-                 
+                @else
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Payment Type</label>
+                    <select name="payment_type" id="payment_type" class="select2 w-full border mt-2 flex-1">
+                        <option value="0">--Select Reservation--</option>
+                        <option value="C">Cash</option>
+                        <option value="O">Online</option>
+                    </select>
+                </div>
+                @endif
 
                <div class="col-span-12 sm:col-span-12">
                 <div class="mt-3"> <label>Select Payment</label>
@@ -30,10 +40,10 @@
                </div>
                 <div class="col-span-12 sm:col-span-12" id="reservation_dropdown">
                     <label>Reservation</label>
-                    <select name="reservation_id" class="select2 w-full border mt-2 flex-1">
+                    <select name="reservation_id" id="reservation_id" class="select2 w-full border mt-2 flex-1">
                         <option value="0">--Select Reservation--</option>
                         @foreach ($reservations as $reservation)
-                        <option value="{{$reservation->id}}">#{{$reservation->id}} - {{getRoomName($reservation->room_id)}} - [{{getUserName($reservation->user_id)}}]</option>
+                        <option value="{{$reservation->id}}" class="{{$reservation->room_id}}">#{{$reservation->id}} - {{getRoomName($reservation->room_id)}} - [{{getUserName($reservation->user_id)}}]</option>
                         @endforeach                        
                     </select>
                 </div>
@@ -44,14 +54,14 @@
                     <select required id="add_ons_id" name="add_ons_id" class="select2 w-full border mt-2 flex-1" style="width: 100%">
                         <option value="0">--Select Add Ons--</option>
                         @foreach ($add_ons as $add_on)
-                        <option value="{{$add_on->id}}" class="{{$add_on->reservation_id}}">#{{$add_on->id}} - {{getServiceName($add_on->service_id)}} - {{date('F j, Y H:i:A', strtotime($add_on->created_at))}} [{{getUserName($add_on->user_id)}}]</option>
+                        <option value="{{$add_on->id}}" id="{{$add_on->service_id}}" class="{{$add_on->reservation_id}}">#{{$add_on->id}} - {{getServiceName($add_on->service_id)}} - {{date('F j, Y H:i:A', strtotime($add_on->created_at))}} [{{getUserName($add_on->user_id)}}]</option>
                         @endforeach
                         
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Amount</label>
-                    <input type="number" name="total_amount" class="input w-full border mt-2 flex-1" placeholder="Price" required>
+                    <input type="number" readonly name="total_amount" id="total_amount" class="input w-full border mt-2 flex-1" placeholder="Price" required>
                 </div>
                 <div class="col-span-12 sm:col-span-12" id="reference_number" required>
                     <label>Reference Number</label>

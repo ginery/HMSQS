@@ -22,6 +22,7 @@
                         <th class="text-center whitespace-no-wrap">PAYMENT TYPE</th>
                         <th class="text-center whitespace-no-wrap">REFERENCE NUMBER</th>
                         <th class="text-center whitespace-no-wrap">AMOUNT</th>
+                        <th class="text-center whitespace-no-wrap">STATUS</th>
                         @if (Auth::user()->role != '2')
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
                         @endif
@@ -45,9 +46,16 @@
                         </td>
                         <td class="w-40">
                             {{$payment->reference_number}}
-                        </td>
+                        </td>                       
                         <td class="w-40">
                             Php. {{number_format($payment->total_amount, 2)}}
+                        </td>
+                        <td class="w-40">
+                           @if ($payment->status == 1)
+                                <div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>
+                            @else
+                                <div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Pending for approval</div>
+                           @endif
                         </td>
                         @if (Auth::user()->role != '2')
                         <td class="table-report__action w-56">
@@ -153,15 +161,31 @@
             qrcode.makeCode("HOMETEL-PAY-" + id);
         }
         $(document).ready(function() {
+
+            $('#reservation_id').on('change', function() {
+                var val = $(this).val();
+                var reservation_id = $(this).find('option:selected').attr('class');
+                $.ajax({
+                    url: 'api/get-room-price/' + reservation_id,
+                    type: 'GET',
+                    success: function(response) {
+                        // service_price = response.price;
+                        $("#total_amount").val(response.price);
+                        console.log(response, reservation_id);
+                    }
+                });
+            });
             $('#reservation').on('click', function() {
                 var reservation = $(this).val();
                 $('#service').prop('checked', false);
                 $("#service_dropdown").hide();
                 $("#reservation_dropdown").show();
                 $('#service').val(0);
-                console.log("reservation", reservation); // Output the selected value to the console
+
+                
             });
             $('#service').on('click', function() {
+
                 var service = $(this).val();
                 $('#reservation').prop('checked', false);
                 $("#reservation_dropdown").hide();
@@ -174,6 +198,14 @@
                 var reservation_id = $(this).find('option:selected').attr('class');
                 console.log(reservation_id);
                 $('#input_reservation_id').val(reservation_id);
+                var service_id = $(this).find('option:selected').attr('id');
+                $.ajax({
+                    url: 'api/get-service-price/' + service_id,
+                    type: 'GET',
+                    success: function(response) {                       
+                        $("#total_amount").val(response.price);
+                    }
+                });
             });
             $('#payment_type').on('change', function() {
                 let val_selected = $(this).val();
