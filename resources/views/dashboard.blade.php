@@ -21,7 +21,7 @@
                         <div class="report-box zoom-in">
                             <div class="box p-5">
                                 <div class="flex">
-                                    <i data-feather="dollar-sign" class="report-box__icon text-theme-10"></i> 
+                                    <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> 
                                     <div class="ml-auto">
                                     </div>
                                 </div>

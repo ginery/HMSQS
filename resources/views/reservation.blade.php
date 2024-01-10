@@ -19,7 +19,9 @@
                     <tr>
                         <th class="whitespace-no-wrap">ROOMS</th>
                         <th class="whitespace-no-wrap">ROOM NAME</th>
+                        @if (Auth::user()->role != '2')
                         <th class="whitespace-no-wrap">CUSTOMER NAME</th>
+                        @endif
                         <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
                         <th class="text-center whitespace-no-wrap">PAYMENT STATUS</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
@@ -43,9 +45,11 @@
                             <a href="" class="font-medium whitespace-no-wrap">{{getRoomName($reservation->room_id)}}</a>
                             <div class="text-gray-600 text-xs whitespace-no-wrap"> Total: {{number_format($reservation->total_amount,2)}}</div>
                         </td>
+                        @if (Auth::user()->role != '2')
                         <td>
                             {{getUserName($reservation->user_id)}}
                         </td>
+                        @endif
                         <td class="text-center">{{$reservation->checkin_date ? date('F j, Y H:i:A', strtotime($reservation->checkin_date)):'N/A' }} - {{ $reservation->checkout_date ? date('F j, Y H:i:A', strtotime($reservation->checkout_date)):'N/A'}}</td>
                         <td class="w-40">
                             {!!getPaymentStatus($reservation->id)!!}
