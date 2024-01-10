@@ -71,7 +71,11 @@
                                             <a href="#" onclick="deletePayment({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
 
                                             <a href="#" onclick="generateQR({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="repeat" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
-
+                                            
+                                            <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
+                                                <button type="button" onclick="" class="button button--sm bg-theme-1 text-white" >Approve</button>
+                                                <button type="button" onclick="" class="button button--sm bg-theme-6 text-white ml-auto">Cancel</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
