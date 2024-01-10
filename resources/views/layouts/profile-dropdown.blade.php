@@ -12,6 +12,7 @@
                 <a href="{{route('profile.edit')}}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
                 @if (Auth::user()->role == 0)                   
                     <a href="{{ route('users') }}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"> <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account </a>
+                    <a href="{{ route('users') }}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"> <i data-feather="edit" class="w-4 h-4 mr-2"></i> Master Data </a>
                 @endif
             </div>
             <div class="p-2 border-t border-theme-40">
