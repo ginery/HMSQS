@@ -1,15 +1,15 @@
 <x-app-layout>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
-            <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Add Payment</button>
+            <button button="button" onclick="addModal()" class="button text-white bg-theme-1 shadow-md mr-2">Payment</button>
 
-            {{--<div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>--}}
+            {{-- <div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-gray-700">
                     <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search...">
                     <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
@@ -18,7 +18,7 @@
                     <tr>
                         <th class="whitespace-no-wrap">PAYMENT ID</th>
                         <th class="whitespace-no-wrap">RESERVATION ID</th>
-                        <th class="whitespace-no-wrap">SERVICE ID</th>
+                        <th class="whitespace-no-wrap">ADD ONS</th>
                         <th class="text-center whitespace-no-wrap">PAYMENT TYPE</th>
                         <th class="text-center whitespace-no-wrap">REFERENCE NUMBER</th>
                         <th class="text-center whitespace-no-wrap">AMOUNT</th>
@@ -38,7 +38,7 @@
                             {{$payment->reservation_id}}
                         </td>
                         <td>
-                            {{$payment->service_id}}
+                            {{$payment->add_ons_id}}
                         </td>
                         <td class="text-center">
                             {{$payment->payment_type == 'C' ? 'Cash':'Online'}}

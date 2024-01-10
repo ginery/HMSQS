@@ -2,7 +2,7 @@
 <div class="modal" id="add-modal">
     <div class="modal__content">
         <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-            <h2 class="font-medium text-base mr-auto">Add Payment</h2>
+            <h2 class="font-medium text-base mr-auto">Payment</h2>
         </div>
         <div>
             <form id="addForm" class="p-5 grid grid-cols-12 gap-4 row-gap-3" enctype="multipart/form-data">
@@ -64,7 +64,7 @@
             </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
                 <button type="button" class="button w-20 border text-gray-700 mr-1" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="button w-20 bg-theme-1 text-white">Add</button>
+                <button type="submit" class="button w-20 bg-theme-1 text-white">Pay Now</button>
             </div>
         </form>
     </div>
