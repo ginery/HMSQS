@@ -46,7 +46,7 @@ create by: ginx
                             // $name = "test";
                         }else{
                             $breadcrumbs = route("dashboard");
-                            $name = "test";
+                            $name = "Home";
                         }
                     @endphp
                     <!-- BEGIN: Breadcrumb -->

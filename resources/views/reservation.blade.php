@@ -1,4 +1,7 @@
+
+
 <x-app-layout>
+    
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
             @if (Auth::user()->role != 2)
@@ -6,10 +9,10 @@
             @endif
             {{--<div class="hidden md:block mx-auto text-gray-600">Showing 1 to 10 of 150 entries</div>--}}
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-                <div class="w-56 relative text-gray-700">
+                {{-- <div class="w-56 relative text-gray-700">
                     <input type="text" class="input w-56 box pr-10 placeholder-theme-13" placeholder="Search...">
                     <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
-                </div>
+                </div> --}}
             </div>
         </div>
         <!-- BEGIN: Data List -->
@@ -33,7 +36,9 @@
                 </thead>
                 <tbody>
                     @foreach ($reservations as $reservation)
-
+                    @php
+                        $expiry = date('Y-m-d', strtotime('+ '.$reservation->terms.' days', strtotime($reservation->created_at))); 
+                    @endphp
                     <tr class="intro-x reservation-{{$reservation->id}}" style="cursor: pointer">
                         <td class="w-40">
                             <div class="flex">
@@ -70,7 +75,7 @@
                                         <div class="p-2">
                                             <a href="{{ route('view-reservation', $reservation->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
                                             
-                                        @if (date('Y-m-d', strtotime('+ '.$reservation->terms.' days', strtotime($reservation->created_at))) >= date('Y-m-d') || $reservation->status == 0)
+                                        @if ($expiry >= date('Y-m-d') || $reservation->status == 0)
                                             <a href="#" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md" onclick="view_reservation_details('{{$reservation}}')"> <i data-feather="check-square" class="w-4 h-4 text-gray-700 mr-2"></i> Edit </a>                                          
 
                                             <a href="#" onclick="deleteReservation({{$reservation->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
@@ -80,12 +85,13 @@
                                             @endif
                                         </div>
                                         @if (Auth::user()->role != '2')
-                                        @if (date('Y-m-d', strtotime('+ '.$reservation->terms.' days', strtotime($reservation->created_at))) >= date('Y-m-d') || $reservation->status == 0)
+                                        @if (($expiry >= date('Y-m-d') || $reservation->status == 0))
+                                        @if ($reservation->checkin_date == NULL)
                                         <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
                                             <button type="button" onclick="approve({{$reservation->id}})" class="button button--sm bg-theme-1 text-white" {{$reservation->overdue}}>Approve</button>
                                             <button type="button" onclick="decline({{$reservation->id}})" class="button button--sm bg-theme-6 text-white ml-auto">Decline</button>
                                         </div>
-
+                                        @endif
                                         @endif
                                         @endif
                                     </div>

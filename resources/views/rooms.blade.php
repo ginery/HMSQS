@@ -5,8 +5,8 @@
         <!-- BEGIN: File Manager Filter -->
         <div class="intro-y flex flex-col-reverse sm:flex-row items-center">
             <div class="w-full sm:w-auto relative mr-auto mt-3 sm:mt-0">
-                <i class="w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700" data-feather="search"></i> 
-                <input type="text" class="input w-full sm:w-64 box px-10 text-gray-700 placeholder-theme-13" placeholder="Search rooms">
+                {{-- <i class="w-4 h-4 absolute my-auto inset-y-0 ml-3 left-0 z-10 text-gray-700" data-feather="search"></i> 
+                <input type="text" class="input w-full sm:w-64 box px-10 text-gray-700 placeholder-theme-13" placeholder="Search rooms"> --}}
                 
             </div>
             <div class="w-full sm:w-auto flex">
