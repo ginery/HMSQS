@@ -47,10 +47,10 @@
                                     </td>
                                     <td class="text-right border-b">
                                         <div class="font-medium whitespace-no-wrap">{{getRoomName($pd->room_id)}}</div>
-                                        <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format($pd->r_total,2)}}</div>
+                                        <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format(getRoomPrice($pd->room_id),2)}}</div>
                                     </td>
                                     <td class="text-right border-b">
-                                        <div class="font-medium whitespace-no-wrap"> {{getServiceName($pd->service_id)}}</div>
+                                        <div class="font-medium whitespace-no-wrap"> {{getServiceName($pd->service_id)}} - {{$pd->qty}}</div>
                                         <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format($pd->ao_total,2)}}</div>
                                     </td>
                                     <td class="text-right border-b font-medium">Php. {{number_format($pd->total_amount,2)}}</td>

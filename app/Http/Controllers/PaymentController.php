@@ -92,6 +92,7 @@ class PaymentController extends Controller
             'p.payment_type',
             'p.reference_number',
             'r.total_amount as r_total',
+            'ao.qty as qty',
             DB::raw('(r.total_amount + ao.total_amount) AS total_amount'),
             'ao.service_id'
         )
