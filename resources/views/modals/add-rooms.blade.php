@@ -20,6 +20,17 @@
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-12">
+                    <label>Pax </label>
+                    <select name="adult" class="select2 w-full border mt-2 flex-1" required>
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <!-- <div class="col-span-12 sm:col-span-12">
                     <label>No. Adult </label>
                     <select name="adult" class="select2 w-full border mt-2 flex-1" required>
                         <option value="0" selected>0</option>
@@ -40,7 +51,8 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
-                </div>
+                </div> -->
+                <input type="hidden" name="child" value="0">
                 <div class="col-span-12 sm:col-span-12">
                     <label>Price</label>
                     <input type="number" name="price" class="input w-full border mt-2 flex-1" placeholder="Price" required>
