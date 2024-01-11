@@ -8,6 +8,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScanqrController;
+use App\Http\Controllers\PaymentAccountController;
 use App\Http\Middleware\Authenticate;
 
 /*
@@ -58,6 +59,10 @@ Route::group(['prefix' => 'payment'], function () {
 });
 Route::group(['prefix' => 'qr'], function () {
     Route::post('/scanqr', [ScanqrController::class, 'scanqr']);
+});
+Route::group(['prefix' => 'payment_account'], function () {
+    Route::post('/payment_account_add', [PaymentAccountController::class, 'create']);
+    Route::post('/payment_account_delete', [PaymentAccountController::class, 'delete']);
 });
 
 // for javascript

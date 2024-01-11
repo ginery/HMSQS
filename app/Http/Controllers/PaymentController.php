@@ -9,6 +9,7 @@ use App\Models\Room;
 use App\Models\Payment;
 use App\Models\Services;
 use App\Models\AddOns;
+use App\Models\PaymentAccount;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
@@ -45,7 +46,8 @@ class PaymentController extends Controller
             ->get();
         }
         $rooms = Room::where('status', '1')->get();
-        return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments, 'add_ons' => $add_ons]);
+        $payment_method = PaymentAccount::where('status', 1)->get();
+        return view('payment', ['rooms' => $rooms, 'reservations' => $reservations, 'payments' => $payments, 'add_ons' => $add_ons, 'payment_method' => $payment_method]);
     }
     public function create(Request $request){
         $image = $request->image;
@@ -61,6 +63,7 @@ class PaymentController extends Controller
             'reservation_id'    => $request->reservation_id == 0 ? $request->input_reservation_id : $request->reservation_id,
             'payment_type'      => $request->payment_type  == 'Online' ? 'O': $request->payment_type,
             'reference_number'  => $request->reference_number,
+            'account'           => $request->payment_account_id,
             'total_amount'      => $request->total_amount,
             'status'            => $stats,
             'image'             => $imageName, 

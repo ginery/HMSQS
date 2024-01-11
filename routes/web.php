@@ -7,6 +7,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\ScanqrController;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::get('/view-reservation/{reservation_id}', [ReservationController::class, 
 Route::get('/view-reservation/add-ons/{reservation_id}', [ReservationController::class, 'view_add_ons'])->middleware(['auth', 'verified'])->name('add-ons');
 Route::get('/services', [ServicesController::class, 'index'])->middleware(['auth', 'verified'])->name('services');
 Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth', 'verified'])->name('payment');
+Route::get('/payment-account', [PaymentAccountController::class, 'index'])->middleware(['auth', 'verified'])->name('payment-account');
 Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoice'])->middleware(['auth', 'verified'])->name('invoice');
 Route::get('/scanqr', [ScanqrController::class, 'index'])->middleware(['auth', 'verified'])->name('scanqr');
 

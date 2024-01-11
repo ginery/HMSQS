@@ -236,9 +236,27 @@
                 }
                 // console.log($(this).val());
             });
+            $('#payment_method').on('change', function() {
+                let val_selected = $(this).val();
+                let val = val_selected.split(',');
+
+                if(val[3]){
+                    $(".rounded-md").show();
+                    $(".rounded-md").attr("src", 'assets/uploads/payment_account/'+val[3]);
+                }else{
+                    $(".rounded-md").hide();
+                }
+
+                $(".account_name").html(val[0]);
+                $(".account_number").html(val[2]);
+                $(".account_holder_name").html(val[1]);
+            });
             $('#addForm').submit(function(e) {
                 e.preventDefault();
+                var payment_account_id = $("#payment_method").find('option:selected').attr('class');;
                 var formData = new FormData(this);
+                formData.append('payment_account_id', payment_account_id);
+                
                 $.ajax({
                     url: 'api/payment/add_payment',
                     type: 'POST',
