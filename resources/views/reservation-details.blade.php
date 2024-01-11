@@ -10,7 +10,7 @@
     
     <!-- BEGIN: Invoice -->
     <div class="intro-y box overflow-hidden mt-5">
-        @if (($reservation->checkin_date == NULL || $reservation->checkout_date == NULL ) && $reservation->status == 1)
+        @if ($reservation->checkin_date == NULL && $reservation->status == 1)
             <div id="qrcode" style=" display: flex; justify-content: center;">
             </div>
         @endif
@@ -105,29 +105,46 @@
             </div>
         </div>
         <div class="px-5 sm:px-20 pb-10 sm:pb-20 flex flex-col-reverse sm:flex-row">
-            <div class="text-center sm:text-left mt-10 sm:mt-0">
-                <div class="text-base text-gray-600">Bank Transfer</div>
-                <div class="text-lg text-theme-1 font-medium mt-2">Owner Name</div>
-                <div class="mt-1">Bank Account : 098347234832</div>
-            </div>
             <div class="text-center sm:text-right sm:ml-auto">
                 <div class="text-base text-gray-600">Total Amount</div>
                 <div class="text-xl text-theme-1 font-medium mt-2">{{number_format($total_reservation,2)}}</div>
                 <div class="mt-1 tetx-xs">Taxes included</div>
-            </div>
+            </div>            
         </div>
+        <div class="w-full sm:w-auto flex sm:mt-0" style="float: right;">
+            <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="checkOut({{$reservation->id}})" class="button text-white bg-theme-6 shadow-md mr-2">Check Out </button>
+        </div>
+        
     </div>
 @include('modals.add-ons')
+@include('modals.generate-qr')
 <script> 
+function closeModal(id) {
+    // console.log("QR Cleared", id);
+    $("#" + id).modal('hide');
+    var qrcode = new QRCode(document.getElementById("qrcode1"));
+    qrcode.clear();
+}
+
+function checkOut(reservation_id){
+    $("#generate-qr").modal("show");
+    $('#generate-qr').on('click', function(e) {
+        e.stopPropagation();
+    });
+    var qrcode = new QRCode(document.getElementById("qrcode1"));
+    qrcode.makeCode("HOMETEL-OUT-" + reservation_id);
+}
+
 function addOns(reservation_id){
     // $("#add-modal").modal('show');
     window.location.href = "/view-reservation/add-ons/"+reservation_id;
 }
-function generateQR(room_id) {
-  
+
+function generateQR(room_id) {  
     var qrcode = new QRCode(document.getElementById("qrcode"));
     qrcode.makeCode("HOMETEL-RES-" + room_id);
 }
+
 $(document).ready(function(){
     var res_id = '{{$reservation->id}}';
     generateQR(res_id);

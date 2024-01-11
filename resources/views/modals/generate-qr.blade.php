@@ -14,7 +14,7 @@
         <a href="#" onclick="closeModal('generate-qr')" class="absolute right-0 top-0 mt-3 mr-3"> <i data-feather="x" class="w-8 h-8 text-gray-500"></i> </a>
         <div class="p-5 text-center"> 
            
-            <div id="qrcode" style="display: flex; justify-content: center;"></div>
+            <div id="qrcode1" style="display: flex; justify-content: center;"></div>
         </div>
       
     </div>

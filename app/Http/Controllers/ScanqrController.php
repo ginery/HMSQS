@@ -20,31 +20,45 @@ class ScanqrController extends Controller
             Config::set('app.timezone', 'Asia/Manila');
             $reservation = Reservation::where('id', $explode[2])->get()->first();        
             $date = date('Y-m-d H:i:s');
-            if($reservation->checkin_date == NULL || $reservation->checkout_date == NULL){
-                if($reservation->checkin_date == NULL){
-                    $data = [
-                        'checkin_date' => $date,
-                    ];
-                    $room = [
-                        'status' => 0,
-                    ];
-                }else{
-                    $data = [
-                        'checkout_date' => $date,                       
-                    ];
-                    $room = [
-                        'status' => 1,
-                    ];
-                }
+            if($reservation->checkin_date == NULL){
+              
+                $data = [
+                    'checkin_date' => $date,
+                ];
+                $room = [
+                    'status' => 0,
+                ];
+             
                 $result = Reservation::where('id', $explode[2])->update($data);
-                $result = Room::where('id', $reservation->room_id)->update($room);
+                        Room::where('id', $reservation->room_id)->update($room);
                 if($result){
                     return 1;
                 }else{
                     return 0;
                 }
             }
+        }else{
+            $this->checkOut($request->scan_data);
         }
     
+    }
+    public function checkOut($scan_data){
+        $explode = explode('-', $scan_data);
+        Config::set('app.timezone', 'Asia/Manila');
+        $reservation = Reservation::where('id', $explode[2])->get()->first();        
+        $date = date('Y-m-d H:i:s');
+        $data = [
+            'checkout_date' => $date,
+        ];
+        $room = [
+            'status' => 1,
+        ];
+        $result = Reservation::where('id', $explode[2])->update($data);
+                Room::where('id', $reservation->room_id)->update($room);
+        if($result){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

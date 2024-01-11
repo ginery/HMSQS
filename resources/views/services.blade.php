@@ -20,7 +20,7 @@
                         <th class="whitespace-no-wrap">SERVICE NAME</th>
                         <th class="text-center whitespace-no-wrap">TYPE</th>
                         <th class="text-center whitespace-no-wrap">DESCRIPTION</th>
-                        <th class="text-center whitespace-no-wrap">STATUS</th>
+                        {{-- <th class="text-center whitespace-no-wrap">STATUS</th> --}}
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
                     </tr>
                 </thead>
@@ -43,9 +43,9 @@
                             {!!getServiceType($services->id)!!}
                         </td>
                         <td class="text-center">{{$services->description}}</td>
-                        <td class="w-40">
+                        {{-- <td class="w-40">
                             <div class="flex items-center justify-center text-theme-9"> <i data-feather="check-square" class="w-4 h-4 mr-2"></i> {{$services->status}} </div>
-                        </td>
+                        </td> --}}
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
                                 <a class="flex items-center mr-3" href="javascript:;" onclick="view_service_details('{{$services}}')"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>

@@ -55,6 +55,24 @@ function scanQR(scan_data){
                 contentType: false,
                 success: function(response) {
                     console.log("response: ", response);
+                    $("#status").html("checked in to your room! Enjoy!");
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
+        }else if(explode[1] == "OUT"){
+            var formData = new FormData();
+            formData.append("scan_data", scan_data);
+            $.ajax({
+                url: 'api/qr/scanqr',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log("response: ", response);
+                    $("#status").html("checked out to your room! Thank you and come again.");
                 },
                 error: function(error) {
                     console.log("error: ", error);
