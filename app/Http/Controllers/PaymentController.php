@@ -76,8 +76,8 @@ class PaymentController extends Controller
         // echo  $request->reservation_id == 0 ? $request->input_reservation_id : $request->reservation_id;
     }
     public function invoice($payment_id) : View {
-        $payment = Payment::where('id', $payment_id)->where('status','1')->get()->first();
-        $payments = Payment::where('id', $payment_id)->where('status','1')->get(); 
+        $payment = Payment::where('id', $payment_id)->get()->first();
+        $payments = Payment::where('id', $payment_id)->get(); 
        
         $reservations = [];
         foreach($payments as $pm){
