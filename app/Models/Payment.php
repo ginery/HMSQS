@@ -22,6 +22,7 @@ class Payment extends Authenticatable
         'reservation_id',
         'add_ons_id',
         'payment_type',
+        'account',
         'reference_number',
         'total_amount',
         'status',
