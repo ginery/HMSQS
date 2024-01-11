@@ -200,16 +200,18 @@
             $("#add_ons_id").on('change', function() {
                
                 var reservation_id = $(this).find('option:selected').attr('class');
-                console.log(reservation_id);
                 $('#input_reservation_id').val(reservation_id);
-                var service_id = $(this).find('option:selected').attr('id');
+                var aoid = $(this).val();
+             
                 $.ajax({
-                    url: 'api/get-service-price/' + service_id,
+                    url: 'api/get-addons-price/' + aoid,
                     type: 'GET',
                     success: function(response) {                       
                         $("#total_amount").val(response.price);
+                        console.log("price", response);
                     }
                 });
+               
             });
             $('#payment_type').on('change', function() {
                 let val_selected = $(this).val();

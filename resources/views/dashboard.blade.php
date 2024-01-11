@@ -72,7 +72,7 @@
                 </div>
             </div>
             <!-- END: General Report -->
-            <!-- BEGIN: Weekly Top Seller -->
+            {{-- <!-- BEGIN: Weekly Top Seller -->
             <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">
@@ -135,7 +135,7 @@
                     </div>
                 </div>
             </div>
-            <!-- END: Sales Report -->
+            <!-- END: Sales Report --> --}}
         
         </div>
     </div>

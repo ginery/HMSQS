@@ -69,6 +69,10 @@ Route::get('/get-room-price/{id}', function ($id) {
     $price = getRoomPrice($id); // Call the Laravel helper function
     return response()->json(['price' => $price]);
 });
+Route::get('/get-addons-price/{id}', function ($id) {
+    $price = getAddOnsPrice($id); // Call the Laravel helper function
+    return response()->json(['price' => $price]);
+});
 
 
 

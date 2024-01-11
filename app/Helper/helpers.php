@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Models\Services;
 use App\Models\Reservation;
 use App\Models\Payment;
-
+use App\Models\AddOns;
 if (!function_exists('getRole')) {
     function getRole($role)
     {
@@ -159,5 +159,12 @@ if (!function_exists('getPaymentStatus1')) {
 
 
         return $return;
+    }
+}
+if (!function_exists('getAddOnsPrice')) {
+    function getAddOnsPrice($id)
+    {
+        $data = AddOns::where('id', $id)->get()->first();
+        return $data ? $data->total_amount : 0;
     }
 }

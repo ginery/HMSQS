@@ -60,7 +60,7 @@ class PaymentController extends Controller
             'payment_type'      => $request->payment_type  == 'Online' ? 'O': $request->payment_type,
             'reference_number'  => $request->reference_number,
             'total_amount'      => $request->total_amount,
-            'status'            => 0,
+            'status'            => Auth::user()->role > 0 ? 1 : 0,
             'image'             => $imageName, 
         ]);
         if($result){

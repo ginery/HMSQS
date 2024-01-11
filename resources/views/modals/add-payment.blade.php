@@ -17,7 +17,7 @@
                 <div class="col-span-12 sm:col-span-12">
                     <label>Payment Type</label>
                     <select name="payment_type" id="payment_type" class="select2 w-full border mt-2 flex-1">
-                        <option value="0">--Select Reservation--</option>
+                        <option value="0">--Select Payment Type--</option>
                         <option value="C">Cash</option>
                         <option value="O">Online</option>
                     </select>
@@ -41,10 +41,12 @@
                 <div class="col-span-12 sm:col-span-12" id="reservation_dropdown">
                     <label>Reservation</label>
                     <select name="reservation_id" id="reservation_id" class="select2 w-full border mt-2 flex-1">
+
                         <option value="0">--Select Reservation--</option>
                         @foreach ($reservations as $reservation)
                         <option value="{{$reservation->id}}" class="{{$reservation->room_id}}">#{{$reservation->id}} - {{getRoomName($reservation->room_id)}} - [{{getUserName($reservation->user_id)}}]</option>
-                        @endforeach                        
+                        @endforeach     
+
                     </select>
                 </div>
                 <div class="hidden col-span-12 sm:col-span-12" id="service_dropdown">
@@ -54,11 +56,20 @@
                     <select required id="add_ons_id" name="add_ons_id" class="select2 w-full border mt-2 flex-1" style="width: 100%">
                         <option value="0">--Select Add Ons--</option>
                         @foreach ($add_ons as $add_on)
-                        <option value="{{$add_on->id}}" id="{{$add_on->service_id}}" class="{{$add_on->reservation_id}}">#{{$add_on->id}} - {{getServiceName($add_on->service_id)}} - {{date('F j, Y H:i:A', strtotime($add_on->created_at))}} [{{getUserName($add_on->user_id)}}]</option>
+                        <option value="{{$add_on->id}}" class="{{$add_on->reservation_id}}" >
+
+                            # {{$add_on->id}} -
+                            {{getServiceName($add_on->service_id)}}
+                            @if (Auth::user()->role == 0)
+                            [{{getUserName($add_on->user_id)}}]
+                            @endif
+                        
+                        </option>
                         @endforeach
                         
                     </select>
                 </div>
+               
                 <div class="col-span-12 sm:col-span-12">
                     <label>Amount</label>
                     <input type="number" readonly name="total_amount" id="total_amount" class="input w-full border mt-2 flex-1" placeholder="Price" required>
@@ -70,7 +81,9 @@
                 <div class="col-span-12 sm:col-span-12">
                     <label>Image</label>
                     <input type="file" name="image" class="input w-full border mt-2 flex-1" placeholder="Password" required>
-                </div>             
+                </div>    
+                
+                
             </div>
             <div class="px-5 py-3 text-right border-t border-gray-200">
                 <button type="button" class="button w-20 border text-gray-700 mr-1" data-dismiss="modal">Cancel</button>
