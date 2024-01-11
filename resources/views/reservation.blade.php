@@ -22,7 +22,8 @@
                         @if (Auth::user()->role != '2')
                         <th class="whitespace-no-wrap">CUSTOMER NAME</th>
                         @endif
-                        <th class="text-center whitespace-no-wrap">CHECKIN & CHECK OUT</th>
+                        <th class="text-center whitespace-no-wrap">CHECKIN</th>
+                        <th class="text-center whitespace-no-wrap">CHECKOUT</th>
                         <th class="text-center whitespace-no-wrap">PAYMENT STATUS</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
                         {{--@if (Auth::user()->role != '2')--}}
@@ -50,7 +51,8 @@
                             {{getUserName($reservation->user_id)}}
                         </td>
                         @endif
-                        <td class="text-center">{{$reservation->checkin_date ? date('F j, Y H:i:A', strtotime($reservation->checkin_date)):'N/A' }} - {{ $reservation->checkout_date ? date('F j, Y H:i:A', strtotime($reservation->checkout_date)):'N/A'}}</td>
+                        <td class="text-center">{{$reservation->checkin_date ? date('F j, Y H:i:A', strtotime($reservation->checkin_date)):'N/A' }}</td>
+                        <td class="text-center">{{ $reservation->checkout_date ? date('F j, Y H:i:A', strtotime($reservation->checkout_date)):'N/A'}}</td>
                         <td class="w-40">
                             {!!getPaymentStatus($reservation->id)!!}
                         </td>

@@ -99,7 +99,7 @@ if (!function_exists('getPaymentStatus')) {
             if ($result->status == 0) {
                 $return = '<div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending</div>';
             } else if ($result->status == 1) {
-                $return = '<div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>';
+                $return = '<div class="bg-green-600  px-1 rounded-md text-white ml-auto">Paid<div class="text-white text-xs whitespace-no-wrap"> '.date("F d, Y", strtotime($result->created_at)).'</div></div> ';
             } else if ($result->status == 2) {
                 $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Expired/Canceled</div>';
             } else {
