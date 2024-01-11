@@ -71,85 +71,35 @@
                     </div>
                 </div>
             </div>
-            <!-- END: General Report -->
-            {{-- <!-- BEGIN: Weekly Top Seller -->
-            <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
-                <div class="intro-y flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        Weekly Top Seller
-                    </h2>
-                </div>
-                <div class="intro-y box p-5 mt-5">
-                    <canvas class="mt-3" id="report-pie-chart" height="280"></canvas>
-                    <div class="mt-8">
-                        <div class="flex items-center">
-                            <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                            <span class="truncate">17 - 30 Years old</span> 
-                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">62%</span> 
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                            <span class="truncate">31 - 50 Years old</span> 
-                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">33%</span> 
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <div class="w-2 h-2 bg-theme-12 rounded-full mr-3"></div>
-                            <span class="truncate">>= 50 Years old</span> 
-                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">10%</span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Weekly Top Seller -->
-            <!-- BEGIN: Sales Report -->
-            <div class="col-span-12 sm:col-span-6 lg:col-span-3 mt-8">
-                <div class="intro-y flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        Sales Report
-                    </h2>
-                </div>
-                <div class="intro-y box p-5 mt-5">
-                    <canvas class="mt-3" id="report-donut-chart" height="280"></canvas>
-                    <div class="mt-8">
-                        <div class="flex items-center">
-                            <div class="w-2 h-2 bg-theme-11 rounded-full mr-3"></div>
-                            <span class="truncate">17 - 30 Years old</span> 
-                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">62%</span> 
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <div class="w-2 h-2 bg-theme-1 rounded-full mr-3"></div>
-                            <span class="truncate">31 - 50 Years old</span> 
-                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">33%</span> 
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <div class="w-2 h-2 bg-theme-12 rounded-full mr-3"></div>
-                            <span class="truncate">>= 50 Years old</span> 
-                            <div class="h-px flex-1 border border-r border-dashed border-gray-300 mx-3 xl:hidden"></div>
-                            <span class="font-medium xl:ml-auto">10%</span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END: Sales Report --> --}}
+    
         
         </div>
     </div>
     @else
     <div class="intro-y box py-10 sm:py-20 mt-5">
         <div class="px-5 mt-10">
+            <div id="qrcode" style="display: flex; justify-content: center;">
+
+            </div>
+            <br/>
             <div class="font-medium text-center text-lg">Welcome to Hometel, <span style="color: #1C3FAA">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span></div>
             <div class="text-gray-600 text-center mt-2">Enjoy our offers exclusive for you.</div>
             <br>
             <center>
             <a href="{{route('book')}}" class="button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white"> <i data-feather="book" class="w-4 h-4 mr-2"></i> Book Now! </a>
-        </center>
+            </center>
+           
         </div>
     </div>
     @endif
     <!-- FOR QR -->
 </x-app-layout>
+<script>
+function generateQR() {  
+    var qrcode = new QRCode(document.getElementById("qrcode"));
+    qrcode.makeCode("https://my-work-desk.online/book");
+}
+$(document).ready(function(){ 
+    generateQR();
+});
+</script>
