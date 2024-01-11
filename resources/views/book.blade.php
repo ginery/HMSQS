@@ -107,7 +107,7 @@
                 <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
                   <div class="row">
                     <div class="col-md-6 mb-3 mb-md-0">
-                      <label for="adults" class="font-weight-bold text-black">Adults</label>
+                      <label for="adults" class="font-weight-bold text-black">Pax</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                         <select name="" id="adults" class="form-control" required>
@@ -119,7 +119,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-6 mb-3 mb-md-0">
+                    <!-- <div class="col-md-6 mb-3 mb-md-0">
                       <label for="children" class="font-weight-bold text-black">Children</label>
                       <div class="field-icon-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -131,7 +131,8 @@
                           <option value="4">4+</option>
                         </select>
                       </div>
-                    </div>
+                    </div> -->
+                    <input type="hidden" name="" id="children" value="0" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-3 align-self-end">
@@ -566,7 +567,7 @@
                       </select>
                   </div>
                   <div class="form-group">
-                      <label>No. Adult</label>
+                      <label>Pax</label>
                       <select name="adult" class="select2 form-control">
                           <option value="0">0</option>
                           <option value="1">1</option>                        
@@ -576,7 +577,7 @@
                           <option value="5">5</option> 
                       </select>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                       <label>No. Child</label>
                       <select name="child" class="select2 form-control">
                           <option value="0">0</option>
@@ -586,7 +587,8 @@
                           <option value="4">4</option> 
                           <option value="5">5</option>                       
                       </select>
-                  </div>
+                  </div> -->
+                  <input type="hidden" name="child" value="0" />
                   <div class="form-group">
                       <label>Check-In</label>
                       <input type="date" name="checkin" class="input form-control" value="{{date('Y-m-d', strtotime(request()->input('checkInDate')))}}">
