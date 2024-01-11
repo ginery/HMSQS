@@ -3,9 +3,11 @@
         <h2 class="text-lg font-medium mr-auto">
             Reservation Details
         </h2>
+        @if ($reservation->checkout_date == NULL)
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="addOns({{ request()->route('reservation_id') }})" class="button text-white bg-theme-1 shadow-md mr-2">Add-ons </button>
         </div>
+        @endif
     </div>
     
     <!-- BEGIN: Invoice -->
@@ -80,6 +82,7 @@
                             <th class="border-b-2 whitespace-no-wrap">ID</th>
                             <th class="border-b-2 whitespace-no-wrap">SERVICE</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">DATE</th>
+                            <th class="border-b-2 text-right whitespace-no-wrap">QUANTITY</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">PRICE</th>
                             <th class="border-b-2 text-right whitespace-no-wrap">STATUS</th>
                         </tr>
@@ -93,9 +96,10 @@
                             <td class="text-center border-b w-32">{{$add_on->id}}</td>
                             <td class="border-b">
                                 <div class="font-medium whitespace-no-wrap">{{getServiceName($add_on->service_id)}} </div>
-                                <div class="text-gray-600 text-xs whitespace-no-wrap">Add ons</div>
+                                <div class="text-gray-600 text-xs whitespace-no-wrap">{{number_format(getServicePrice($add_on->service_id),2)}}</div>
                             </td>
                             <td class="text-right border-b">{{date('F j, Y H:i:A', strtotime($add_on->created_at))}}</td>
+                            <td class="text-right border-b w-32">{{$add_on->qty}}</td>
                             <td class="text-right border-b w-32">{{number_format($add_on->total_amount,2)}}</td>
                             <td class="text-right border-b w-32">{!!getPaymentStatus1($reservation->id,$add_on->id)!!}</td>
                         </tr>
@@ -111,9 +115,11 @@
                 <div class="mt-1 tetx-xs">Taxes included</div>
             </div>            
         </div>
+        @if ($reservation->checkout_date == NULL)
         <div class="w-full sm:w-auto flex sm:mt-0" style="float: right;">
             <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="checkOut({{$reservation->id}})" class="button text-white bg-theme-6 shadow-md mr-2">Check Out </button>
         </div>
+        @endif
         
     </div>
 @include('modals.add-ons')
