@@ -168,3 +168,11 @@ if (!function_exists('getAddOnsPrice')) {
         return $data ? $data->total_amount : 0;
     }
 }
+if (!function_exists('countUnpaid')) {
+    function countUnpaid()
+    {
+        $data = Payment::where('status', 0)->get()->toArray();
+        return $data ? count($data) : 0;
+    }
+}
+

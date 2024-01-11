@@ -53,6 +53,8 @@ Route::group(['prefix' => 'services'], function () {
 Route::group(['prefix' => 'payment'], function () {
     Route::post('/add_payment', [PaymentController::class, 'create']);
     Route::post('/delete', [PaymentController::class, 'delete']);
+    Route::post('/approve', [PaymentController::class, 'approve']);
+    Route::post('/decline', [PaymentController::class, 'decline']);
 });
 Route::group(['prefix' => 'qr'], function () {
     Route::post('/scanqr', [ScanqrController::class, 'scanqr']);

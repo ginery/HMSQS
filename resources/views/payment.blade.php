@@ -23,9 +23,9 @@
                         <th class="text-center whitespace-no-wrap">REFERENCE NUMBER</th>
                         <th class="text-center whitespace-no-wrap">AMOUNT</th>
                         <th class="text-center whitespace-no-wrap">STATUS</th>
-                        @if (Auth::user()->role != '2')
+                      
                         <th class="text-center whitespace-no-wrap">ACTIONS</th>
-                        @endif
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -53,11 +53,13 @@
                         <td class="w-40">
                            @if ($payment->status == 1)
                                 <div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>
+                            @elseif($payment->status == 2)
+                                <div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Canceled</div>
                             @else
-                                <div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Pending for approval</div>
-                           @endif
+                            <div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending for approval</div>
+                            @endif
                         </td>
-                        @if (Auth::user()->role != '2')
+                       
                         <td class="table-report__action w-56">
                             <div class="dropdown relative"> <a href="#" class="dropdown-toggle button inline-block text-black"><i data-feather="settings" class="w-6 h-6 text-gray-700"></i></a>
                                 <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 -mr-12 sm:mr-0 z-20">
@@ -67,59 +69,29 @@
                                         <div class="p-2">
 
                                             <a href="{{route('invoice', $payment->id)}}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="eye" class="w-4 h-4 text-gray-700 mr-2"></i> View </a>
-
+                                            @if (Auth::user()->role != '2')
                                             <a href="#" onclick="deletePayment({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="trash-2" class="w-4 h-4 text-gray-700 mr-2"></i> Delete </a>
 
                                             <a href="#" onclick="generateQR({{$payment->id}})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"> <i data-feather="repeat" class="w-4 h-4 text-gray-700 mr-2"></i> Generate </a>
-                                            
+                                            @if ($payment->status == 0)
                                             <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
-                                                <button type="button" onclick="" class="button button--sm bg-theme-1 text-white" >Approve</button>
-                                                <button type="button" onclick="" class="button button--sm bg-theme-6 text-white ml-auto">Cancel</button>
+                                                <button type="button" onclick="approve({{$payment->id}})" class="button button--sm bg-theme-1 text-white" >Approve</button>
+                                                <button type="button" onclick="decline({{$payment->id}})" class="button button--sm bg-theme-6 text-white ml-auto">Cancel</button>
                                             </div>
+                                            @endif
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        @endif
+                        
 
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <!-- END: Data List -->
-        {{--
-        <!-- BEGIN: Pagination -->
-        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-no-wrap items-center">
-            <ul class="pagination">
-                <li>
-                    <a class="pagination__link" href=""> <i class="w-4 h-4" data-feather="chevrons-left"></i> </a>
-                </li>
-                <li>
-                    <a class="pagination__link" href=""> <i class="w-4 h-4" data-feather="chevron-left"></i> </a>
-                </li>
-                <li> <a class="pagination__link" href="">...</a> </li>
-                <li> <a class="pagination__link" href="">1</a> </li>
-                <li> <a class="pagination__link pagination__link--active" href="">2</a> </li>
-                <li> <a class="pagination__link" href="">3</a> </li>
-                <li> <a class="pagination__link" href="">...</a> </li>
-                <li>
-                    <a class="pagination__link" href=""> <i class="w-4 h-4" data-feather="chevron-right"></i> </a>
-                </li>
-                <li>
-                    <a class="pagination__link" href=""> <i class="w-4 h-4" data-feather="chevrons-right"></i> </a>
-                </li>
-            </ul>
-            <select class="w-20 input box mt-3 sm:mt-0">
-                <option>10</option>
-                <option>25</option>
-                <option>35</option>
-                <option>50</option>
-            </select>
-        </div>
-        <!-- END: Pagination -->
-        --}}
     </div>
     <!-- BEGIN: Delete Confirmation Modal -->
     <div class="modal" id="delete-confirmation-modal">
@@ -163,6 +135,47 @@
             });
             var qrcode = new QRCode(document.getElementById("qrcode"));
             qrcode.makeCode("HOMETEL-PAY-" + id);
+        }
+        function approve(payment_id) {
+            var formData = new FormData();
+            formData.append("payment_id", payment_id);
+
+            $.ajax({
+                url: 'api/payment/approve',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // console.log("response: ", response);
+                    $.toast("Success! Selected reservation was approved.");
+                    setTimeout(()=>{window.location.reload();},2000);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
+        }
+
+        function decline(payment_id) {
+            var formData = new FormData();
+            formData.append("payment_id", payment_id);
+
+            $.ajax({
+                url: 'api/payment/decline',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // console.log("response: ", response);
+                    $.toast("Success! Selected reservation was declined.");
+                    setTimeout(()=>{window.location.reload();},2000);
+                },
+                error: function(error) {
+                    console.log("error: ", error);
+                }
+            });
         }
         $(document).ready(function() {
 

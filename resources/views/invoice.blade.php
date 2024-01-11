@@ -60,6 +60,18 @@
                 </table>
             </div>
         </div>
+
+            <!-- BEGIN: Blog Layout -->
+           
+                <div class="intro-y blog" style="margin-left: 30%;">
+                    <div class="blog__preview image-fit" style="width: 50%; height: 250px;">
+                        <img  alt="Midone Tailwind HTML Admin Template" class="rounded-t-md" src="{{asset('assets/uploads/payments/'.$payment->image)}}">
+                        <div class="absolute bottom-0 text-white px-5 pb-6 z-10"> <a href="" class="block font-medium text-xl mt-3">Copy of Receipt</a> </div>
+                    </div>
+                </div>
+      
+
+        <br>
         <div class="px-5 sm:px-20 pb-10 sm:pb-20 flex flex-col-reverse sm:flex-row">
             <div class="text-center sm:text-left mt-10 sm:mt-0">
                 <div class="text-base text-gray-600">{{$payment->payment_type == 'O' ? 'Online':'Cash'}}</div>

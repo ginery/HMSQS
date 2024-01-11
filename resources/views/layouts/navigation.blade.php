@@ -39,7 +39,10 @@ $currentPageName = Route::current()->getName();
         <li>
             <a href="{{ route('payment') }}" class="<?= $currentPageName == 'payment' ? 'side-menu side-menu--active':'side-menu'?>">
                 <div class="side-menu__icon"> <i data-feather="dollar-sign"></i> </div>
-                <div class="side-menu__title"> Payments </div>
+                @if (countUnpaid() > 0)
+                <div class="side-menu__title"> Payments <div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">{{countUnpaid()}}</div></div>
+                @endif
+              
             </a>
         </li>
         @if (Auth::user()->role != 2)

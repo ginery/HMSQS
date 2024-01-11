@@ -16,7 +16,7 @@ class PaymentController extends Controller
     public function index() : View {
         $user_id = Auth::id();
         if(Auth::user()->role > 0){
-            $payments = Payment::where('status', 1)->where('user_id', $user_id)->get();  
+            $payments = Payment::where('user_id', $user_id)->get();  
 
             $add_ons = DB::connection('mysql')->table('add_ons')
             ->leftJoin('payment', 'add_ons.id', '=', 'payment.add_ons_id')
@@ -33,7 +33,7 @@ class PaymentController extends Controller
             ->get();
 
         }else{
-            $payments = Payment::where('status', 1)->get();
+            $payments = Payment::all();
             $add_ons = DB::connection('mysql')->table('add_ons')->select('add_ons.*')
             ->leftJoin('payment', 'payment.add_ons_id', '=', 'add_ons.id')
             ->whereNull('payment.add_ons_id')
@@ -53,6 +53,8 @@ class PaymentController extends Controller
         $imagePath = public_path('assets/uploads/payments/' . $imageName); 
         $image->move(public_path('assets/uploads/payments'), $imageName);
 
+        $stats = 0;
+
         $result = Payment::create([
             'user_id'           => $request->user_id,
             'add_ons_id'        => $request->add_ons_id,
@@ -60,7 +62,7 @@ class PaymentController extends Controller
             'payment_type'      => $request->payment_type  == 'Online' ? 'O': $request->payment_type,
             'reference_number'  => $request->reference_number,
             'total_amount'      => $request->total_amount,
-            'status'            => Auth::user()->role > 0 ? 1 : 0,
+            'status'            => $stats,
             'image'             => $imageName, 
         ]);
         if($result){
@@ -108,5 +110,19 @@ class PaymentController extends Controller
         }else{
             echo 0;
         }
+    }
+    public function approve(Request $request)
+    {
+        $data = [
+            'status' => 1,
+        ];
+        $result = Payment::where('id', $request->payment_id)->update($data);
+    }
+    public function decline(Request $request)
+    {
+        $data = [
+            'status' => 2,
+        ];
+        $result = Payment::where('id', $request->payment_id)->update($data);
     }
 }
