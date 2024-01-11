@@ -200,6 +200,7 @@ class ReservationController extends Controller
                 'user_id' => $request->user_id,
                 'service_id' => $service_data[0],
                 'reservation_id' => $request->reservation_id,
+                'qty' => $service_data[1],
                 'total_amount' => $total_price,
                 'status' => 0,
             ]);

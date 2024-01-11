@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('service_id');
             $table->integer('reservation_id');
+            $table->integer('qty');
             $table->float('total_amount');
             $table->integer('status');
             $table->timestamps();

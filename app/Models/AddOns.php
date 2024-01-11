@@ -20,6 +20,7 @@ class AddOns extends Authenticatable
         'user_id',
         'service_id',
         'reservation_id',
+        'qty',
         'total_amount',        
         'status'
     ];
