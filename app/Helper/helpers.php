@@ -6,6 +6,7 @@ use App\Models\Services;
 use App\Models\Reservation;
 use App\Models\Payment;
 use App\Models\AddOns;
+
 if (!function_exists('getRole')) {
     function getRole($role)
     {
@@ -71,7 +72,7 @@ if (!function_exists('getReservationStatus')) {
     function getReservationStatus($reservation_id)
     {
         $result = Reservation::where('id', $reservation_id)->get()->first();
-        $overDue = date('Y-m-d', strtotime('+ '.$result->terms.' days', strtotime($result->created_at))) <= date('Y-m-d') ? true : false;
+        $overDue = date('Y-m-d', strtotime('+ ' . $result->terms . ' days', strtotime($result->created_at))) <= date('Y-m-d') ? true : false;
         if ($result) {
             if ($result->status == 0 && !$overDue) {
                 $return = '<div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending</div>';
@@ -99,7 +100,7 @@ if (!function_exists('getPaymentStatus')) {
             if ($result->status == 0) {
                 $return = '<div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending</div>';
             } else if ($result->status == 1) {
-                $return = '<div class="bg-green-600  px-1 rounded-md text-white ml-auto">Paid<div class="text-white text-xs whitespace-no-wrap"> '.date("F d, Y", strtotime($result->created_at)).'</div></div> ';
+                $return = '<div class="bg-green-600  px-1 rounded-md text-white ml-auto">Paid<div class="text-white text-xs whitespace-no-wrap"> ' . date("F d, Y", strtotime($result->created_at)) . '</div></div> ';
             } else if ($result->status == 2) {
                 $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Expired/Canceled</div>';
             } else {
@@ -124,6 +125,10 @@ if (!function_exists('getServiceType')) {
             } else if ($result->service_type == 1) {
                 $return = '<strong>Foods</strong>';
             } else if ($result->service_type == 2) {
+                $return = '<strong>Massage</strong>';
+            } else if ($result->service_type == 3) {
+                $return = '<strong>Laundry</strong>';
+            } else if ($result->service_type == 4) {
                 $return = '<strong>Others</strong>';
             } else {
                 $return = "N/A";
@@ -148,14 +153,14 @@ if (!function_exists('getPaymentStatus1')) {
     function getPaymentStatus1($reservation_id, $add_ons_id)
     {
         $result = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', $add_ons_id)->get()->first();
-       
-       
-            if ($result) {
-                $return = '<div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>';
-            } else {
-                $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Unpaid</div>';
-            } 
-       
+
+
+        if ($result) {
+            $return = '<div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>';
+        } else {
+            $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Unpaid</div>';
+        }
+
 
 
         return $return;
@@ -166,7 +171,7 @@ if (!function_exists('getAddOnsPrice')) {
     {
         $data = AddOns::where('id', $id)->get()->first();
         $dataPayment = Payment::where('add_ons_id', $id)->sum('partial_amount');
-        return $data ? ( $dataPayment != 0.00 ? $data->total_amount - $dataPayment : $data->total_amount ) : 0;
+        return $data ? ($dataPayment != 0.00 ? $data->total_amount - $dataPayment : $data->total_amount) : 0;
     }
 }
 if (!function_exists('countUnpaid')) {
@@ -185,10 +190,10 @@ if (!function_exists('getPaymentStatus2')) {
         $paymentReservation = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', 0)->where('status', 1)->count();
         $paymentAddOns = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', '<>', 0)->where('status', 1)->count();
         $paymentPartialAddOns = Payment::where('reservation_id', $reservation_id)
-        ->where('add_ons_id', '<>', 0)
-        ->where('status', 1)
-        ->where('partial_amount', '<>', 0.00)
-        ->count();
+            ->where('add_ons_id', '<>', 0)
+            ->where('status', 1)
+            ->where('partial_amount', '<>', 0.00)
+            ->count();
 
         $reservationPayStatus = $reservation - $paymentReservation;
         $addOnsPayStatus = $add_ons == 0 ? 0 : ($paymentPartialAddOns == 0 ? $add_ons - $paymentAddOns : 0);
@@ -200,4 +205,3 @@ if (!function_exists('getPaymentStatus2')) {
 
     }
 }
-
