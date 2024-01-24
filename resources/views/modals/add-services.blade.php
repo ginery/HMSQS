@@ -15,6 +15,8 @@
                     <select name="service_type" class="select2 w-full border mt-2 flex-1">
                         <option value="0">-- Select Type --</option>
                         <option value="1">Foods</option>
+                        <option value="3">Laundry</option>
+                        <option value="4">Massage</option>
                         <option value="2">Others</option>
                     </select>
                 </div>

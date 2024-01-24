@@ -18,6 +18,8 @@
                         <select id="filter" class="input" onchange="filter()">
                             <option value="all">All</option>
                             <option value="1">Foods</option>
+                            <option value="3">Laundry</option>
+                            <option value="4">Massage</option>
                             <option value="2">Others</option>
                         </select>
                     </div>
