@@ -193,7 +193,7 @@ if (!function_exists('getPaymentStatus2')) {
     {
         $reservation = Reservation::where('id', $reservation_id)->where('status', 1)->count();
         $add_ons = AddOns::where('reservation_id', $reservation_id)->count();
-        $paymentReservation = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', 0)->where('status', 1)->count();
+        $paymentReservation = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', 0)->where('status', 1)->where('partial_amount', 0.00)->count();
         $paymentAddOns = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', '<>', 0)->where('status', 1)->count();
         $paymentPartialAddOns = Payment::where('reservation_id', $reservation_id)
             ->where('add_ons_id', '<>', 0)
@@ -212,7 +212,7 @@ if (!function_exists('getPaymentStatus2')) {
         $status = $reservationPayStatus == 0 && $addOnsPayStatus == 0 ? 0 : 1;
 
         return $status;
-        // return $reservation."-".$add_ons."-".$paymentReservation."-".$paymentAddOns."-".$paymentPartialAddOns;
+        // return $reservation."-".$add_ons."-".$paymentReservation."-".$paymentAddOns."-".$paymentPartialAddOns."-".$paymentPartialReservation;
 
     }
 }
