@@ -1,9 +1,3 @@
-@php
-$jusers = App\Models\User::where('role', 2)->get()->count();
-$javailable = App\Models\Room::where('status', 1)->get()->count();
-$joccupied = App\Models\Room::where('status', 0)->get()->count();
-$jtotal_sales = App\Models\Payment::where('status', 1)->sum('total_amount');
-@endphp
 <x-app-layout>
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
         <div class="grid grid-cols-12 gap-2">
@@ -26,7 +20,7 @@ $jtotal_sales = App\Models\Payment::where('status', 1)->sum('total_amount');
                 </tr>
             </thead>
         </table> -->
-        <table id="tbl_report" class="display" style="width:100%">
+        <table id="tbl_report" class="table-report--bordered display w-full dataTable no-footer dtr-inline" style="width:100%">
             <thead>
                 <tr>
                     <th>CUSTOMER NAME</th>
@@ -36,12 +30,12 @@ $jtotal_sales = App\Models\Payment::where('status', 1)->sum('total_amount');
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <!-- <tr>
                     <td>Tiger Nixon</td>
                     <td>System Architect</td>
                     <td>Edinburgh</td>
                     <td>61</td>
-                </tr>
+                </tr> -->
 
             </tbody>
 
@@ -57,6 +51,7 @@ $jtotal_sales = App\Models\Payment::where('status', 1)->sum('total_amount');
     });
 
     function get_report(strDate, endDate) {
+        $j('#tbl_report').DataTable().destroy();
         $j('#tbl_report').DataTable({
             dom: 'Bfrtip',
             buttons: [
