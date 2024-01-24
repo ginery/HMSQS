@@ -10,6 +10,7 @@
     <meta name="author" content="" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/sogo/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/sogo/css/animate.css">
     <link rel="stylesheet" href="assets/sogo/css/owl.carousel.min.css">
@@ -413,17 +414,42 @@
                   </div>
                   <div class="form-group">
                       <label>Services</label>
-                      <select name="service_id" class="select2 form-control">
+                      <select name="service_id" class="form-control select2">
                           <option value="0">--Select Service--</option>
+                          <optgroup label="Food">
                           @foreach ($services as $service)
-                          <option value="{{$service->id}}">{{$service->service_name}}</option>
+                            @if ($service->service_type == 1)
+                            <option value="{{$service->id}}">{{$service->service_name}}</option>
+                            @endif
                           @endforeach
+                          </optgroup>
+                          <optgroup label="Laundry">
+                          @foreach ($services as $service)
+                            @if ($service->service_type == 3)
+                            <option value="{{$service->id}}">{{$service->service_name}}</option>
+                            @endif
+                          @endforeach
+                          </optgroup>
+                          <optgroup label="Massage">
+                          @foreach ($services as $service)
+                            @if ($service->service_type == 4)
+                            <option value="{{$service->id}}">{{$service->service_name}}</option>
+                            @endif
+                          @endforeach
+                          </optgroup>
+                          <optgroup label="Others">
+                          @foreach ($services as $service)
+                            @if ($service->service_type == 2)
+                            <option value="{{$service->id}}">{{$service->service_name}}</option>
+                            @endif
+                          @endforeach
+                          </optgroup>
                           
                       </select>
                   </div>
                   <div class="form-group">
                       <label>Pax</label>
-                      <select name="adult" class="select2 form-control">
+                      <select name="adult" class="form-control">
                           <option value="0">0</option>
                           <option value="1">1</option>                        
                           <option value="2">2</option> 
@@ -468,6 +494,7 @@
     <script src="assets/sogo/js/jquery-3.3.1.min.js"></script>
     <script src="assets/sogo/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="assets/sogo/js/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> 
     <script src="assets/sogo/js/bootstrap.min.js"></script>
     <script src="assets/sogo/js/owl.carousel.min.js"></script>
     <script src="assets/sogo/js/jquery.stellar.min.js"></script>
@@ -477,7 +504,7 @@
     <script src="assets/sogo/js/aos.js"></script>
     
     <script src="assets/sogo/js/bootstrap-datepicker.js"></script> 
-    <script src="assets/sogo/js/jquery.timepicker.min.js"></script> 
+    <script src="assets/sogo/js/jquery.timepicker.min.js"></script>
 
     <script src="assets/sogo/js/main.js"></script>
     <script>
@@ -487,6 +514,10 @@
         }else{
           get_available_rooms("{{date('Y-m-d')}}", "{{date('Y-m-d', strtotime('+1 day'))}}");
         }
+        $(".select2").select2({
+            width: '100%',
+            height: '50px'
+        });
       });
 
       $("#check-available-rooms").submit( function(e){

@@ -49,12 +49,17 @@ class ReportsController extends Controller
         $res = Payment::whereBetween('created_at', [$checkInDate, $checkOutDate])
         ->where('status', 1)->get();
 
+        $total = 0;
         foreach ($res as $payment) {
             if($payment->user_id){
+                $amount = $payment->partial_amount != 0 ? $payment->partial_amount : $payment->total_amount;
+                $total += $amount;
+
                 $payment["customer_name"] = getUserName($payment->user_id);
                 $payment["payment_id"] = $payment->id;
                 $payment["is_add_ons"] = $payment->add_ons_id != 0 ? "YES" : "NO";
-                $payment["amount"] = $payment->partial_amount != 0 ? number_format($payment->partial_amount,2) : number_format($payment->total_amount,2);
+                $payment["amount"] = number_format($amount,2);
+                $payment["total_amount"] = number_format($total,2);
             }
         }
 

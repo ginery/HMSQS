@@ -102,6 +102,15 @@
                     </td>
                 </tr> -->
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align: right; margin-right: 1rem;"><b>Total</b></td>
+                    <td id="total"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <!-- FOR QR -->
@@ -115,37 +124,66 @@
     });
 
     function get_report(strDate, endDate) {
+
+        let dateObj = new Date(strDate);
+        let dateObj1 = new Date(endDate);
+
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let formattedDate = dateObj.toLocaleDateString("en-US", options);
+        let formattedDate1 = dateObj1.toLocaleDateString("en-US", options);
+
         $j("#tbl_report").DataTable().destroy();
         $j("#tbl_report").DataTable({
-              "ajax": {
-                "type": "POST",
-                "url": "/api/reports/get_sales",
-                 "data": { start: strDate, end: endDate }
-              },
-              "processing": true,
-              "bFilter": true,
-              "columns": [
-              {
-                "data": "customer_name"
-              },
-              {
-                "data": "payment_id"
-              },
-              {
-                "data": "reservation_id"
-              },
-              {
-                "data": "is_add_ons"
-              },
-              {
-                "data": "amount"
-              },
-              ],
-              dom: 'Bfrtip',
-              buttons: [
-                    'print'
-                ]
-            });
+            "ajax": {
+            "type": "POST",
+            "url": "/api/reports/get_sales",
+                "data": { start: strDate, end: endDate }
+            },
+            "processing": true,
+            "bFilter": true,
+            "columns": [
+            {
+            "data": "customer_name"
+            },
+            {
+            "data": "payment_id"
+            },
+            {
+            "data": "reservation_id"
+            },
+            {
+            "data": "is_add_ons"
+            },
+            {
+            "data": "amount"
+            },
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'print',
+                    // title: 'As of '+formattedDate+' - '+formattedDate1+' Sales Report',
+                    customize: function (win) {
+                        $(win.document.body)
+                        .css('font-size', '10pt')
+                        .prepend('<span style="font-weight: bold;">As of '+formattedDate+' - '+formattedDate1+' Sales Report</span>');
+                        $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                    },
+                    footer: true
+                }
+            ],
+            footerCallback: function (row, data, start, end, display) {
+                var api = this.api();
+                // Calculate the total and update the footer
+                // var total = api.column(4).data().reduce(function (a, b) {
+                //     return a + b;
+                // }, 0);
+                var total_amount = data.length != 0? data[data.length-1].total_amount : 0;
+                $(api.column(4).footer()).html(total_amount);
+            }
+        });
     }
 
     function generateReport(){

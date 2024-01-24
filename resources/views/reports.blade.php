@@ -36,7 +36,6 @@
                     <td>Edinburgh</td>
                     <td>61</td>
                 </tr> -->
-
             </tbody>
 
         </table>
@@ -52,11 +51,29 @@
     });
 
     function get_report(strDate, endDate) {
+        let dateObj = new Date(strDate);
+        let dateObj1 = new Date(endDate);
+
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let formattedDate = dateObj.toLocaleDateString("en-US", options);
+        let formattedDate1 = dateObj1.toLocaleDateString("en-US", options);
+
         $j('#tbl_report').DataTable().destroy();
         $j('#tbl_report').DataTable({
             dom: 'Bfrtip',
             buttons: [
-                'print'
+                {
+                    extend: 'print',
+                    // title: 'As of '+formattedDate+' - '+formattedDate1+' Transaction Report',
+                    customize: function (win) {
+                        $(win.document.body)
+                        .css('font-size', '10pt')
+                        .prepend('<span style="font-weight: bold;">As of '+formattedDate+' - '+formattedDate1+' Transaction Report</span>');
+                        $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                    }
+                }
             ],
             ajax: {
                 type: "POST",

@@ -36,26 +36,28 @@
                         @php
                             $total_amount = 0;
                         @endphp
-                        @foreach ($payment_data as $pd)
-                        @php
-                            $total_amount += $pd->total_amount;
-                        @endphp                  
-                                <tr>
-                                    <td class="border-b">
-                                        <div class="font-medium whitespace-no-wrap">{{$pd->id}}</div>
-                                        <div class="text-gray-600 text-xs whitespace-no-wrap">test</div>
-                                    </td>
-                                    <td class="text-right border-b">
-                                        <div class="font-medium whitespace-no-wrap">{{getRoomName($pd->room_id)}}</div>
-                                        <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format(getRoomPrice($pd->room_id),2)}}</div>
-                                    </td>
-                                    <td class="text-right border-b">
-                                        <div class="font-medium whitespace-no-wrap"> {{getServiceName($pd->service_id)}} - {{$pd->qty}}</div>
-                                        <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format($pd->ao_total,2)}}</div>
-                                    </td>
-                                    <td class="text-right border-b font-medium">Php. {{number_format($pd->total_amount,2)}}</td>
-                                </tr>
-                        @endforeach
+                        @if ($payment->partial_amount == 0.00)
+                            @foreach ($payment_data as $pd)
+                            @php
+                                $total_amount += $pd->total_amount;
+                            @endphp                  
+                                    <tr>
+                                        <td class="border-b">
+                                            <div class="font-medium whitespace-no-wrap">{{$pd->id}}</div>
+                                            <div class="text-gray-600 text-xs whitespace-no-wrap">test</div>
+                                        </td>
+                                        <td class="text-right border-b">
+                                            <div class="font-medium whitespace-no-wrap">{{getRoomName($pd->room_id)}}</div>
+                                            <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format(getRoomPrice($pd->room_id),2)}}</div>
+                                        </td>
+                                        <td class="text-right border-b">
+                                            <div class="font-medium whitespace-no-wrap"> {{getServiceName($pd->service_id)}} - {{$pd->qty}}</div>
+                                            <div class="text-gray-600 text-xs whitespace-no-wrap"> {{number_format($pd->ao_total,2)}}</div>
+                                        </td>
+                                        <td class="text-right border-b font-medium">Php. {{number_format($pd->total_amount,2)}}</td>
+                                    </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -63,13 +65,15 @@
 
             <!-- BEGIN: Blog Layout -->
            
-                <div class="intro-y blog" style="margin-left: 30%;">
-                    <div class="blog__preview image-fit" style="width: 50%; /*height: 250px;*/">
-                        <img  alt="Midone Tailwind HTML Admin Template" class="rounded-t-md" src="{{asset('assets/uploads/payments/'.$payment->image)}}">
-                        <div class="absolute bottom-0 text-white px-5 pb-6 z-10"> <a href="" class="block font-medium text-xl mt-3">Copy of Receipt</a> </div>
+            <div class="intro-y blog flex justify-center">
+                <div class="box" style="width: 25%;">
+                    <img  alt="Midone Tailwind HTML Admin Template" class="rounded-t-md" style="width: 100%; height: auto;" src="{{asset('assets/uploads/payments/'.$payment->image)}}">
+                    <div class="absolute bottom-0 text-white px-5 pb-6 z-10" style="background-color: rgba(0,0,0,0.7); width: 100%;"> 
+                        <a href="" class="block font-medium text-xl mt-3">Copy of Receipt</a>
+                        <a href="" class="block font-small">Reference Number: <b>{{$payment->reference_number}}</b></a>
                     </div>
                 </div>
-      
+            </div>
 
         <br>
         <div class="px-5 sm:px-20 pb-10 sm:pb-20 flex flex-col-reverse sm:flex-row">
@@ -80,7 +84,7 @@
             </div>
             <div class="text-center sm:text-right sm:ml-auto">
                 <div class="text-base text-gray-600">Total Amount</div>
-                <div class="text-xl text-theme-1 font-medium mt-2">{{number_format($total_amount,2)}}</div>
+                <div class="text-xl text-theme-1 font-medium mt-2">{{$total_amount == 0 ? ($payment->partial_amount != 0.00 ? number_format($payment->partial_amount,2) : number_format($payment->total_amount,2) ) : number_format($total_amount,2)}}</div>
                 <div class="mt-1 tetx-xs">Taxes included</div>
             </div>
         </div>
