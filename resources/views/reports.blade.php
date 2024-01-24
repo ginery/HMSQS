@@ -44,6 +44,7 @@
     <!-- FOR QR -->
 </x-app-layout>
 <script>
+    var $j = jQuery.noConflict();
     $j(document).ready(function() {
         var start_date = $j("#date_start").val();
         var end_date = $j("#date_end").val();

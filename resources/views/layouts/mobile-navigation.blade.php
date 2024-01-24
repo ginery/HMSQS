@@ -49,5 +49,27 @@
         </li>
         @endif
         
+        @if (Auth::user()->role != 2)
+        <li>
+            <a href="javascript:;" class="menu">
+                <div class="menu__icon"> <i data-feather="bar-chart-2"></i> </div>
+                <div class="menu__title"> Reports <i class="menu__sub-icon" data-feather="chevron-down"></i> </div>
+            </a>
+            <ul class="">
+                <li>
+                    <a href="{{ route('reports') }}" class="menu">
+                        <div class="menu__icon"> <i data-feather="circle"></i> </div>
+                        <div class="menu__title"> Transactions </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('sales-report') }}" class="menu">
+                        <div class="menu__icon"> <i data-feather="circle"></i> </div>
+                        <div class="menu__title"> Sales </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @endif
     </ul>
 </div>
