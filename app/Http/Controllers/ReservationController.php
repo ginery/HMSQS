@@ -204,6 +204,9 @@ class ReservationController extends Controller
             }else{
                 
                 $services = Services::where('service_type', $request->filter)->get();
+                foreach($services as $val){
+                    $val['image'] = asset('assets/uploads/service/'.$val->image);
+                }
             }
             $servicesArray = $services->toArray();
 

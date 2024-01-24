@@ -191,7 +191,7 @@
 
             $('#reservation_id').on('change', function() {
                 var val = $(this).val();
-                var reservation_id = $(this).find('option:selected').attr('class');
+                var reservation_id = $(this).val();
                 $('#partial_payment').val("0").trigger('change');
                 $.ajax({
                     url: 'api/get-room-price/' + reservation_id,

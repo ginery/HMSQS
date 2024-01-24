@@ -170,7 +170,7 @@
                                 <div class="file box rounded-md px-5 pt-8 pb-5 px-3 sm:px-5 relative zoom-in">
                                     <a href="" class="w-3/5">
                                         <img alt="Midone Tailwind HTML Admin Template" class="rounded-md"
-                                            src="assets/uploads/service/${service.image}">
+                                            src="${service.image}">
                                     </a>
                                     <a href="#" class="block font-medium mt-4 text-center truncate">${service.service_name}</a>
                                     <div class="text-gray-600 text-xs text-center">Php. ${service.price.toFixed(2)}</div>

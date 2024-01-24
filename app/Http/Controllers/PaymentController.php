@@ -43,10 +43,27 @@ class PaymentController extends Controller
             ->select('add_ons.*')
             ->get();
 
+            // $reservations = DB::connection('mysql')->table('reservation')
+            // ->leftJoin('payment', 'reservation.id', '=', 'payment.reservation_id')
+            // ->where('reservation.user_id', $user_id)
+            // ->whereNull('payment.reservation_id')
+            // ->select('reservation.*')
+            // ->get();
+
             $reservations = DB::connection('mysql')->table('reservation')
-            ->leftJoin('payment', 'reservation.id', '=', 'payment.reservation_id')
+            ->leftJoin('payment', function($join) {
+                $join->on('reservation.id', '=', 'payment.reservation_id')
+                     ->where('payment.id', function($query) {
+                         $query->select(DB::raw('MAX(id)'))
+                               ->from('payment')
+                               ->whereColumn('reservation.id', 'payment.reservation_id');
+                     });
+            })
             ->where('reservation.user_id', $user_id)
-            ->whereNull('payment.reservation_id')
+            ->where(function($query) {
+                $query->whereNull('payment.reservation_id')
+                      ->orWhere('payment.status', 2);
+            })
             ->select('reservation.*')
             ->get();
 
@@ -78,7 +95,7 @@ class PaymentController extends Controller
             $data = [
                 'status' => 1,
             ];
-            $result = Payment::where('add_ons_id', $request->add_ons_id)->where('status', 2)->update($data);
+            $result = Payment::where('add_ons_id', $request->add_ons_id)->where('status', 2)->where('reservation_id', $request->reservation_id)->update($data);
         }
 
         $result = Payment::create([
@@ -88,7 +105,7 @@ class PaymentController extends Controller
             'payment_type'      => $request->payment_type  == 'Online' ? 'O': $request->payment_type,
             'reference_number'  => $request->reference_number,
             'account'           => $request->payment_account_id,
-            'partial_amount'    => $request->partial_amount,
+            'partial_amount'    => $request->partial_amount ? $request->partial_amount : 0,
             'total_amount'      => $request->total_amount,
             'status'            => $stats,
             'image'             => $imageName, 

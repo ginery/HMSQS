@@ -100,9 +100,15 @@ if (!function_exists('getPaymentStatus')) {
             if ($result->status == 0) {
                 $return = '<div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending</div>';
             } else if ($result->status == 1) {
-                $return = '<div class="bg-green-600  px-1 rounded-md text-white ml-auto">Paid<div class="text-white text-xs whitespace-no-wrap"> ' . date("F d, Y", strtotime($result->created_at)) . '</div></div> ';
-            } else if ($result->status == 2) {
+                if($result->partial_amount != 0.00){
+                    $return = '<div class="bg-green-600  px-1 rounded-md text-white ml-auto">Partial - Fully Paid<div class="text-white text-xs whitespace-no-wrap"> ' . date("F d, Y", strtotime($result->created_at)) . '</div></div> ';
+                }else{
+                    $return = '<div class="bg-green-600  px-1 rounded-md text-white ml-auto">Paid<div class="text-white text-xs whitespace-no-wrap"> ' . date("F d, Y", strtotime($result->created_at)) . '</div></div> ';
+                }
+            } else if ($result->status == -1) {
                 $return = '<div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Expired/Canceled</div>';
+            } else if ($result->status == 2) {
+                $return = '<div class="text-xs  bg-theme-11  px-1 rounded-md text-white ml-auto">Partial</div>';
             } else {
                 $return = "N/A";
             }
@@ -194,8 +200,13 @@ if (!function_exists('getPaymentStatus2')) {
             ->where('status', 1)
             ->where('partial_amount', '<>', 0.00)
             ->count();
+        $paymentPartialReservation = Payment::where('reservation_id', $reservation_id)
+            ->where('add_ons_id', 0)
+            ->where('status', 1)
+            ->where('partial_amount', '<>', 0.00)
+            ->count();
 
-        $reservationPayStatus = $reservation - $paymentReservation;
+        $reservationPayStatus = $paymentPartialReservation != 0 ? 0 : $reservation - $paymentReservation;
         $addOnsPayStatus = $add_ons == 0 ? 0 : ($paymentPartialAddOns == 0 ? $add_ons - $paymentAddOns : 0);
 
         $status = $reservationPayStatus == 0 && $addOnsPayStatus == 0 ? 0 : 1;
@@ -203,5 +214,16 @@ if (!function_exists('getPaymentStatus2')) {
         return $status;
         // return $reservation."-".$add_ons."-".$paymentReservation."-".$paymentAddOns."-".$paymentPartialAddOns;
 
+    }
+}
+
+if (!function_exists('getRoomPrice2')) {
+    function getRoomPrice2($reservation_id)
+    {
+        $resData = Reservation::where('id', $reservation_id)->get()->first();
+        $rooms = Room::where('id', $resData->room_id)->get()->first();
+        $dataPayment = Payment::where('reservation_id', $reservation_id)->sum('partial_amount');
+        return $rooms ? ($dataPayment != 0.00 ? $rooms->price - $dataPayment : $rooms->price) : 0;
+        // return $rooms ? $rooms->price : 0;
     }
 }
