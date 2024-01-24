@@ -56,5 +56,27 @@ $currentPageName = Route::current()->getName();
             </a>
         </li>
         @endif
+        @if (Auth::user()->role != 2)
+        <li>
+            <a href="javascript:;" class="<?= $currentPageName == 'reports' || $currentPageName == 'sales-report' ? 'side-menu side-menu--active':'side-menu'?>">
+                <div class="side-menu__icon"> <i data-feather="bar-chart-2"></i> </div>
+                <div class="side-menu__title"> Reports <i class="side-menu__sub-icon" data-feather="chevron-down"></i> </div>
+            </a>
+            <ul class="<?= $currentPageName == 'reports' || $currentPageName == 'sales-report' ? 'side-menu__sub-open':''?>">
+                <li>
+                    <a href="{{ route('reports') }}" class="<?= $currentPageName == 'reports' ? 'side-menu side-menu--active':'side-menu'?>">
+                        <div class="side-menu__icon"> <i data-feather="circle"></i> </div>
+                        <div class="side-menu__title"> Transactions </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('sales-report') }}" class="<?= $currentPageName == 'sales-report' ? 'side-menu side-menu--active':'side-menu'?>">
+                        <div class="side-menu__icon"> <i data-feather="circle"></i> </div>
+                        <div class="side-menu__title"> Sales </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @endif
     </ul>
 </nav>

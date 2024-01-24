@@ -9,6 +9,7 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ScanqrController;
 use App\Http\Controllers\PaymentAccountController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Middleware\Authenticate;
 
 /*
@@ -45,6 +46,7 @@ Route::group(['prefix' => 'reservation'], function () {
     Route::post('/delete', [ReservationController::class, 'delete']);
     Route::post('/update', [ReservationController::class, 'update']);
     Route::post('/add_ons_insert', [ReservationController::class, 'add_ons_insert']);
+    Route::post('/add_ons_filter', [ReservationController::class, 'view_add_ons']);
 });
 Route::group(['prefix' => 'services'], function () {
     Route::post('/add_services', [ServicesController::class, 'create']);
@@ -63,6 +65,10 @@ Route::group(['prefix' => 'qr'], function () {
 Route::group(['prefix' => 'payment_account'], function () {
     Route::post('/payment_account_add', [PaymentAccountController::class, 'create']);
     Route::post('/payment_account_delete', [PaymentAccountController::class, 'delete']);
+});
+Route::group(['prefix' => 'reports'], function () {
+    Route::post('/get_transactions', [ReportsController::class, 'transactions']);
+    Route::post('/get_sales', [ReportsController::class, 'sales']);
 });
 
 // for javascript

@@ -17,24 +17,30 @@ class ScanqrController extends Controller
 
         $explode = explode('-', $request->scan_data);
         if($explode[1] == 'RES'){
-            Config::set('app.timezone', 'Asia/Manila');
+            // Config::set('app.timezone', 'Asia/Manila');
             $reservation = Reservation::where('id', $explode[2])->get()->first();        
             $date = date('Y-m-d H:i:s');
             if($reservation->checkin_date == NULL){
+
+                if(date('Y-m-d') == date('Y-m-d', strtotime($reservation->reservedate_in))){
               
-                $data = [
-                    'checkin_date' => $date,
-                ];
-                $room = [
-                    'status' => 0,
-                ];
-             
-                $result = Reservation::where('id', $explode[2])->update($data);
-                        Room::where('id', $reservation->room_id)->update($room);
-                if($result){
-                    return 1;
-                }else{
-                    return 0;
+                    $data = [
+                        'checkin_date' => $date,
+                    ];
+                    $room = [
+                        'status' => 0,
+                    ];
+                 
+                    $result = Reservation::where('id', $explode[2])->update($data);
+                            Room::where('id', $reservation->room_id)->update($room);
+                    if($result){
+                        return 1;
+                    }else{
+                        return 0;
+                    }
+
+                } else {
+                    return 2;
                 }
             }
         }else{
@@ -44,7 +50,7 @@ class ScanqrController extends Controller
     }
     public function checkOut($scan_data){
         $explode = explode('-', $scan_data);
-        Config::set('app.timezone', 'Asia/Manila');
+        // Config::set('app.timezone', 'Asia/Manila');
         $reservation = Reservation::where('id', $explode[2])->get()->first();        
         $date = date('Y-m-d H:i:s');
         $data = [

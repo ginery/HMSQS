@@ -19,10 +19,27 @@ class PaymentController extends Controller
         if(Auth::user()->role > 0){
             $payments = Payment::where('user_id', $user_id)->get();  
 
+            // $add_ons = DB::connection('mysql')->table('add_ons')
+            // ->leftJoin('payment', 'add_ons.id', '=', 'payment.add_ons_id')
+            // ->where('add_ons.user_id', $user_id)
+            // ->whereNull('payment.add_ons_id')->orWhere('payment.status', 2)
+            // ->select('add_ons.*')
+            // ->get();
+
             $add_ons = DB::connection('mysql')->table('add_ons')
-            ->leftJoin('payment', 'add_ons.id', '=', 'payment.add_ons_id')
+            ->leftJoin('payment', function($join) {
+                $join->on('add_ons.id', '=', 'payment.add_ons_id')
+                     ->where('payment.id', function($query) {
+                         $query->select(DB::raw('MAX(id)'))
+                               ->from('payment')
+                               ->whereColumn('add_ons.id', 'payment.add_ons_id');
+                     });
+            })
             ->where('add_ons.user_id', $user_id)
-            ->whereNull('payment.add_ons_id')
+            ->where(function($query) {
+                $query->whereNull('payment.add_ons_id')
+                      ->orWhere('payment.status', 2);
+            })
             ->select('add_ons.*')
             ->get();
 
@@ -55,7 +72,14 @@ class PaymentController extends Controller
         $imagePath = public_path('assets/uploads/payments/' . $imageName); 
         $image->move(public_path('assets/uploads/payments'), $imageName);
 
-        $stats = 0;
+        $stats = !$request->partial_amount ? 1 : ( $request->partial_amount == $request->total_amount ? 1 : 2 );
+
+        if($request->partial_amount == $request->total_amount){
+            $data = [
+                'status' => 1,
+            ];
+            $result = Payment::where('add_ons_id', $request->add_ons_id)->where('status', 2)->update($data);
+        }
 
         $result = Payment::create([
             'user_id'           => $request->user_id,
@@ -64,6 +88,7 @@ class PaymentController extends Controller
             'payment_type'      => $request->payment_type  == 'Online' ? 'O': $request->payment_type,
             'reference_number'  => $request->reference_number,
             'account'           => $request->payment_account_id,
+            'partial_amount'    => $request->partial_amount,
             'total_amount'      => $request->total_amount,
             'status'            => $stats,
             'image'             => $imageName, 

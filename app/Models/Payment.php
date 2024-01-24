@@ -24,6 +24,7 @@ class Payment extends Authenticatable
         'payment_type',
         'account',
         'reference_number',
+        'partial_amount',
         'total_amount',
         'status',
         'image'

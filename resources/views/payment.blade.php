@@ -48,13 +48,23 @@
                             {{$payment->reference_number}}
                         </td>                       
                         <td class="w-40">
-                            Php. {{number_format($payment->total_amount, 2)}}
+                            @if($payment->partial_amount != 0.00)
+                                Php. {{number_format($payment->partial_amount, 2)}} / {{number_format($payment->total_amount, 2)}}
+                            @else
+                                Php. {{number_format($payment->total_amount, 2)}}
+                            @endif
                         </td>
                         <td class="w-40">
                            @if ($payment->status == 1)
-                                <div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>
-                            @elseif($payment->status == 2)
+                                @if ($payment->partial_amount == 0.00)
+                                    <div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Paid</div>
+                                @else
+                                    <div class="text-xs  bg-green-600  px-1 rounded-md text-white ml-auto">Partial -<br> Fully Paid</div>
+                                @endif
+                            @elseif($payment->status == -1)
                                 <div class="text-xs  bg-theme-6  px-1 rounded-md text-white ml-auto">Canceled</div>
+                            @elseif($payment->status == 2)
+                                <div class="text-xs  bg-theme-11  px-1 rounded-md text-white ml-auto">Partial</div>
                             @else
                             <div class="text-xs  bg-gray-600  px-1 rounded-md text-white ml-auto">Pending for approval</div>
                             @endif
@@ -182,6 +192,7 @@
             $('#reservation_id').on('change', function() {
                 var val = $(this).val();
                 var reservation_id = $(this).find('option:selected').attr('class');
+                $('#partial_payment').val("0").trigger('change');
                 $.ajax({
                     url: 'api/get-room-price/' + reservation_id,
                     type: 'GET',
@@ -214,6 +225,7 @@
                
                 var reservation_id = $(this).find('option:selected').attr('class');
                 $('#input_reservation_id').val(reservation_id);
+                $('#partial_payment').val("0").trigger('change');
                 var aoid = $(this).val();
              
                 $.ajax({
@@ -250,6 +262,18 @@
                 $(".account_name").html(val[0]);
                 $(".account_number").html(val[2]);
                 $(".account_holder_name").html(val[1]);
+            });
+            $('#partial_payment').on('change', function() {
+                let val_selected = $(this).val();
+                var total_amount = $("#total_amount").val();
+                if (val_selected != '0') {
+                    $(".partial-container").removeClass("md:hidden");
+                    $("#partial_amount").val(total_amount * (val_selected/100));
+                } else {
+                    $("#partial_amount").val("");
+                    $(".partial-container").addClass("md:hidden");
+                }
+                // console.log($(this).val());
             });
             $('#addForm').submit(function(e) {
                 e.preventDefault();

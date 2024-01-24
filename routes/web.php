@@ -8,6 +8,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentAccountController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ScanqrController;
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,8 @@ Route::get('/payment', [PaymentController::class, 'index'])->middleware(['auth',
 Route::get('/payment-account', [PaymentAccountController::class, 'index'])->middleware(['auth', 'verified'])->name('payment-account');
 Route::get('/invoice/{payment_id}', [PaymentController::class, 'invoice'])->middleware(['auth', 'verified'])->name('invoice');
 Route::get('/scanqr', [ScanqrController::class, 'index'])->middleware(['auth', 'verified'])->name('scanqr');
+Route::get('/reports', [ReportsController::class, 'index'])->middleware(['auth', 'verified'])->name('reports');
+Route::get('/sales-report', [ReportsController::class, 'index1'])->middleware(['auth', 'verified'])->name('sales-report');
 
 
 Route::get('/users', [UsersController::class, 'index'])->name('users');

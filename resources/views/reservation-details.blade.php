@@ -115,7 +115,8 @@
                 <div class="mt-1 tetx-xs">Taxes included</div>
             </div>            
         </div>
-        @if ($reservation->checkout_date == NULL)
+        {{--getPaymentStatus2($reservation->id)--}}
+        @if ($reservation->checkout_in != NULL && $reservation->checkout_date == NULL && getPaymentStatus2($reservation->id) == 0)
         <div class="w-full sm:w-auto flex sm:mt-0" style="float: right;">
             <button button="button text-white bg-theme-1 shadow-md mr-2" onclick="checkOut({{$reservation->id}})" class="button text-white bg-theme-6 shadow-md mr-2">Check Out </button>
         </div>

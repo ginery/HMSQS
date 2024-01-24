@@ -56,7 +56,7 @@ class RoomController extends Controller
     }
 
     public function get_services() : View {
-        $rooms = Room::where('status', 1)->get();
+        $rooms = Room::all();
         $services = Services::where('service_type', 1)->get();
         $amenities = Services::where('service_type', 2)->get();
 
@@ -65,15 +65,19 @@ class RoomController extends Controller
     }
 
     public function available_rooms(Request $request){
-        Config::set('app.timezone', 'Asia/Manila');
+        // Config::set('app.timezone', 'Asia/Manila');
         $checkInDate = date("Y-m-d", strtotime(str_replace(",","", $request->checkin_date)));
+        $checkOutDate = date("Y-m-d", strtotime(str_replace(",","", $request->checkout_date)));
         
         $rooms = DB::connection('mysql')
         ->table('rooms')
-        ->whereNotIn('id', function($query) use ($checkInDate) {
+        ->whereNotIn('id', function($query) use ($checkInDate, $checkOutDate) {
             $query->select('room_id')
                 ->from('reservation')
-                ->whereDate('reservedate_in', '=', $checkInDate)
+                ->where(function($query) use ($checkInDate, $checkOutDate) {
+                    $query->whereBetween('reservedate_in', [$checkInDate, $checkOutDate])
+                          ->orWhereBetween('reservedate_out', [$checkInDate, $checkOutDate]);
+                })
                 ->where('status', 1);
         })
         ->get();

@@ -83,9 +83,26 @@
                     </div>
                     
                     <div class="col-span-12 sm:col-span-12">
-                        <label>Amount</label>
+                        <label>Partial Payment</label>
+                        <select name="partial_payment" id="partial_payment" class="select2 w-full border mt-2 flex-1">
+                            <option value="0">--Select Partial Payment--</option>
+                            <option value="25">25 %</option>
+                            <option value="50">50 %</option>
+                            <option value="75">75 %</option>
+                            <option value="100">100 %</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-span-12 sm:col-span-12 md:hidden partial-container">
+                        <label>Partial Amount</label>
+                        <input type="number" readonly name="partial_amount" id="partial_amount" class="input w-full border mt-2 flex-1" placeholder="Price" required>
+                    </div>
+                    
+                    <div class="col-span-12 sm:col-span-12">
+                        <label>Total Amount</label>
                         <input type="number" readonly name="total_amount" id="total_amount" class="input w-full border mt-2 flex-1" placeholder="Price" required>
                     </div>
+
                     <div class="col-span-12 sm:col-span-12" id="reference_number" required>
                         <label>Reference Number</label>
                         <input type="text" name="reference_number" class="input w-full border mt-2 flex-1" placeholder="Reference Number">

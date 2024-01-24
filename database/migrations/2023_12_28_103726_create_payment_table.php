@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('payment_type');
             $table->integer('account');
             $table->string('reference_number')->nullable();
+            $table->float('partial_amount');
             $table->float('total_amount');
             $table->timestamps();
             $table->integer('status');

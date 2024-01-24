@@ -90,7 +90,7 @@
                                         @if (($expiry >= date('Y-m-d') || $reservation->status == 0))
                                         @if ($reservation->checkin_date == NULL)
                                         <div class="px-3 py-3 border-t border-gray-200 font-medium flex">
-                                            <button type="button" onclick="approve({{$reservation->id}})" class="button button--sm bg-theme-1 text-white" {{$reservation->overdue}}>Approve</button>
+                                            <button type="button" onclick="approve({{$reservation->id}}, {{$reservation->room_id}})" class="button button--sm bg-theme-1 text-white" {{$reservation->overdue}}>Approve</button>
                                             <button type="button" onclick="decline({{$reservation->id}})" class="button button--sm bg-theme-6 text-white ml-auto">Decline</button>
                                         </div>
                                         @endif
@@ -254,9 +254,10 @@
             });
         }
 
-        function approve(reservation_id) {
+        function approve(reservation_id, room_id) {
             var formData = new FormData();
             formData.append("reservation_id", reservation_id);
+            formData.append("room_id", room_id);
 
             $.ajax({
                 url: 'api/reservation/approve',

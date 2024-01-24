@@ -56,6 +56,7 @@ class ReservationController extends Controller
         Config::set('app.timezone', 'Asia/Manila');
         $reservation = Reservation::where('id', $request->reservation_id)->get()->first();
         $date = date('Y-m-d H:i:s');
+        
         if ($reservation->checkin_date == NULL || $reservation->checkout_date == NULL) {
             if ($reservation->checkin_date == NULL) {
                 $data = [
@@ -69,9 +70,13 @@ class ReservationController extends Controller
                     // 'status' => 1            
                     // Add more fields as needed
                 ];
+                $roomData = [
+                    'status' => 1            
+                    // Add more fields as needed
+                ];
+                $result = Room::where('id', $reservation->room_id)->update($roomData);
             }
             $result = Reservation::where('id', $request->reservation_id)->update($data);
-            $result = Room::where('id', $reservation->room_id)->update($data);
             if ($result) {
                 return 1;
             } else {
@@ -88,7 +93,12 @@ class ReservationController extends Controller
             // 'status' => 0            
             // Add more fields as needed
         ];
+        $roomData = [
+            'status' => 0            
+            // Add more fields as needed
+        ];
         $result = Reservation::where('id', $request->reservation_id)->update($data);
+        $result = Room::where('id', $request->room_id)->update($roomData);
     }
     public function decline(Request $request)
     {
@@ -183,10 +193,22 @@ class ReservationController extends Controller
             return 0;
         }
     }
-    public function view_add_ons($reservation_id) : View {
-        $services = Services::all();
+    public function view_add_ons(Request $request) {
+        if(!isset($request->filter)){
+            $services = Services::all();
 
-        return view('add-ons', ['services' => $services]);
+            return view('add-ons', ['services' => $services]);
+        }else{
+            if($request->filter == 'all'){
+                $services = Services::all();
+            }else{
+                
+                $services = Services::where('service_type', $request->filter)->get();
+            }
+            $servicesArray = $services->toArray();
+
+            return response()->json(['services' => $servicesArray]);
+        }
     }
     public function add_ons_insert(Request $request){
         $res = 0;

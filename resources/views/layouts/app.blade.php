@@ -14,8 +14,14 @@ create by: ginx
         <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="{{asset('dist/css/app.css')}}" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-        <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" type="text/javascript"></script>
+        <!-- <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}" type="text/javascript"></script> -->
+        <script src="https://code.jquery.com/jquery-3.7.0.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js" type="text/javascript"></script>
         <script src="{{asset('assets/js/jquery-qrcode.min.js')}}" type="text/javascript"></script>
         <!-- END: CSS Assets-->
     </head>

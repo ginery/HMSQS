@@ -165,7 +165,8 @@ if (!function_exists('getAddOnsPrice')) {
     function getAddOnsPrice($id)
     {
         $data = AddOns::where('id', $id)->get()->first();
-        return $data ? $data->total_amount : 0;
+        $dataPayment = Payment::where('add_ons_id', $id)->sum('partial_amount');
+        return $data ? ( $dataPayment != 0.00 ? $data->total_amount - $dataPayment : $data->total_amount ) : 0;
     }
 }
 if (!function_exists('countUnpaid')) {
@@ -173,6 +174,30 @@ if (!function_exists('countUnpaid')) {
     {
         $data = Payment::where('status', 0)->get()->toArray();
         return $data ? count($data) : 0;
+    }
+}
+
+if (!function_exists('getPaymentStatus2')) {
+    function getPaymentStatus2($reservation_id)
+    {
+        $reservation = Reservation::where('id', $reservation_id)->where('status', 1)->count();
+        $add_ons = AddOns::where('reservation_id', $reservation_id)->count();
+        $paymentReservation = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', 0)->where('status', 1)->count();
+        $paymentAddOns = Payment::where('reservation_id', $reservation_id)->where('add_ons_id', '<>', 0)->where('status', 1)->count();
+        $paymentPartialAddOns = Payment::where('reservation_id', $reservation_id)
+        ->where('add_ons_id', '<>', 0)
+        ->where('status', 1)
+        ->where('partial_amount', '<>', 0.00)
+        ->count();
+
+        $reservationPayStatus = $reservation - $paymentReservation;
+        $addOnsPayStatus = $add_ons == 0 ? 0 : ($paymentPartialAddOns == 0 ? $add_ons - $paymentAddOns : 0);
+
+        $status = $reservationPayStatus == 0 && $addOnsPayStatus == 0 ? 0 : 1;
+
+        return $status;
+        // return $reservation."-".$add_ons."-".$paymentReservation."-".$paymentAddOns."-".$paymentPartialAddOns;
+
     }
 }
 

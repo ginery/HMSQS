@@ -40,10 +40,10 @@ let html5QrcodeScanner = new Html5QrcodeScanner(
 html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 function scanQR(scan_data){
         // console.log(scan_data);
-        $("#success-modal").modal("show");
 
         let explode = scan_data.split('-');
         console.log("Scaned: ", scan_data);
+        console.log("explode: ", explode[1]);
         if(explode[1] == "RES"){
             var formData = new FormData();
             formData.append("scan_data", scan_data);
@@ -55,7 +55,17 @@ function scanQR(scan_data){
                 contentType: false,
                 success: function(response) {
                     console.log("response: ", response);
-                    $("#status").html("checked in to your room! Enjoy!");
+                    if(response == 2){
+                        $(".text-theme-11").show();
+                        $(".text-theme-9").hide();
+                        $(".modal-body").html(`<div class="text-3xl mt-5">Oh no!</div><div class="text-gray-600 mt-2">Check in invalid. You can't check in earlier than your check in date.</div>`);
+                    }else{
+                        $(".text-theme-11").hide();
+                        $(".text-theme-9").show();
+                        $(".modal-body").html(`<div class="text-3xl mt-5">Great!</div><div class="text-gray-600 mt-2">You successfully checked in to your room! Enjoy!</div>`);
+                    }
+                    
+                    $("#success-modal").modal("show");
                 },
                 error: function(error) {
                     console.log("error: ", error);
@@ -71,8 +81,9 @@ function scanQR(scan_data){
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log("response: ", response);
+                    console.log("responsesss: ", response);
                     $("#status").html("checked out to your room! Thank you and come again.");
+                    $("#success-modal").modal("show");
                 },
                 error: function(error) {
                     console.log("error: ", error);

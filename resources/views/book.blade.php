@@ -482,10 +482,10 @@
     <script src="assets/sogo/js/main.js"></script>
     <script>
       $(document).ready(function() {
-        if("{{request()->input('checkInDate')}}" !== ""){
-          get_available_rooms("{{request()->input('checkInDate')}}");
+        if("{{request()->input('checkInDate')}}" !== "" && "{{request()->input('checkOutDate')}}" !== ""){
+          get_available_rooms("{{request()->input('checkInDate')}}", "{{request()->input('checkOutDate')}}");
         }else{
-          get_available_rooms("{{date('Y-m-d')}}");
+          get_available_rooms("{{date('Y-m-d')}}", "{{date('Y-m-d', strtotime('+1 day'))}}");
         }
       });
 
@@ -555,7 +555,7 @@
                 contentType: false,
                 success: function(response) {
                   if(response == 1){
-                    window.location.href="/reservation";
+                    window.location.href="/payment";
                   }else{
                     if(response == 2){
                       alert("Notice: You already have a reservation for this room.");
@@ -569,11 +569,11 @@
 
         });
 
-        function get_available_rooms(date){
+        function get_available_rooms(date, date2){
           $.ajax({
             type: "POST",
             url: "api/room/rooms_available",
-            data: {checkin_date: date},
+            data: {checkin_date: date, checkout_date: date2},
             success: function(res){
               var o = JSON.parse(res);
               let container = $('#rooms-available');
