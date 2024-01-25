@@ -57,7 +57,7 @@ class RoomController extends Controller
 
     public function get_services() : View {
         $rooms = Room::all();
-        $services = Services::where('service_type', 1)->get();
+        $services = Services::all();
         $amenities = Services::where('service_type', 2)->get();
 
         return view('book', ['rooms' => $rooms, 'services' => $services, 
